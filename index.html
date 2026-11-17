@@ -914,11 +914,11 @@ figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-s
 /* Destinations: the same arch as the Real Rate photo (semicircle top, 24px base corners) */
 .city{border-radius:170px 170px 24px 24px}
 .city-badge{left:50%;top:40px;translate:-50% 0}
-.ds-track{padding-bottom:64px;margin-bottom:-40px}
+
 @media (max-width: 600px){#ds-track{container-type:inline-size}.city{border-radius:39cqi 39cqi 22px 22px}}
 
 /* Carousels run to the right edge of the screen; the first card stays aligned with the section content */
-.ex-track,.ds-track{--bleed:calc((100vw - 100%) / 2);margin-right:calc(-1 * var(--bleed));padding-right:var(--bleed);scroll-padding-inline:4px var(--bleed)}
+.ex-track,.ds-track{--bleed:max(24px,calc((100vw - 1280px) / 2));margin-right:calc(-1 * var(--bleed));padding-right:var(--bleed);scroll-padding-inline:4px var(--bleed)}
 .ex-track.grid{margin-right:-4px;padding-right:0}
 
 /* Why Estaie feature cards: editorial type scale */
@@ -992,6 +992,18 @@ figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-s
 @media (max-width: 1023px){.ml{border-radius:0}}
 /* Explore stays: cards sit on mist; filters read as part of the carousel, not a new block */
 .ex-filters,.ex-chips{margin-top:8px}
+/* Carousels: give card shadows room to fade inside the scroll area (overflow-x clips them otherwise), then pull the next block back so spacing is unchanged */
+.ex-track,.ds-track{padding-top:24px;padding-bottom:72px;margin-top:-20px;margin-bottom:-48px}
+.ex-track,.ds-track{margin-left:calc(-1 * var(--bleed));padding-left:var(--bleed);scroll-padding-inline:var(--bleed)}
+.stay{box-shadow:0 14px 32px rgba(36,2,67,.09)}
+.ex-track.grid{padding:4px 0 24px;margin:0 -4px}
+.ex-foot{position:relative;z-index:1}
+.ml-incl li{gap:10px}
+.ml-incl svg{box-sizing:border-box;flex:none;width:22px;height:22px;padding:4.5px;border-radius:50%;background:var(--plum-50);stroke:var(--purple);stroke-width:2.4}
+.hero-proof{justify-content:center;text-align:center;padding:0}
+.hero-proof li + li::before{margin-left:-13px;margin-right:-9px}
+@media (max-width: 760px){.hero-proof li + li::before{margin-left:-10px;margin-right:-6px}}
+@media (max-width: 600px){.hero-proof{align-items:center}}
 @media (max-width: 1180px){.ml-inner{gap:48px}.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}.ml-stop{padding:12px 12px 11px;min-width:0}}
 @media (max-width: 1023px){.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width: 600px){.ml-stops{grid-template-columns:1fr 1fr}}

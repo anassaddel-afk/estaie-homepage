@@ -1091,6 +1091,94 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
 .sd-rate div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--hair);font-size:14px}
 .sd-rate dt{color:var(--text-2)}.sd-rate dd{margin:0;font-weight:600;color:var(--ink);text-align:right}
 .sd .sd-note{margin:12px 0 0;font-size:12.5px}
+/* =================== Typography synced from Figma (Live build page, v3 styles + manual overrides, 17 Nov 2026) ===================
+   Desktop values are the Figma 1440 frame; phone values are the v3 "/M" styles; widths between scale with the viewport. */
+:root{
+  --t-dl:300 clamp(40px,4.444vw,64px)/1.03 var(--display);   /* v3/EN Display L 64 · M 40 */
+  --t-dm:300 clamp(34px,3.75vw,54px)/1.06 var(--display);    /* v3/EN Display M 54 · M 34 */
+  --t-ds:300 clamp(30px,3.056vw,44px)/1.1 var(--display);    /* v3/EN Display S 44 · M 30 */
+  --t-lede:400 clamp(16px,1.25vw,18px)/1.6 var(--font);      /* v3/EN Lede 18 · M 16 */
+  --t-body:400 clamp(14px,1.042vw,15px)/1.6 var(--font);     /* v3/EN Body 15 · M 14 */
+  --t-card:400 clamp(20px,1.528vw,22px)/1.15 var(--display); /* v3/EN Card title 22 · M 20 */
+  --t-small:400 12.5px/1.5 var(--font);                      /* v3/EN Small */
+  --t-label:600 14px/1.3 var(--font);                        /* v3/EN Label */
+  --t-button:600 15px/1.2 var(--font);                       /* v3/EN Button */
+  --t-nav:500 14px/1.2 var(--font);                          /* v3/EN Nav */
+  --t-eyebrow:700 11.5px/1.3 var(--font);                    /* v3/EN Eyebrow, uppercase, 14% */
+}
+/* Hero and final titles: manual Figma override, Outfit Medium 112 / 116% / -3% */
+.hero-title,.final h2{font:500 clamp(52px,7.778vw,112px)/1.16 var(--display);letter-spacing:-.03em}
+/* Header */
+.dock-nav a{font:var(--t-nav);letter-spacing:0}
+.cur-btn,.cur-btn .cur-code,.account{font:var(--t-label);letter-spacing:0}
+.lang button,.lang .on{font:var(--t-label);letter-spacing:0}
+.lang .ar{font:600 14.5px/1.5 "Noto Sans Arabic",var(--font)}
+/* Eyebrows */
+.kicker,.ml-kicker,.rr-k,.sd .sd-k,.seg small,.stay-txt small,.stay-price small,.city-meta small,.ft-cols h3{font:var(--t-eyebrow);letter-spacing:.14em;text-transform:uppercase}
+/* Hero search */
+.hero-lede{font:var(--t-lede)}
+.seg [data-val]{font:600 16px/1.3 var(--font)}
+.seg [data-val].ph{font-weight:400}
+.submit,.submit .lbl{font:var(--t-button);letter-spacing:0}
+.hero-proof{font:var(--t-small)}
+/* Buttons */
+.btn-sun,.btn-cream,.btn-line,.final-cta,.ml-cta,.ft-top-btn,.pop-next{font:var(--t-button);letter-spacing:0}
+/* Destinations */
+.city{font-family:var(--font)}
+.city-meta b{font:400 clamp(28px,2.222vw,32px)/1.02 var(--display);letter-spacing:-.01em}
+/* Explore stay cards */
+.stay-rep{font:var(--t-small)}
+.stay-txt b{font:var(--t-card);letter-spacing:-.005em}
+.stay-txt span{font:var(--t-small)}
+.stay-price b{font:400 26px/1.15 var(--display);letter-spacing:-.005em}
+.stay-price b i{font:500 12.5px/1.5 var(--font);letter-spacing:0}
+.stay-price span{font:400 12px/1.5 var(--font)}
+.stay-cta{font:600 13px/normal var(--font)}
+.chips-label{font:var(--t-small)}
+.chip-f,.chip-f b{font:var(--t-label);letter-spacing:0}
+/* What's moving you */
+.mv-name{font:300 clamp(28px,2.778vw,40px)/1.06 var(--display);letter-spacing:-.016em}
+.mv-panel p{font:var(--t-body)}
+/* Why Estaie */
+.feat b{font:400 clamp(17px,1.944vw,28px)/1.1 var(--display);letter-spacing:-.015em}
+@media (min-width: 1181px){.feat p{font:400 16.5px/1.6 var(--font)}}
+.tod-ctrl button{font:var(--t-label);letter-spacing:0}
+/* Monthly living */
+#ml-chip-name{font:var(--t-label)}
+#ml-chip-n{font:var(--t-small)}
+.ml-lede{font:var(--t-body)}
+.ml-lede b{font:var(--t-card);letter-spacing:-.005em}
+.ml-label{font:var(--t-small);letter-spacing:0}
+.ml-stop b{font:300 30px/1.15 var(--display);letter-spacing:-.005em}
+.ml-stop small{font:var(--t-small)}
+.ml-stop span{font:var(--t-label)}
+.ml-band{font:var(--t-small)}
+.ml-result,.ml-result b{font:var(--t-body)}
+.ml-incl li,.ml-note{font:var(--t-small)}
+/* The Real Rate */
+.rr-lede,.cr-lede{font:var(--t-lede)}
+.rr-chips li{font:var(--t-label)}
+.rr-big small{font:var(--t-lede);letter-spacing:0}
+.rr-big b{font:600 clamp(52px,4.444vw,64px)/1 var(--display);letter-spacing:-.02em}
+.rr-sub,.rr-pill{font:var(--t-small)}
+.rr-ticks span{font:var(--t-small)}
+.rr-ticks span.on{font-weight:700}
+.rr-scale .ic,.rr-legend .ic{font:700 17px/1.3 var(--font)}
+.rr-brand{font:var(--t-label)}
+.rr-lbl b{font:300 30px/1.15 var(--display);letter-spacing:-.005em}
+.rr-tag b{font:600 28px/1.15 var(--display);letter-spacing:-.005em}
+/* Estaiecare */
+.cr-pts b{font:var(--t-card);letter-spacing:-.005em}
+.cr-pts span:not(.cr-ic){font:var(--t-small)}
+/* FAQ */
+.fq-item button{font:400 21px/1.15 var(--display);letter-spacing:-.005em}
+.fq-panel p{font:var(--t-body)}
+/* Final */
+.final p{font:var(--t-lede)}
+/* Footer */
+.ft-brand p{font:var(--t-card);letter-spacing:-.005em}
+.ft-link,.ft-cols a,.ft-legal a,.ft-bottom p,.ft-offices address{font:var(--t-small)}
+.ft-offices b{display:block;font:var(--t-label)}
 /* =================== Arabic (RTL): Figma "v3/AR" type, mirrored layout =================== */
 html[lang="ar"]{--font:"Noto Sans Arabic","Figtree",sans-serif;--display:"Alexandria","Noto Sans Arabic",sans-serif;
   --t-dl:300 clamp(34px,3.85vw,56px)/1.4 var(--display);--t-dm:300 clamp(29px,3.2vw,46px)/1.42 var(--display);--t-ds:300 clamp(26px,2.62vw,38px)/1.45 var(--display)}
@@ -1136,7 +1224,6 @@ html[dir="rtl"] .rr-legend b{margin-left:0;margin-right:auto}
 html[dir="rtl"] :is(.stay-price b,.rr-tag b,.rr-big b,#total){direction:ltr;unicode-bidi:isolate}
 html[dir="rtl"] .hero-proof li + li::before{margin-left:-9px;margin-right:-13px}
 @media (max-width: 760px){html[dir="rtl"] .hero-proof li + li::before{margin-left:-6px;margin-right:-10px}}
-html[lang="ar"] .hero-proof li{line-height:1.6}
 @media (max-width: 760px){
   /* Phones: the switch shows only the other language, as a small pill beside currency */
   .lang{display:flex;width:auto;padding:3px}
@@ -1147,6 +1234,53 @@ html[lang="ar"] .hero-proof li{line-height:1.6}
 html[dir="rtl"] .chip{right:auto;left:max(16px,calc(50vw - 640px))}
 @media (min-width: 1181px){html[dir="rtl"] .feat::before{left:auto;right:-1px}}
 html[dir="rtl"] .stay-price b{display:inline-flex;flex-direction:row-reverse;gap:.25em}
+/* =================== Arabic typography synced from Figma (AR 1440 frame + v3/AR styles, 17 Nov 2026) ===================
+   Lyon Arabic Display is named in Figma but no font files are available here: it is used when installed on the device, otherwise Alexandria. */
+html[lang="ar"]{
+  --lyon:"Lyon Arabic Display","Alexandria","Noto Sans Arabic",sans-serif;
+  --t-dl:500 clamp(34px,4.444vw,64px)/1.42 var(--lyon);
+  --t-dm:500 clamp(34px,4.444vw,64px)/1.42 var(--lyon);
+  --t-ds:500 clamp(34px,4.444vw,64px)/1.42 var(--lyon);
+  --t-lede:400 clamp(16px,1.25vw,18px)/1.85 var(--font);
+  --t-body:400 clamp(14px,1.042vw,15px)/1.85 var(--font);
+  --t-card:400 clamp(18px,1.389vw,20px)/1.45 "Alexandria",var(--font);
+  --t-small:400 13px/1.65 var(--font);
+  --t-label:600 14.5px/1.5 var(--font);
+  --t-button:600 15px/1.4 var(--font);
+  --t-nav:500 14.5px/1.4 var(--font);
+  --t-eyebrow:600 13px/1.5 var(--font);
+}
+html[lang="ar"] :is(.kicker,.ml-kicker,.rr-k,.sd .sd-k,.seg small,.stay-txt small,.stay-price small,.city-meta small,.ft-cols h3){font:var(--t-eyebrow)}
+html[lang="ar"] .hero-title{font:400 clamp(43px,8.889vw,128px)/1.19 var(--lyon)}
+html[lang="ar"] .hero-title,html[lang="ar"] .hero-title *{letter-spacing:-.01em !important}
+html[lang="ar"] .hero-lede{font:400 clamp(16px,1.25vw,18px)/1.85 var(--lyon)}
+html[lang="ar"] .final h2{font:500 clamp(43px,6.389vw,92px)/1.35 var(--lyon)}
+html[lang="ar"] .final p{font:400 clamp(16px,1.389vw,20px)/1.85 var(--lyon)}
+html[lang="ar"] .seg [data-val],html[lang="ar"] .seg [data-val].ph{font:600 15px/1.5 var(--font)}
+html[lang="ar"] .city-meta b{font:400 clamp(25px,2.014vw,29px)/1.3 "Alexandria",var(--font)}
+html[lang="ar"] .stay-txt b{font:400 clamp(18px,1.667vw,24px)/1.45 var(--lyon)}
+html[lang="ar"] .stay-price span{font:400 12px/1.65 var(--font)}
+html[lang="ar"] .mv-name{font:500 clamp(25px,2.431vw,35px)/1.4 var(--lyon)}
+html[lang="ar"] .feat b{font:500 clamp(15px,1.667vw,24px)/1.4 var(--lyon)}
+@media (min-width: 1181px){html[lang="ar"] .feat p{font:400 16.5px/1.85 var(--font)}}
+html[lang="ar"] .ml-lede b{font:400 clamp(18px,1.667vw,24px)/1.45 var(--lyon)}
+html[lang="ar"] .cr-pts b{font:400 clamp(18px,1.389vw,20px)/1.45 var(--lyon)}
+html[lang="ar"] .fq-item button{font:400 19px/1.45 "Alexandria",var(--font)}
+html[lang="ar"] .ft-brand p{font:500 clamp(18px,1.667vw,24px)/1.45 var(--lyon)}
+/* Latin figures and brand names keep the EN styles in the Arabic frame */
+html[lang="ar"] .stay-price b{font:400 26px/1.15 "Outfit",sans-serif}
+html[lang="ar"] .stay-price b i{font:500 12.5px/1.5 var(--font)}
+html[lang="ar"] .ml-stop b{font:300 30px/1.45 "Outfit",sans-serif}
+html[lang="ar"] .rr-big b{font:600 clamp(52px,4.444vw,64px)/1 "Outfit",sans-serif}
+html[lang="ar"] .rr-lbl b{font:300 30px/1.15 "Outfit",sans-serif}
+html[lang="ar"] .rr-tag b{font:600 28px/1.15 "Outfit",sans-serif}
+html[lang="ar"] :is(.stay-price b,.rr-lbl b,.rr-tag b){letter-spacing:-.005em !important}
+html[lang="ar"] .rr-big b{letter-spacing:-.02em !important}
+html[lang="ar"] :is(.rr-brand,.ft-offices b,.lang [data-lang="en"]){font:600 14px/1.3 "Figtree",sans-serif}
+html[lang="ar"] .rr-ticks span{font:400 12.5px/1.5 "Figtree",sans-serif}
+html[lang="ar"] .rr-ticks span.on{font-weight:700}
+html[lang="ar"] :is(.hero-proof li,.ml-label,.rr-sub,.rr-pill,.ml-note,.ml-incl li,.ml-band,.stay-rep,.stay-txt span,.chips-label,.cr-pts span:not(.cr-ic),.ft-bottom p,.ft-link,.ft-legal a,.ft-offices address){line-height:1.65}
+html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
 </style>
 </head>
 <body>

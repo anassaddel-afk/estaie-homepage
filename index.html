@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estaie — Conversion Edition · Desktop homepage (scroll prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@300;400&family=Noto+Sans+Arabic:wght@700&display=swap">
+<style>
+:root{
+  --paper:#fdf9f1; --page:#f6efe2; --ink:#240243; --plum:#0d0417; --plum-500:#45067e; --plum-600:#240243;
+  --purple:#8a3ebf; --lilac:#cfabf4; --lavender:#e4d8f5; --plum-50:#f4f0fa; --plum-100:#f5ebff;
+  --text-2:#5f5668; --hair:rgba(36,2,67,.12); --cream:#fffbf5; --cta-ink:#17012c;
+  --ease-soft:cubic-bezier(.22,1,.36,1); --ease-glide:cubic-bezier(.65,0,.35,1);
+  --glass-bg:linear-gradient(180deg,rgba(253,249,241,.94),rgba(246,239,226,.86));
+  --font:"Figtree","Segoe UI",sans-serif; --display:"Outfit","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--page);font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.page{position:relative;width:100%;max-width:1440px;margin:0 auto}
+.sec{display:block;width:100%}
+.sec img{display:block;width:100%;height:auto}
+.hero{position:relative}
+/* Sits exactly over the search inside the hero artwork (80, 694, 1280×90 at 1440). */
+#hero-search-sentinel{position:absolute;left:5.556%;top:77.11%;width:88.889%;height:10%;pointer-events:none}
+
+/* ---------- Header: the Conversion Edition header, unchanged in size, spacing and type ---------- */
+.site-header{position:fixed;top:22px;left:0;right:0;margin:0 auto;width:min(1280px,calc(100% - 32px));height:64px;z-index:40;color:var(--cream);
+  transition:translate 640ms var(--ease-soft),opacity 420ms ease,width 700ms var(--ease-soft)}
+/* Over the hero the bar spans the full width with no surface; past the hero it draws in to a narrower glass bar. */
+.site-header[data-scrolled="true"]{width:min(1120px,calc(100% - 32px))}
+.site-header[data-hidden="true"]{translate:0 -140%;opacity:0;pointer-events:none;
+  transition:translate 460ms var(--ease-glide),opacity 300ms ease}
+/* Light surface for legibility once the header is over page content (never over the hero photo). */
+.site-header::before{content:"";position:absolute;inset:-6px -8px -6px -22px;border-radius:38px;
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
+  backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.26),inset 0 1px 0 rgba(255,255,255,.35),0 10px 30px rgba(12,2,24,.12);
+  opacity:0;transition:background 400ms ease,box-shadow 400ms ease,opacity 400ms ease}
+/* Over page content the glass turns light, still translucent, so the text stays readable. */
+.site-header[data-tone="solid"]{color:var(--ink)}
+.site-header[data-tone="solid"]::before{opacity:1;background:linear-gradient(180deg,rgba(253,249,241,.72),rgba(246,239,226,.58));
+  backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),inset 0 1px 0 rgba(255,255,255,.9),0 14px 36px rgba(28,7,49,.12)}
+.dock-logo{position:absolute;left:0;top:15px;width:118px;height:34px;display:block}
+.dock-logo img{position:absolute;left:0;top:0;width:111px;height:34px;transition:opacity 300ms ease}
+.dock-logo .dark{opacity:0}
+[data-tone="solid"] .dock-logo .dark{opacity:1}[data-tone="solid"] .dock-logo .light{opacity:0}
+.dock-nav{position:absolute;left:50%;top:14px;display:flex;gap:6px;translate:-50% 0}
+.dock-nav a{display:block;height:37px;padding:10px 16px 0;border-radius:18.5px;color:inherit;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.01em;white-space:nowrap;line-height:17px;transition:background-color 300ms var(--ease-soft)}
+.dock-nav a:hover{background:rgba(255,255,255,.14)}
+.dock-nav a[aria-current]{background:rgba(255,255,255,.2)}
+[data-tone="solid"] .dock-nav a:hover{background:rgba(36,2,67,.06)}
+[data-tone="solid"] .dock-nav a[aria-current]{background:rgba(36,2,67,.09)}
+.dock-actions{position:absolute;right:0;top:10px;display:flex;gap:10px}
+/* Currency: same pill as Account, with a small menu. */
+.currency{position:relative}
+.cur-btn{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px 0 18px;border:1px solid rgba(255,255,255,.5);border-radius:22px;background:transparent;color:inherit;font:600 14px var(--font);letter-spacing:.02em;cursor:pointer;transition:border-color 300ms,background-color 300ms}
+.cur-btn svg{width:16px;height:16px;transition:transform 300ms var(--ease-soft)}
+.cur-btn:hover{background:rgba(255,255,255,.12)}
+[data-open="true"] .cur-btn svg{transform:rotate(180deg)}
+[data-tone="solid"] .cur-btn{border-color:var(--hair)}
+[data-tone="solid"] .cur-btn:hover{background:rgba(36,2,67,.05)}
+.cur-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:200px;padding:6px;border-radius:18px;background:#fff;box-shadow:0 18px 44px rgba(28,7,49,.18),0 0 0 1px var(--hair);
+  opacity:0;translate:0 -6px;visibility:hidden;transition:opacity 200ms ease,translate 260ms var(--ease-soft),visibility 0s linear 260ms}
+[data-open="true"] .cur-menu{opacity:1;translate:0 0;visibility:visible;transition:opacity 200ms ease,translate 260ms var(--ease-soft)}
+.cur-menu button{display:flex;align-items:baseline;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 14px var(--font);text-align:left;cursor:pointer}
+.cur-menu button b{width:36px;font-weight:700;letter-spacing:.02em}
+.cur-menu button span{color:var(--text-2);font-size:13px}
+.cur-menu button:hover{background:var(--plum-50)}
+.cur-menu button[aria-checked="true"]{background:var(--plum-50)}
+.cur-menu button[aria-checked="true"] b{color:var(--purple)}
+.lang{position:relative;display:flex;width:128px;height:44px;border:1px solid rgba(255,255,255,.5);border-radius:22px;padding:3px;transition:border-color 300ms}
+.lang span{display:grid;place-items:center;width:60px;height:36px;border-radius:18px;font-weight:700}
+.lang .on{background:var(--cream);color:var(--plum);font-size:13px;letter-spacing:.08em}
+.lang .ar{font-family:"Noto Sans Arabic",var(--font);font-size:14px}
+[data-tone="solid"] .lang{border-color:var(--hair)}
+[data-tone="solid"] .lang .on{background:var(--ink);color:var(--paper)}
+.account{width:96px;height:44px;border:1px solid rgba(255,255,255,.5);border-radius:22px;background:transparent;color:inherit;font:600 14px var(--font);cursor:pointer;transition:border-color 300ms}
+[data-tone="solid"] .account{border-color:var(--hair)}
+
+/* ---------- Floating search, bottom of the viewport ---------- */
+.float-search{position:fixed;left:0;right:0;margin:0 auto;bottom:20px;width:min(1140px,calc(100% - 24px));z-index:50;
+  padding:8px 8px 6px;border-radius:30px;background:var(--glass-bg);border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 14px 40px rgba(28,7,49,.16),0 1px 3px rgba(28,7,49,.08),inset 0 1px 0 rgba(255,255,245,.85);
+  backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);
+  transition:translate 560ms var(--ease-soft),opacity 380ms var(--ease-soft),visibility 0s linear 0s}
+.float-search[data-visible="false"]{translate:0 calc(100% + 28px);opacity:0;visibility:hidden;pointer-events:none;
+  transition:translate 420ms var(--ease-glide),opacity 260ms ease,visibility 0s linear 420ms}
+.float-row{display:flex;align-items:stretch;gap:4px;height:64px;background:#fff;border-radius:24px;padding:4px}
+.seg{position:relative;flex:1 1 0;display:flex;align-items:center;gap:14px;padding:0 22px;border:0;background:transparent;border-radius:20px;text-align:left;font-family:var(--font);color:var(--ink);cursor:pointer;min-width:0}
+.seg.wide{flex:1.15 1 0}.seg.party{flex:1.4 1 0}
+.seg + .seg::before{content:"";position:absolute;left:-3px;top:14px;bottom:14px;width:1px;background:rgba(36,2,67,.14)}
+.seg:hover{background:rgba(36,2,67,.05)}
+.seg svg{flex:none;width:20px;height:20px;color:var(--purple)}
+.seg .t{display:grid;gap:3px;min-width:0}
+.seg small{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.seg span{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg span.ph{color:#8d8596;font-weight:500}
+/* "Describe a stay": the same quiet secondary button the site's floating bar carries. */
+.describe{display:inline-flex;align-items:center;gap:8px;flex:none;padding:0 18px;border:1px solid rgba(36,2,67,.12);border-radius:20px;background:rgba(244,240,250,.7);color:var(--plum-500);font:700 14px var(--font);cursor:pointer;transition:background 300ms var(--ease-soft),border-color 300ms var(--ease-soft)}
+.describe:hover{background:#fff;border-color:rgba(69,6,126,.3)}
+.describe svg{width:18px;height:18px}
+.submit{display:inline-flex;align-items:center;gap:10px;flex:none;padding:0 28px;border:0;border-radius:20px;background:linear-gradient(135deg,var(--plum-500),var(--plum-600));color:var(--paper);font:700 15px var(--font);cursor:pointer}
+.submit svg{width:18px;height:18px}
+.float-caption{display:flex;justify-content:center;align-items:center;gap:12px;padding:8px 0 3px;font-size:13px;color:var(--text-2)}
+.float-caption i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6}
+
+/* "Describe a stay" sits in the corner only while the hero search is on screen. */
+.chip{position:fixed;right:max(16px,calc(50vw - 640px));bottom:28px;z-index:45;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 19px;border:0;border-radius:24px;
+  background:rgba(255,255,255,.92);box-shadow:0 10px 30px rgba(28,7,49,.16);backdrop-filter:blur(18px);font:600 14px var(--font);color:var(--ink);cursor:pointer;
+  transition:opacity 300ms ease,transform 400ms var(--ease-soft)}
+.chip svg{width:18px;height:18px;color:var(--purple)}
+.chip[data-visible="false"]{opacity:0;transform:translateY(12px);pointer-events:none}
+
+/* ================= Why Estaie · one apartment, four demonstrations ================= */
+.why{position:relative;background:var(--paper);padding:96px 0;overflow:hidden}
+.why-inner{width:1280px;margin:0 auto}
+/* Two columns across the whole section: intro and selector on the left, the apartment on the right. */
+.xp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,680px);grid-template-rows:auto auto;column-gap:56px;row-gap:32px;align-items:stretch}
+/* The intro sits above the selector; the photo spans exactly the four feature rows. */
+.xp-side{display:contents}
+.why-head{margin:0;grid-column:1;grid-row:1}
+.feats{grid-column:1;grid-row:2}
+.scene{grid-column:2;grid-row:2}
+.kicker{display:flex;align-items:center;gap:14px;margin:0;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.why h2{margin:20px 0 0;font:300 46px/1.08 var(--display);letter-spacing:-.018em;color:var(--plum)}
+.why h2 em{font-style:normal;color:var(--purple)}
+
+/* Feature selector: stays still while the scene changes. */
+.feats{display:flex;flex-direction:column;gap:0;margin-left:-14px}
+.feats .feat{flex:1 1 0;align-content:center;padding-top:16px;padding-bottom:16px}
+.feats .feat:not([aria-selected="true"]){border-color:rgba(36,2,67,.07)}
+.feat + .feat{margin-top:4px}
+.feat{position:relative;display:grid;grid-template-columns:40px 1fr;gap:2px 14px;align-items:center;width:100%;padding:14px 16px 14px 14px;border:1px solid transparent;border-radius:18px;background:transparent;text-align:left;font-family:var(--font);color:var(--ink);cursor:pointer;
+  transition:background-color 320ms var(--ease-soft),border-color 320ms var(--ease-soft),box-shadow 320ms var(--ease-soft),opacity 480ms var(--ease-soft),transform 480ms var(--ease-soft)}
+.feat::before{content:"";position:absolute;left:-1px;top:16px;bottom:16px;width:2px;border-radius:2px;background:var(--purple);transform:scaleY(0);transition:transform 380ms var(--ease-soft)}
+.feat .ic{grid-row:span 2;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--plum-50);color:var(--purple);transition:background-color 320ms,color 320ms}
+.feat .ic svg{width:20px;height:20px}
+.feat b{font-size:16.5px;font-weight:600;line-height:1.25}
+.feat p{margin:0;font-size:13.5px;line-height:1.4;color:var(--text-2)}
+.feat:hover{background:rgba(244,240,250,.55)}
+.feat[aria-selected="true"]{background:var(--plum-50);border-color:rgba(138,62,191,.18)}
+.feat[aria-selected="true"]::before{transform:scaleY(1)}
+.feat[aria-selected="true"] .ic{background:var(--purple);color:#fff}
+.feat:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
+
+/* Scene. Every layer is placed in percentages of the 1600 × 1172 photograph, so it stays registered at any size. */
+.scene{position:relative;margin:0;border-radius:24px;overflow:hidden;background:#e9e1d4;aspect-ratio:1600/1030;isolation:isolate;box-shadow:0 20px 50px rgba(36,2,67,.1)}
+.room{position:absolute;left:0;top:-2%;width:100%;aspect-ratio:1600/1172;transform-origin:45% 40%;transition:transform 1300ms var(--ease-soft)}
+.room > *{position:absolute;pointer-events:none}
+.room .base{inset:0;width:100%;height:100%;display:block}
+.tod{inset:0;opacity:0;transition:opacity 1600ms var(--ease-glide)}
+.tod-summer{background:radial-gradient(60% 70% at 45% 35%,rgba(255,214,150,.26),rgba(255,214,150,0) 70%);mix-blend-mode:soft-light}
+.tod-winter{background:linear-gradient(180deg,rgba(176,196,232,.24),rgba(150,168,210,.16));mix-blend-mode:multiply}
+.tod-autumn{background:radial-gradient(70% 80% at 45% 35%,rgba(240,170,90,.3),rgba(240,170,90,.08) 75%);mix-blend-mode:soft-light}
+.tod-spring{background:radial-gradient(60% 70% at 45% 35%,rgba(236,248,236,.22),rgba(236,248,236,0) 70%);mix-blend-mode:soft-light}
+.win{left:35%;top:5.119%;width:21.25%;height:69.966%;opacity:0;transition:opacity 1600ms var(--ease-glide)}
+.win img{width:100%;height:100%;display:block}
+.glass{left:37.6%;top:8.36%;width:15.6%;height:60.6%;overflow:hidden;container-type:size}
+.snow{position:absolute;inset:0;opacity:0;transition:opacity 1200ms ease}
+.snow i{position:absolute;top:-4%;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(255,255,255,.8);animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(var(--dx,8px),110cqh,0)}}
+.beam{left:28%;top:30%;width:42%;height:70%;background:linear-gradient(160deg,rgba(255,236,196,.55),rgba(255,236,196,0) 70%);clip-path:polygon(32% 0,58% 0,100% 100%,18% 100%);mix-blend-mode:screen;filter:blur(10px);opacity:0;transition:opacity 1600ms var(--ease-glide)}
+/* Interior light: shared by Dusk, Night and Move-in ready. */
+.glow{border-radius:50%;opacity:0;transition:opacity 900ms ease;mix-blend-mode:screen}
+.glow.down1{left:8%;top:-16%;width:36%;height:48%;background:radial-gradient(closest-side,rgba(255,206,150,.6),rgba(255,206,150,0))}
+.glow.down2{left:60%;top:-16%;width:36%;height:48%;background:radial-gradient(closest-side,rgba(255,206,150,.55),rgba(255,206,150,0))}
+.glow.c1,.glow.c2{width:3.2%;height:4.4%;background:radial-gradient(closest-side,rgba(255,196,110,.95),rgba(255,170,80,0))}
+.glow.c1{left:6.34%;top:43.2%;animation:flicker 2.6s ease-in-out infinite}
+.glow.c2{left:9.46%;top:44.67%;animation:flicker 2.2s ease-in-out .4s infinite}
+@keyframes flicker{50%{transform:scale(.88)}}
+.warm{inset:0;background:radial-gradient(70% 60% at 30% 45%,rgba(255,200,140,.2),rgba(255,200,140,0));mix-blend-mode:soft-light;opacity:0;transition:opacity 1400ms ease}
+/* Move-in ready */
+.dim{inset:0;background:linear-gradient(180deg,rgba(40,30,52,.6),rgba(30,22,40,.66));mix-blend-mode:multiply;filter:saturate(.6);opacity:0;transition:opacity 1300ms var(--ease-glide)}
+.curtain{top:7.6%;height:61.5%;width:9.4%;background:url(img/curtain.jpg) center/100% 100%;box-shadow:0 0 18px rgba(60,40,20,.18);transform:scaleX(.08);opacity:0;transition:transform 1300ms var(--ease-glide),opacity 500ms ease}
+.curtain.cl{left:37.1%;transform-origin:0 50%}
+.curtain.cr{left:44.8%;transform-origin:100% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Floating layers sit outside the zoomed room, so they stay crisp and level. */
+.hud{position:absolute;inset:0;pointer-events:none}
+.hud > *{pointer-events:none}
+.scene[data-feature="flexible"] .tod-ctrl,.scene[data-feature="pricing"] .price,.scene[data-feature="support"] .care{pointer-events:auto}
+.glassy{background:rgba(253,249,241,.92);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(255,255,255,.7);box-shadow:0 18px 44px rgba(28,7,49,.18)}
+.tod-ctrl{position:absolute;left:18px;top:18px;display:flex;gap:2px;padding:4px;border-radius:999px;opacity:0;transform:translateY(-6px);visibility:hidden;transition:opacity 380ms var(--ease-soft),transform 480ms var(--ease-soft),visibility 0s linear 480ms}
+.tod-ctrl button{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink);font:600 13px var(--font);cursor:pointer;transition:background-color 280ms,color 280ms}
+.tod-ctrl button svg{width:15px;height:15px}
+.tod-ctrl button:hover{background:rgba(36,2,67,.06)}
+.tod-ctrl button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.tod-ctrl button:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.tag{position:absolute;left:18px;bottom:18px;display:inline-flex;align-items:center;gap:10px;margin:0;padding:10px 16px 10px 12px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--ink);opacity:0;transform:translateY(8px);transition:opacity 420ms var(--ease-soft),transform 520ms var(--ease-soft)}
+.tag .tick{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--purple);color:#fff}
+.tag .tick svg{width:13px;height:13px}
+.live{position:relative;flex:none;width:8px;height:8px;border-radius:50%;background:#2f9e6a}
+.live::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid #2f9e6a;animation:ping 2s var(--ease-soft) infinite}
+@keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+
+.price{position:absolute;left:4%;top:6%;width:min(318px,42%);padding:18px 20px 14px;border-radius:20px;color:var(--ink);opacity:0;transform:translateY(12px) scale(.985);transition:opacity 460ms var(--ease-soft),transform 600ms var(--ease-soft)}
+.price .eyebrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 10px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
+.price .badge{padding:3px 8px;border-radius:999px;background:var(--plum-50);color:var(--text-2);letter-spacing:.06em}
+.price ul{list-style:none;margin:0;padding:0}
+.price li{display:grid;grid-template-columns:1fr auto;gap:1px 12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--hair);font-size:13.5px;opacity:0;transform:translateY(6px);transition:opacity 360ms ease,transform 440ms var(--ease-soft)}
+.price li span{color:var(--text-2)}
+.price li em{font-style:normal;font-weight:600;color:var(--ink);white-space:nowrap}
+.price li em.inc{color:var(--purple)}
+.price li small{grid-column:1/-1;font-size:11.5px;color:var(--text-2)}
+.price .total{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:12px 0 0;opacity:0;transition:opacity 400ms ease}
+.price .total span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2)}
+.price .total b{font:300 34px/1 var(--display);letter-spacing:-.01em;white-space:nowrap}
+.price .total b small{font:600 13px var(--font);color:var(--text-2);margin-right:4px}
+.price .note{margin:8px 0 0;font-size:11px;line-height:1.45;color:var(--text-2)}
+@media (min-width: 1024px){
+  .price{top:14px;left:16px;padding:14px 18px 12px}
+  .price .eyebrow{margin-bottom:6px}
+  .price li{padding:6px 0}
+  .price .total{margin-top:8px}
+  .price .total b{font-size:28px}
+  .tod-ctrl{top:14px;left:14px}
+  .tag{left:14px;bottom:14px}
+  .care{right:16px;bottom:14px}
+}
+.price .total .plus{display:block;margin-top:4px;font:500 12px var(--font);color:var(--text-2);text-align:right;text-transform:none;letter-spacing:0}
+.price .total > div{text-align:right}
+
+.care{position:absolute;right:4%;bottom:6%;width:min(310px,44%);padding:14px 14px 12px;border-radius:20px;opacity:0;transform:translateY(12px);transition:opacity 420ms var(--ease-soft),transform 560ms var(--ease-soft)}
+.care-head{display:flex;align-items:center;gap:10px;padding:0 2px 10px;border-bottom:1px solid var(--hair)}
+.care-head .mark{flex:none;display:block;width:30px;height:30px;border-radius:50%;background:var(--ink);overflow:hidden}
+.care-head .mark img{display:block;height:17px;width:auto;max-width:none;margin:6px 0 0 6.5px;clip-path:inset(0 70% 0 0)}
+.care-head b{display:block;font-size:13.5px;font-weight:700;line-height:1.2}
+.care-head small{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text-2)}
+.care-head small .live{width:6px;height:6px}
+.care-clock{margin-left:auto;width:26px;height:26px;color:var(--purple)}
+.care-clock svg{width:100%;height:100%;display:block}
+.care-clock .ch{transform-origin:12px 12px;transform-box:view-box;animation:spin 6s linear infinite}
+.care-clock .cm{transform-origin:12px 12px;transform-box:view-box;animation:spin 72s linear infinite}
+.msgs{display:grid;gap:8px;padding-top:10px}
+.msg{max-width:86%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.4;opacity:0;transform:translateY(6px);transition:opacity 320ms ease,transform 420ms var(--ease-soft)}
+.msg.guest{justify-self:end;background:var(--plum-50);color:var(--ink);border-bottom-right-radius:4px}
+.msg.reply{justify-self:start;background:#fff;color:var(--ink);border:1px solid var(--hair);border-bottom-left-radius:4px}
+.msg.reply .who{display:block;margin-bottom:2px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+.typing{justify-self:start;display:none;gap:4px;padding:11px 12px;border-radius:14px;background:#fff;border:1px solid var(--hair)}
+.typing i{width:5px;height:5px;border-radius:50%;background:var(--text-2);opacity:.5;animation:typing 1s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes typing{50%{opacity:1;transform:translateY(-2px)}}
+
+/* ---- State wiring ---- */
+.scene[data-tod="summer"] .tod-summer,.scene[data-tod="summer"] .win-summer,.scene[data-tod="summer"] .beam{opacity:1}
+.scene[data-tod="winter"] .tod-winter,.scene[data-tod="winter"] .win-winter{opacity:1}
+.scene[data-tod="winter"][data-feature="flexible"] .snow{opacity:1}
+.scene[data-tod="autumn"] .tod-autumn,.scene[data-tod="autumn"] .win-autumn{opacity:1}
+.scene[data-tod="autumn"] .beam{opacity:.7}
+.scene[data-tod="spring"] .tod-spring,.scene[data-tod="spring"] .win-spring{opacity:1}
+.scene[data-tod="spring"] .beam{opacity:.45}
+.scene[data-feature="flexible"] .tod-ctrl{opacity:1;transform:none;visibility:visible;transition:opacity 380ms var(--ease-soft),transform 480ms var(--ease-soft)}
+.scene[data-feature="flexible"] .room{transform:scale(1.03)}
+.scene[data-feature="pricing"] .room{transform:scale(1.025);transform-origin:20% 30%}
+.scene[data-feature="support"] .room{transform:scale(1.03);transform-origin:70% 60%}
+.scene[data-ready="dark"] .dim{opacity:1;transition-duration:200ms}
+.scene[data-ready="dark"] .curtain,.scene[data-ready="lights"] .curtain{opacity:1;transform:scaleX(1);transition-duration:0ms,200ms}
+.scene[data-ready="lights"] .dim{opacity:.6}
+.scene[data-ready="lights"] .glow,.scene[data-ready="open"] .glow{opacity:1}
+.scene[data-ready="open"] .curtain{opacity:1;transform:scaleX(.08)}
+.scene[data-ready="open"] .warm{opacity:1}
+.scene[data-feature="ready"][data-ready="done"] .glow{opacity:.55}
+.scene[data-feature="ready"][data-ready="done"] .warm{opacity:.8}
+.scene[data-feature="ready"][data-ready="done"] .tag-ready{opacity:1;transform:none}
+.scene[data-feature="pricing"] .price{opacity:1;transform:none}
+.scene[data-feature="pricing"] .price li{opacity:1;transform:none}
+.scene[data-feature="pricing"] .price li:nth-child(1){transition-delay:260ms}
+.scene[data-feature="pricing"] .price li:nth-child(2){transition-delay:380ms}
+.scene[data-feature="pricing"] .price li:nth-child(3){transition-delay:500ms}
+.scene[data-feature="pricing"] .price .total{opacity:1;transition-delay:640ms}
+.scene[data-feature="support"] .care{opacity:1;transform:none;transition-delay:250ms}
+.care[data-step="1"] .msg.guest,.care[data-step="2"] .msg.guest,.care[data-step="3"] .msg.guest{opacity:1;transform:none}
+.care[data-step="2"] .typing{display:flex}
+.care[data-step="3"] .msg.reply{opacity:1;transform:none}
+.care:not([data-step="3"]) .msg.reply{display:none}
+
+/* Entrance */
+.js .xp .feat{opacity:0;transform:translateX(-12px)}
+.js .xp .scene{opacity:0;transform:translateY(16px) scale(.99);transition:opacity 650ms var(--ease-soft),transform 850ms var(--ease-soft)}
+.xp.in .feat{opacity:1;transform:none}
+.xp.in .feat:nth-child(2){transition-delay:50ms}.xp.in .feat:nth-child(3){transition-delay:100ms}.xp.in .feat:nth-child(4){transition-delay:150ms}
+.xp.in .scene{opacity:1;transform:none}
+
+@media (max-width: 1320px){ .why-inner{width:auto;padding:0 40px} .xp{gap:40px} .why h2{font-size:clamp(34px,3.4vw,46px)} }
+@media (max-width: 1180px){
+  .xp{grid-template-columns:1fr;grid-template-rows:auto;row-gap:20px}
+  .why-head,.feats,.scene{grid-column:1;grid-row:auto}
+  .feats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .feat + .feat{margin-top:0}
+  .scene{height:auto;aspect-ratio:1600/1030}
+  .why{padding:72px 0 80px}
+  .why-inner{padding:0 20px;max-width:760px;margin:0 auto}
+  .xp{grid-template-columns:1fr;gap:20px}
+  .xp-side{gap:22px}
+  .feats{margin-left:0}
+  .why h2{font-size:clamp(34px,7.4vw,48px)}
+  .feats{grid-template-columns:1fr 1fr;gap:8px}
+  .feat{grid-template-columns:34px 1fr;padding:12px;border-color:var(--hair);min-height:64px}
+  .feat .ic{width:34px;height:34px;border-radius:10px}
+  .feat .ic svg{width:18px;height:18px}
+  .feat b{font-size:15px}
+  .feat p{font-size:12.5px}
+  .feat::before{left:12px;right:12px;top:auto;bottom:-1px;width:auto;height:2px;transform:scaleX(0)}
+  .feat[aria-selected="true"]::before{transform:scaleX(1)}
+  .scene{border-radius:18px}
+}
+@media (max-width: 600px){
+  .feat{grid-template-columns:1fr;align-content:start}
+  .feat .ic{grid-row:auto;margin-bottom:6px}
+  .feat p{display:none}
+  .scene{aspect-ratio:1/1.12}
+  .room{left:50%;top:0;height:100%;width:auto;translate:-47% 0}
+  .tod-ctrl{left:10px;right:10px;top:10px;justify-content:space-between}
+  .tod-ctrl button{flex:1;justify-content:center;padding:0 6px;height:34px;font-size:12px}
+  .tod-ctrl button svg{display:none}
+  .price{left:10px;right:10px;top:auto;bottom:10px;width:auto;padding:14px 16px 10px}
+  .price .total b{font-size:28px}
+  .price li:first-child small{display:none}
+  .price .note{font-size:10.5px}
+  .care{left:10px;right:10px;bottom:10px;width:auto}
+  .tag{left:10px;bottom:10px}
+}
+
+
+
+/* ---------- Monthly living: choose a length, see what it means, plan it ---------- */
+.ml{position:relative;overflow:hidden;color:var(--paper);background:radial-gradient(60% 70% at 72% 0%,rgba(98,24,150,.55),rgba(98,24,150,0) 70%),#170126;border-radius:0 0 48px 48px}
+.ml-inner{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:120px 0 128px;display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:88px;align-items:center}
+.ml-photo{position:relative;margin:0;aspect-ratio:520/640;border-radius:260px 260px 28px 28px;overflow:hidden;background:#2a0b40}
+.ml-photo img{width:100%;height:100%;object-fit:cover;object-position:40% 50%;display:block}
+.ml-chip{position:absolute;left:20px;right:20px;bottom:20px;display:grid;gap:10px;padding:14px 16px 16px;border-radius:18px;background:rgba(23,1,38,.62);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.14)}
+.ml-chip-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;color:rgba(253,249,241,.72)}
+.ml-chip-top b{font:400 22px/1.1 var(--display);color:var(--paper)}
+.ml-months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.ml-months i{position:relative;height:6px;border-radius:3px;background:rgba(253,249,241,.16);overflow:hidden}
+.ml-months i::after{content:"";position:absolute;inset:0;background:var(--lilac);transform-origin:left;transform:scaleX(var(--f,0));transition:transform 520ms var(--ease-soft);transition-delay:calc(var(--i) * 22ms)}
+.ml-kicker{display:flex;align-items:center;gap:14px;margin:0;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,249,241,.82)}
+.ml h2{margin:22px 0 0;font:300 clamp(44px,4.4vw,64px)/1.04 var(--display);letter-spacing:-.022em}
+.ml h2 em{font-style:normal;color:var(--lilac)}
+.ml-lede{max-width:540px;margin:22px 0 0;font-size:17px;line-height:1.6;color:rgba(253,249,241,.74)}
+.ml-lede b{display:block;margin-bottom:2px;font:400 22px/1.3 var(--display);color:var(--paper)}
+.ml-picker{margin-top:36px}
+.ml-label{margin:0 0 12px;font-size:12px;font-weight:600;letter-spacing:.06em;color:rgba(253,249,241,.6)}
+.ml-stops{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ml-stop{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:0 6px;padding:14px 16px 13px;border:1px solid rgba(253,249,241,.18);border-radius:16px;background:rgba(253,249,241,.04);color:var(--paper);text-align:left;font-family:var(--font);cursor:pointer;transition:background-color 260ms var(--ease-soft),border-color 260ms,color 260ms,transform 260ms var(--ease-soft)}
+.ml-stop b{font:400 28px/1 var(--display)}
+.ml-stop small{font-size:12px;color:rgba(253,249,241,.6)}
+.ml-stop span{grid-column:1/-1;margin-top:6px;font-size:13px;font-weight:600;color:rgba(253,249,241,.82)}
+.ml-stop:hover{border-color:rgba(207,171,244,.5);background:rgba(207,171,244,.08)}
+.ml-stop[aria-checked="true"]{background:var(--lilac);border-color:var(--lilac);color:var(--ink)}
+.ml-stop[aria-checked="true"] small,.ml-stop[aria-checked="true"] span{color:rgba(36,2,67,.75)}
+.ml-stop:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.ml-bands{display:grid;grid-template-columns:1fr 3fr;gap:10px 16px;margin-top:14px}
+.ml-band{display:grid;gap:10px;font-size:12px;line-height:1.35;color:rgba(253,249,241,.5);transition:color 300ms}
+.ml-band.ext{white-space:nowrap}
+.ml-band i{height:3px;border-radius:2px;background:rgba(253,249,241,.16);transition:background-color 300ms}
+.ml[data-band="extended"] .ml-band.ext,.ml[data-band="monthly"] .ml-band.mon{color:rgba(253,249,241,.9)}
+.ml[data-band="extended"] .ml-band.ext i,.ml[data-band="monthly"] .ml-band.mon i{background:var(--lilac)}
+.ml-result{margin:18px 0 0;font-size:15px;color:rgba(253,249,241,.78)}
+.ml-result b{color:var(--paper);font-weight:600}
+.ml-incl{list-style:none;display:flex;flex-wrap:wrap;gap:10px 22px;margin:26px 0 0;padding:22px 0 0;border-top:1px solid rgba(253,249,241,.14)}
+.ml-incl li{display:flex;align-items:center;gap:8px;font-size:14px;color:rgba(253,249,241,.82)}
+.ml-incl svg{width:16px;height:16px;fill:none;stroke:var(--lilac);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ml-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px;margin-top:32px}
+.ml-cta{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 30px;border:0;border-radius:28px;background:var(--paper);color:var(--ink);font:600 15.5px var(--font);cursor:pointer;transition:transform 300ms var(--ease-soft),box-shadow 300ms}
+.ml-cta:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.ml-cta:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+.ml-cta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ml-note{margin:0;font-size:12.5px;color:rgba(253,249,241,.55)}
+@media (max-width: 1023px){
+  .ml{border-radius:0 0 32px 32px}
+  .ml-inner{grid-template-columns:1fr;gap:40px;padding:80px 0 88px}
+  .ml-photo{order:2;aspect-ratio:4/3.4;border-radius:200px 200px 24px 24px}
+}
+@media (max-width: 600px){
+  .ml-inner{width:calc(100% - 40px)}
+  .ml-stops{grid-template-columns:1fr 1fr}
+  .ml-bands{grid-template-columns:1fr;gap:10px}
+  .ml-photo{aspect-ratio:4/4.4;border-radius:999px 999px 22px 22px}
+}
+@media (prefers-reduced-motion: reduce){ .ml-months i::after,.ml-stop{transition:none} }
+/* ---------- Final call to action: one action, no search ---------- */
+.final{position:relative;overflow:hidden;min-height:720px;display:flex;align-items:center;color:var(--paper);background:#1c0731}
+.final-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.final::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(36,2,67,.78) 0%,rgba(36,2,67,.5) 52%,rgba(36,2,67,.3) 100%),linear-gradient(180deg,rgba(28,7,49,0) 55%,rgba(28,7,49,.55) 100%)}
+.final-inner{position:relative;z-index:2;width:min(1280px,calc(100% - 48px));margin:0 auto;padding:120px 0}
+.final h2{margin:0;font:300 clamp(48px,7.2vw,104px)/.98 var(--display);letter-spacing:-.025em}
+.final h2 em{font-style:normal;color:var(--lilac)}
+.final p{max-width:520px;margin:28px 0 0;font-size:18px;line-height:1.7;color:rgba(253,249,241,.86)}
+.final-cta{display:inline-flex;align-items:center;gap:10px;margin-top:36px;height:58px;padding:0 32px;border-radius:29px;background:#fff;color:var(--ink);box-shadow:0 14px 34px rgba(18,1,31,.28);font:600 16px var(--font);letter-spacing:.01em;text-decoration:none;transition:transform 300ms var(--ease-soft),filter 300ms}
+.final-cta:hover{transform:translateY(-1px);background:var(--plum-50)}
+.final-cta:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.final-cta svg{width:18px;height:18px}
+@media (max-width: 760px){.final{min-height:560px}.final-inner{padding:88px 0}.final p{font-size:16px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Review aid, off by default: press D to show the scroll state. */
+.debug{position:fixed;left:16px;top:50%;z-index:60;padding:10px 12px;border-radius:12px;background:rgba(13,4,23,.82);color:#fff;font:500 12px/1.6 ui-monospace,monospace;display:none;white-space:pre}
+.debug.on{display:block}
+
+/* ---------- Header and floating search on narrower screens ---------- */
+@media (max-width: 1100px){
+  .dock-nav{display:none}
+  .float-caption span:nth-of-type(n+3),.float-caption i:nth-of-type(n+2){display:none}
+  .describe span{display:none}.describe{width:52px;padding:0;justify-content:center}
+}
+@media (max-width: 760px){
+  .site-header{top:12px}
+  .lang,.account{display:none}
+  #float .seg.party,#float .seg.len,.float-caption{display:none}
+  #float .submit{padding:0 18px}#float .submit span{display:none}
+  .hs .seg + .seg::before{display:none}
+  .hs .seg + .seg{border-top:1px solid rgba(36,2,67,.1)}
+  .chip{bottom:16px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .site-header,.site-header[data-hidden="true"]{translate:none;transition:opacity 120ms linear}
+  .float-search,.float-search[data-visible="false"]{translate:none;transition:opacity 120ms linear,visibility 0s linear 120ms}
+  .float-search[data-visible="true"]{transition:opacity 120ms linear}
+  .chip{transition:opacity 120ms linear}.chip[data-visible="false"]{transform:none}
+  .js .xp .feat,.js .xp .scene{opacity:1;transform:none;transition:none}
+  .room{transition:none}
+  .tod,.win,.beam,.dim,.curtain,.glow,.warm,.price,.price li,.price .total,.tag,.tod-ctrl,.care,.msg,.feat,.feat::before{transition-duration:160ms!important;transition-delay:0ms!important}
+  .scene .room,.scene[data-feature] .room{transform:none}
+  .snow,.live::after{display:none}
+  .glow.c1,.glow.c2,.typing i,.care-clock line{animation:none}
+}
+
+/* =================== Shared =================== */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kicker.light{color:rgba(253,249,241,.82)}
+.h-xl{margin:20px 0 0;font:300 clamp(40px,4.6vw,64px)/1.04 var(--display);letter-spacing:-.022em;color:var(--plum)}
+.h-xl em,.h-lg em{font-style:normal;color:var(--purple)}
+.h-lg{margin:20px 0 0;font:300 clamp(34px,3.6vw,52px)/1.06 var(--display);letter-spacing:-.02em;color:var(--plum)}
+svg{flex:none}
+.seg svg,.submit svg,.describe svg,.arrow svg,.btn-sun svg,.btn-cream svg,.btn-line svg,.city-go svg,.pop svg,.ft svg,.chip svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.describe svg,.chip svg{fill:currentColor;stroke:none}
+.btn-sun,.btn-cream,.btn-line{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:27px;font:600 15px var(--font);letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:transform 240ms var(--ease-soft),box-shadow 240ms var(--ease-soft),background-color 240ms,border-color 240ms,filter 240ms}
+.btn-sun{border:0;background:var(--purple);color:var(--cta-ink)}
+.btn-cream{border:0;background:var(--paper);color:var(--ink)}
+.btn-line{height:46px;padding:0 22px;border:1px solid rgba(36,2,67,.22);background:transparent;color:var(--ink);font-size:14px}
+.btn-sun svg,.btn-cream svg{width:18px;height:18px;transition:transform 240ms var(--ease-soft)}
+.btn-sun:hover,.btn-cream:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(36,2,67,.22)}
+.btn-sun:hover svg,.btn-cream:hover svg{transform:translateX(3px)}
+.btn-line:hover{border-color:var(--ink);background:rgba(36,2,67,.04)}
+.btn-sun:active,.btn-cream:active,.btn-line:active,.arrow:active,.submit:active{transform:scale(.97)}
+.btn-sun:focus-visible,.btn-cream:focus-visible,.btn-line:focus-visible,.arrow:focus-visible,.seg:focus-visible,.submit:focus-visible,.city:focus-visible,.chip-f:focus-visible,.mv-btn:focus-visible,.fq-item button:focus-visible,.ft a:focus-visible,.ft button:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
+.arrow{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid rgba(36,2,67,.22);background:transparent;color:var(--ink);cursor:pointer;transition:background-color 240ms,border-color 240ms,opacity 240ms,transform 240ms var(--ease-soft)}
+.arrow svg{width:18px;height:18px}
+.arrow:hover:not(:disabled){background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.arrow:disabled{opacity:.35;cursor:default}
+.arrow.light{border-color:rgba(253,249,241,.3);color:var(--paper)}
+.arrow.light:hover:not(:disabled){background:var(--paper);color:var(--ink)}
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity 700ms var(--ease-soft),transform 800ms var(--ease-soft)}
+[data-reveal].in{opacity:1;transform:none}
+.no-js [data-reveal]{opacity:1;transform:none}
+.spin{display:none;width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:rot 700ms linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.is-busy .spin{display:inline-block}.is-busy .ic{display:none}
+
+/* =================== Hero =================== */
+.hero{position:relative;min-height:max(720px,100svh);max-height:980px;display:flex;align-items:flex-end;overflow:hidden;color:var(--paper);background:#2a1638}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:heroIn 2200ms var(--ease-soft) forwards}
+@keyframes heroIn{to{transform:scale(1)}}
+.hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,7,49,.42) 0%,rgba(28,7,49,.18) 34%,rgba(28,7,49,.55) 72%,rgba(28,7,49,.82) 100%)}
+.hero-inner{position:relative;z-index:1;width:min(1280px,calc(100% - 48px));margin:0 auto;padding:180px 0 64px}
+.hero-title{margin:0;font:300 clamp(52px,7.6vw,112px)/.98 var(--display);letter-spacing:-.03em}
+.hero-title em,.split em{font-style:normal}
+@keyframes word{to{opacity:1;transform:none}}
+.hero-lede{max-width:470px;margin:24px 0 0;font-size:17px;line-height:1.6;color:rgba(253,249,241,.86);transition-delay:420ms}
+.hs{margin-top:40px;transition-delay:520ms}
+.hs-row{display:flex;align-items:stretch;gap:4px;height:84px;padding:6px;border-radius:30px;background:rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(12,2,24,.35),0 2px 8px rgba(12,2,24,.1);backdrop-filter:blur(20px)}
+.hs .seg{padding:0 26px}
+.hs .seg small{font-size:11.5px}
+.hs .seg span{font-size:16px}
+.hs .submit{border-radius:24px;padding:0 32px;font-size:16px}
+.hs-error{margin:12px 4px 0;font-size:14px;font-weight:600;color:#ffd7d2}
+.float-error{color:var(--status-error,#b42318);margin:6px 8px 2px;text-align:center}
+.seg.is-invalid small{color:#c0392b}
+.seg.is-invalid{box-shadow:inset 0 0 0 1.5px rgba(192,57,43,.55)}
+.seg[aria-expanded="true"]{background:#fff;box-shadow:0 2px 12px rgba(36,2,67,.12)}
+.hs .seg[aria-expanded="true"]{background:var(--plum-50)}
+.hero-proof{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:20px 0 0;padding:0 8px;font-size:14.5px;color:rgba(253,249,241,.86);transition-delay:620ms}
+.hero-proof li{display:flex;align-items:center;gap:22px}
+.hero-proof li + li::before{content:"";width:4px;height:4px;margin-left:-22px;border-radius:50%;background:currentColor;opacity:.6}
+.hero-scroll{position:absolute;right:36px;bottom:110px;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;color:rgba(253,249,241,.75);font-size:10.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;text-decoration:none}
+.hero-scroll span{writing-mode:vertical-rl}
+.hero-scroll i{position:relative;width:1px;height:64px;background:rgba(253,249,241,.25);overflow:hidden}
+.hero-scroll i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--paper);animation:drip 2.2s var(--ease-glide) infinite}
+@keyframes drip{to{top:100%}}
+.hero-scroll:hover{color:var(--paper)}
+
+/* =================== Search popover =================== */
+.pop{position:fixed;z-index:70;width:380px;max-width:calc(100vw - 24px);max-height:min(520px,calc(100vh - 120px));overflow:auto;padding:18px;border-radius:22px;background:#fff;box-shadow:0 24px 60px rgba(28,7,49,.24),0 0 0 1px rgba(36,2,67,.06);opacity:0;transform:translateY(8px) scale(.98);transition:opacity 200ms ease,transform 260ms var(--ease-soft)}
+.pop.open{opacity:1;transform:none}
+.pop.up{transform-origin:bottom}
+.pop-panel{display:none}
+.pop[data-panel="where"] [data-for="where"],.pop[data-panel="party"] [data-for="party"],.pop[data-panel="length"] [data-for="length"],.pop[data-panel="describe"] [data-for="describe"]{display:block}
+.pop-field{display:flex;align-items:center;gap:10px;height:48px;padding:0 14px;border:1px solid var(--hair);border-radius:14px;transition:border-color 200ms,box-shadow 200ms}
+.pop-field:focus-within{border-color:var(--purple);box-shadow:0 0 0 3px rgba(138,62,191,.15)}
+.pop-field svg{width:18px;height:18px;color:var(--text-2)}
+.pop-field input{flex:1;border:0;outline:0;font:500 15px var(--font);color:var(--ink);background:transparent}
+.pop-k{margin:16px 0 8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);display:block}
+.pop-panel > .pop-k:first-child{margin-top:2px}
+.pop-cities{list-style:none;margin:0;padding:0}
+.pop-cities li{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:12px;cursor:pointer;transition:background-color 160ms}
+.pop-cities li[aria-selected="true"],.pop-cities li:hover,.pop-cities li.kb{background:var(--plum-50)}
+.pop-cities .pin{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--plum-50);color:var(--purple)}
+.pop-cities .pin svg{width:17px;height:17px}
+.pop-cities b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.pop-cities small{font-size:12.5px;color:var(--text-2)}
+.pop-cities .tagx{margin-left:auto;padding:3px 8px;border-radius:999px;background:var(--lavender);color:var(--plum-500);font-size:11px;font-weight:700}
+.pop-empty{margin:8px 4px;font-size:14px;color:var(--text-2)}
+.pop-types{display:flex;flex-wrap:wrap;gap:6px}
+.pop-types button{height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--hair);background:#fff;color:var(--ink);font:600 13px var(--font);cursor:pointer;transition:all 180ms}
+.pop-types button[aria-checked="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pop-step{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;font-weight:600;color:var(--ink)}
+.pop-step:first-of-type{margin-top:10px;border-top:1px solid var(--hair)}
+.pop-step div{display:flex;align-items:center;gap:12px}
+.pop-step button{width:34px;height:34px;border-radius:50%;border:1px solid rgba(36,2,67,.25);background:#fff;font-size:18px;line-height:1;color:var(--ink);cursor:pointer}
+.pop-step button:disabled{opacity:.3;cursor:default}
+.pop-step output{min-width:18px;text-align:center}
+.pop-next{display:inline-flex;align-items:center;gap:8px;width:100%;justify-content:center;height:46px;margin-top:16px;border:0;border-radius:14px;background:var(--ink);color:var(--paper);font:600 14.5px var(--font);cursor:pointer;transition:filter 200ms}
+.pop-next:hover{filter:brightness(1.2)}
+.pop-next svg{width:16px;height:16px}
+.pop-note{margin:0 0 12px;font-size:13px;line-height:1.5;color:var(--text-2)}
+.pop-presets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pop-presets button{display:block;padding:12px 12px 10px;border-radius:14px;border:1px solid var(--hair);background:#fff;text-align:left;font:500 13px var(--font);color:var(--ink);cursor:pointer;transition:all 180ms}
+.pop-presets b{font:400 24px/1 var(--display)}
+.pop-presets small{display:block;margin-top:4px;font-size:11.5px;color:var(--text-2)}
+.pop-presets button:hover{border-color:var(--purple)}
+.pop-presets button[aria-checked="true"]{background:var(--lilac);border-color:var(--lilac)}
+.pop-dates{margin-top:14px;border-top:1px solid var(--hair);padding-top:12px}
+.pop-sum{margin:10px 2px 0;font-size:13px;color:var(--text-2)}.pop-sum b{color:var(--ink);font-weight:600}
+.pop-dates input:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px rgba(138,62,191,.15)}
+.pop-dates-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pop-dates label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--text-2)}
+.pop-dates input{height:42px;padding:0 10px;border:1px solid var(--hair);border-radius:12px;font:500 14px var(--font);color:var(--ink)}
+.pop-err{margin:10px 2px 0;font-size:13px;font-weight:600;color:#b42318}
+.pop-err.ok{color:var(--text-2);font-weight:500}
+.pop textarea{width:100%;padding:12px 14px;border:1px solid var(--hair);border-radius:14px;font:500 14.5px/1.5 var(--font);color:var(--ink);resize:vertical}
+.pop textarea:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px rgba(138,62,191,.15)}
+
+/* =================== Explore =================== */
+.ex{background:#f3f1f6;padding:112px 0 96px;overflow:hidden}
+.ex-inner,.ds-inner,.rr-inner,.fq-inner{width:min(1280px,calc(100% - 48px));margin:0 auto}
+.ex-head,.ds-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:44px}
+.ex-ctrl{display:flex;align-items:center;gap:10px}
+.ex-results{margin:14px 0 0;font-size:15px;font-weight:600;color:var(--plum-500)}
+.ex-track,.ds-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:4px 0 24px;margin:0 -4px;cursor:grab}
+.ex-track::-webkit-scrollbar,.ds-track::-webkit-scrollbar{display:none}
+.ex-track.drag,.ds-track.drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.ex-track.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));overflow:visible;cursor:default}
+.stay{position:relative;flex:0 0 300px;scroll-snap-align:start;border-radius:22px;overflow:hidden;background:#1c0731;color:var(--paper);box-shadow:0 18px 40px rgba(36,2,67,.12);transition:transform 380ms var(--ease-soft),box-shadow 380ms var(--ease-soft);animation:cardIn 520ms var(--ease-soft) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}}
+.stay:hover{transform:translateY(-4px);box-shadow:0 26px 50px rgba(36,2,67,.2)}
+.stay-img{position:relative;height:330px;overflow:hidden}
+.stay-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms var(--ease-soft)}
+.stay:hover .stay-img img{transform:scale(1.05)}
+.stay-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,7,49,0) 40%,rgba(28,7,49,.88) 100%)}
+.stay-rep{position:absolute;left:12px;top:12px;z-index:1;padding:4px 10px;border-radius:999px;background:rgba(28,7,49,.55);backdrop-filter:blur(8px);font-size:11px;font-weight:600}
+.stay-txt{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
+.stay-txt small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,249,241,.75)}
+.stay-txt b{display:block;margin-top:6px;font:400 22px/1.15 var(--display)}
+.stay-txt span{display:block;margin-top:4px;font-size:13px;color:rgba(253,249,241,.8)}
+.stay-price{margin:0 10px 10px;padding:12px 14px;border-radius:14px;background:var(--paper);color:var(--ink)}
+.stay-price small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--plum-500)}
+.stay-price b{display:flex;align-items:baseline;gap:5px;margin-top:4px;font:400 26px/1 var(--display)}
+.stay-price b i{font:600 12px var(--font);font-style:normal;color:var(--text-2)}
+.stay-price span{display:block;margin-top:5px;font-size:12px;color:var(--text-2)}
+.ex-empty{padding:40px;border-radius:22px;background:#fff;border:1px dashed rgba(36,2,67,.2);color:var(--text-2);font-size:15px;line-height:1.6;max-width:720px}
+.ex-empty b{display:block;margin-bottom:6px;font:400 24px var(--display);color:var(--ink)}
+.ex-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 32px;margin-top:12px}
+.chips{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.chips-label{margin-right:6px;font-size:13px;color:var(--text-2)}
+.chip-f{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:19px;border:1px solid rgba(36,2,67,.18);background:#fff;font:600 13px var(--font);color:var(--ink);cursor:pointer;transition:all 200ms}
+.chip-f b{font-weight:500;color:var(--text-2)}
+.chip-f[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip-f:hover{border-color:var(--ink)}
+.ex-note{max-width:560px;margin:0;font-size:12.5px;line-height:1.5;color:var(--text-2)}
+
+/* =================== What's moving you =================== */
+.mv{position:relative;background:radial-gradient(60% 70% at 78% 50%,rgba(98,24,150,.4),rgba(98,24,150,0) 70%),#170126;color:var(--paper);overflow:hidden}
+.mv-inner{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:112px 0;display:grid;grid-template-columns:minmax(0,632px) minmax(0,490px);justify-content:space-between;align-items:center;gap:56px}
+.mv-title{margin:14px 0 36px;font:300 clamp(32px,3vw,40px)/1.15 var(--display);letter-spacing:-.01em}
+.mv-title em{font-style:normal;color:var(--lilac)}
+.mv-item{border-top:1px solid rgba(253,249,241,.14)}
+.mv-item:last-child{border-bottom:1px solid rgba(253,249,241,.14)}
+.mv-item h3{margin:0}
+.mv-btn{display:flex;align-items:center;gap:22px;width:100%;padding:16px 0;border:0;background:transparent;color:rgba(253,249,241,.38);text-align:left;cursor:pointer;transition:color 400ms var(--ease-soft)}
+.mv-btn:hover{color:rgba(253,249,241,.7)}
+.mv-btn[aria-expanded="true"]{color:var(--paper)}
+.mv-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(207,171,244,.07);border:1px solid rgba(207,171,244,.22);color:var(--lilac);opacity:.6;transition:all 400ms var(--ease-soft)}
+.mv-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mv-btn[aria-expanded="true"] .mv-ic{opacity:1;background:rgba(207,171,244,.16);border-color:rgba(207,171,244,.5)}
+.mv-name{font:300 clamp(34px,3.9vw,56px)/1.05 var(--display);letter-spacing:-.02em}
+.mv-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 520ms var(--ease-soft)}
+.mv-panel > div{overflow:hidden;padding-left:66px}
+.mv-item.open .mv-panel{grid-template-rows:1fr}
+.mv-panel p{max-width:420px;margin:0;font-size:15.5px;line-height:1.65;color:rgba(253,249,241,.78)}
+.mv-plan{margin:22px 0 26px;height:50px;background:var(--lavender);color:var(--ink)}
+.mv-media{display:grid;gap:22px}
+.mv-arch{position:relative;aspect-ratio:490/612;border-radius:245px 245px 26px 26px;overflow:hidden;background:#2a0b40}
+.mv-arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity 800ms var(--ease-soft),transform 1400ms var(--ease-soft)}
+.mv-arch img.on{opacity:1;transform:none}
+.mv-nav{display:flex;align-items:center;justify-content:space-between}
+.mv-dots{display:flex;gap:8px}
+.mv-dots button{width:6px;height:6px;padding:0;border:0;border-radius:3px;background:rgba(253,249,241,.3);cursor:pointer;transition:width 360ms var(--ease-soft),background-color 360ms}
+.mv-dots button[aria-selected="true"]{width:22px;background:var(--lilac)}
+.mv-dots button:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+
+/* =================== Real Rate =================== */
+.rr{background:var(--paper);padding:112px 0 96px}
+.rr-top{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:56px;align-items:center}
+.rr-lede{max-width:520px;margin:22px 0 0;font-size:17px;line-height:1.6;color:var(--text-2)}
+.rr-chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:24px 0 30px;padding:0}
+.rr-chips{gap:10px 26px}
+.rr-chips li{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)}
+.rr-chips li i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--plum-50)}
+.rr-chips li svg{width:13px;height:13px;fill:none;stroke:var(--purple);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.rr-cta{background:linear-gradient(180deg,#4a0f86,#2a0350);color:#fff;border-radius:16px}
+.rr-cta:hover{filter:brightness(1.15)}
+.rr-photo{margin:0;aspect-ratio:440/520;border-radius:220px 220px 24px 24px;overflow:hidden}
+.rr-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.rr-panel{position:relative;overflow:hidden;display:grid;grid-template-columns:300px 1fr;gap:0;align-items:center;margin-top:64px;padding:56px 50px 54px 78px;border-radius:32px;background:radial-gradient(60% 90% at 6% 0%,rgba(122,70,170,.45),rgba(122,70,170,0) 70%),radial-gradient(35% 60% at 100% 100%,rgba(122,70,170,.25),rgba(122,70,170,0) 70%),linear-gradient(160deg,#3a1260,#250742 60%,#2b0a4c);color:#fff}
+.rr-save{padding-right:40px;border-right:1px solid rgba(255,255,255,.14);min-height:220px;display:flex;flex-direction:column;justify-content:center}
+.rr-k{margin:0;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#cfabf4}
+.rr-big{margin:14px 0 10px;font:600 64px/1 var(--display);letter-spacing:-.02em}
+.rr-big small{font:400 19px var(--font);letter-spacing:0;color:#cfabf4}
+.rr-big b{font-weight:600;color:#fff}
+.rr-sub{margin:0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.75)}
+.rr-pill{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin:28px 0 0;height:38px;padding:0 16px;border-radius:19px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);font-size:13.5px;color:rgba(255,255,255,.88)}
+.rr-pill svg{width:14px;height:14px;fill:none;stroke:#cfabf4;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.rr-scale{position:relative;height:250px;margin-left:32px}
+.rr-track{position:absolute;left:0;right:0;bottom:56px;height:4px;border-radius:2px;background:rgba(207,171,244,.55)}
+.rr-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:2px;background:#9b4fe0;transition:width 900ms var(--ease-soft) 200ms}
+.rr-panel.in .rr-fill{width:calc((2400 - 2000) / 2400 * 100%)}
+.rr-ticks span{position:absolute;bottom:20px;left:calc((var(--v) - 2000) / 2400 * 100%);transform:translateX(-50%);font-size:13px;color:rgba(255,255,255,.65)}
+.rr-ticks span::before{content:"";position:absolute;left:50%;top:-14px;width:1px;height:8px;background:rgba(255,255,255,.3)}
+.rr-ticks span.on{font-weight:700;color:#fff}
+.rr-pin{position:absolute;bottom:50px;left:calc((var(--v) - 2000) / 2400 * 100%);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;opacity:0;translate:0 10px;transition:opacity 600ms var(--ease-soft),translate 700ms var(--ease-soft)}
+.rr-panel.in .rr-pin{opacity:1;translate:0 0}
+.rr-pin:nth-of-type(2){transition-delay:400ms}.rr-pin:nth-of-type(3){transition-delay:550ms}.rr-pin:nth-of-type(4){transition-delay:700ms}.rr-pin:nth-of-type(5){transition-delay:850ms}
+.rr-stem{width:1px;height:var(--h);background:rgba(255,255,255,.45)}
+.rr-dot{width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.15)}
+.rr-pin.est .rr-dot{width:24px;height:24px;margin-bottom:-4px;background:#9b4fe0;border:3px solid #fff;box-shadow:0 0 0 6px rgba(155,79,224,.3)}
+.rr-tag{position:relative;display:grid;justify-items:center;gap:2px;padding:12px 18px 10px;border-radius:14px;background:#f6ecff;color:var(--ink);box-shadow:0 14px 30px rgba(10,0,20,.35)}
+.rr-tag::after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#f6ecff;transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.rr-tag img{height:18px;width:auto}
+.rr-tag b{font:600 28px/1.1 var(--display)}
+.rr-lbl{display:grid;justify-items:start;gap:8px;margin-bottom:10px;transform:translateX(18px)}
+.rr-lbl b{font:400 30px/1 var(--display);letter-spacing:-.01em}
+.rr-brand{display:inline-flex;align-items:center;gap:10px;font-size:15px;color:rgba(255,255,255,.9);white-space:nowrap}
+.ic{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:8px;font:800 17px/1 var(--font);font-style:normal}
+.ic.ag{background:#fff;color:#2a2a2a}
+.ic.bk{background:#003b95;color:#fff;font-size:15px}
+.ic.ab{background:#fff;color:#ff385c}
+.rr-legend{display:none;flex-direction:column;gap:10px;list-style:none;margin:22px 0 0;padding:0;font-size:14px;color:rgba(255,255,255,.85)}
+.rr-legend li{display:flex;align-items:center;gap:10px}
+.rr-legend b{margin-left:auto;font:400 20px var(--display);color:#fff}
+.rr-legend .ic{width:26px;height:26px;font-size:14px}
+
+/* =================== Destinations =================== */
+.ds{background:var(--page);padding:112px 0 104px;overflow:hidden}
+.ds-lede{max-width:520px;margin:18px 0 0;font-size:16px;line-height:1.6;color:var(--text-2)}
+.city{position:relative;flex:0 0 340px;height:500px;scroll-snap-align:start;padding:0;border:0;border-radius:24px;overflow:hidden;background:#ddd;text-align:left;cursor:pointer;color:var(--paper);box-shadow:0 18px 40px rgba(36,2,67,.12);transition:transform 380ms var(--ease-soft),box-shadow 380ms var(--ease-soft)}
+.city:nth-child(even){height:460px;margin-top:40px}
+.city img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1000ms var(--ease-soft)}
+.city::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,7,49,0) 45%,rgba(28,7,49,.8) 100%)}
+.city:hover{transform:translateY(-4px);box-shadow:0 28px 54px rgba(36,2,67,.22)}
+.city:hover img{transform:scale(1.06)}
+.city-meta{position:absolute;left:22px;right:22px;bottom:22px;z-index:1;display:grid;gap:4px}
+.city-meta small{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.city-meta b{font:400 36px/1 var(--display)}
+.city-go{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;font-weight:600;opacity:0;transform:translateY(6px);transition:opacity 320ms,transform 420ms var(--ease-soft)}
+.city-go svg{width:16px;height:16px}
+.city:hover .city-go,.city:focus-visible .city-go{opacity:1;transform:none}
+.city-badge{position:absolute;left:16px;top:16px;z-index:1;padding:5px 12px;border-radius:999px;background:var(--lilac);color:var(--ink);font-size:12px;font-weight:700}
+
+/* =================== Estaiecare =================== */
+.cr{background:radial-gradient(50% 60% at 18% 12%,rgba(120,60,170,.45),rgba(120,60,170,0) 70%),#170126;color:var(--paper)}
+.cr-inner{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:140px 0 120px;display:grid;grid-template-columns:minmax(0,627px) minmax(0,500px);justify-content:space-between;align-items:center;gap:56px}
+.cr-title{margin:22px 0 0;font:300 clamp(44px,5vw,80px)/1.02 var(--display);letter-spacing:-.025em}
+.cr-title em{font-style:normal;color:var(--lilac)}
+.cr-lede{max-width:520px;margin:24px 0 28px;font-size:18px;line-height:1.65;color:rgba(253,249,241,.84)}
+.cr-pts{list-style:none;margin:48px 0 0;padding:0}
+.cr-pts li{display:grid;grid-template-columns:40px 230px 1fr;gap:18px;align-items:center;padding:22px 0;border-top:1px solid rgba(253,249,241,.14)}
+.cr-pts li:last-child{border-bottom:1px solid rgba(253,249,241,.14)}
+.cr-pts b{font:300 24px/1.2 var(--display)}
+.cr-pts span:last-child{font-size:14px;line-height:1.5;color:rgba(253,249,241,.72)}
+.cr-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:rgba(207,171,244,.16);border:1px solid rgba(207,171,244,.5);color:var(--lilac)}
+.cr-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cr-photo{margin:0;aspect-ratio:500/660;border-radius:250px 250px 26px 26px;overflow:hidden}
+.cr-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* =================== FAQ =================== */
+.fq{background:var(--paper);padding:112px 0}
+.fq-inner{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:72px;align-items:start}
+.fq-head .btn-line{margin-top:28px}
+.fq-item{border-top:1px solid rgba(36,2,67,.12)}
+.fq-item:last-child{border-bottom:1px solid rgba(36,2,67,.12)}
+.fq-item h3{margin:0}
+.fq-item button{display:flex;justify-content:space-between;align-items:center;gap:20px;width:100%;padding:24px 0;border:0;background:transparent;text-align:left;font:400 21px/1.3 var(--display);color:var(--ink);cursor:pointer}
+.fq-item button i{position:relative;flex:none;width:32px;height:32px;border-radius:50%;border:1px solid rgba(36,2,67,.2);transition:background-color 300ms,border-color 300ms}
+.fq-item button i::before,.fq-item button i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;margin:-.75px 0 0 -6px;background:var(--ink);transition:transform 360ms var(--ease-soft),background-color 300ms}
+.fq-item button i::after{transform:rotate(90deg)}
+.fq-item button[aria-expanded="true"] i{background:var(--ink);border-color:var(--ink)}
+.fq-item button[aria-expanded="true"] i::before,.fq-item button[aria-expanded="true"] i::after{background:var(--paper);transform:rotate(0)}
+.fq-item button:hover{color:var(--plum-500)}
+.fq-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 420ms var(--ease-soft)}
+.fq-panel > div{overflow:hidden}
+.fq-item.open .fq-panel{grid-template-rows:1fr}
+.fq-panel p{max-width:640px;margin:0 0 24px;font-size:15.5px;line-height:1.7;color:var(--text-2)}
+.fq-pending{font-style:italic}
+
+/* =================== Footer =================== */
+.ft{background:#12011f;color:rgba(253,249,241,.78)}
+.ft-inner{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:88px 0 40px}
+.ft-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px}
+.ft-brand p{max-width:300px;margin:18px 0 0;font:300 24px/1.3 var(--display);color:var(--paper)}
+.ft-cols{display:grid;grid-template-columns:repeat(4,minmax(110px,auto));gap:48px}
+.ft-cols h3{margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,249,241,.5)}
+.ft-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ft a,.ft-link{position:relative;padding:0;border:0;background:none;color:rgba(253,249,241,.82);font:500 14px var(--font);text-decoration:none;cursor:pointer;transition:color 200ms}
+.ft a:hover,.ft-link:hover{color:var(--paper)}
+.ft-cols a::after,.ft-link::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 300ms var(--ease-soft)}
+.ft-cols a:hover::after,.ft-link:hover::after{transform:scaleX(1)}
+a.ext::after{content:"↗";margin-left:4px;font-size:11px;opacity:.6}
+.ft-offices{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;padding-top:32px;border-top:1px solid rgba(253,249,241,.12)}
+.ft-offices address{font-style:normal;font-size:12.5px;line-height:1.6;color:rgba(253,249,241,.6)}
+.ft-offices b{display:block;margin-bottom:4px;font-size:13px;color:rgba(253,249,241,.88)}
+.ft-bottom{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;margin-top:40px;padding-top:24px;border-top:1px solid rgba(253,249,241,.12);font-size:12.5px}
+.ft-bottom p{margin:0}
+.ft-legal{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;margin:0;padding:0}
+.ft-legal a{font-size:12.5px;color:rgba(253,249,241,.6)}
+.ft-top-btn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;height:38px;padding:0 16px;border-radius:19px;border:1px solid rgba(253,249,241,.2);background:transparent;color:var(--paper);font:600 13px var(--font);cursor:pointer;transition:background-color 200ms}
+.ft-top-btn svg{width:15px;height:15px}
+.ft-top-btn:hover{background:rgba(253,249,241,.1)}
+.ft-fine{margin:24px 0 0;font-size:11.5px;line-height:1.6;color:rgba(253,249,241,.42)}
+
+/* =================== Dialogs and toast =================== */
+.dlg-back{position:fixed;inset:0;z-index:80;background:rgba(18,1,31,.45);backdrop-filter:blur(4px);opacity:0;transition:opacity 260ms ease}
+.dlg-back.open{opacity:1}
+.dlg{position:fixed;left:50%;top:50%;z-index:81;width:min(460px,calc(100vw - 32px));padding:30px;border-radius:26px;background:var(--paper);color:var(--ink);box-shadow:0 40px 90px rgba(18,1,31,.35);transform:translate(-50%,-46%) scale(.97);opacity:0;transition:opacity 260ms ease,transform 360ms var(--ease-soft)}
+.dlg.open{opacity:1;transform:translate(-50%,-50%)}
+.dlg h2{margin:14px 0 10px;font:300 30px/1.15 var(--display)}
+.dlg p{margin:0 0 12px;font-size:15px;line-height:1.6;color:var(--text-2)}
+.dlg-k{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink)!important}
+.dlg-mark{display:block;width:44px;height:44px;border-radius:50%;background:var(--ink);overflow:hidden}
+.dlg-mark img{display:block;height:24px;width:auto;max-width:none;margin:10px 0 0 10px;clip-path:inset(0 70% 0 0)}
+.dlg-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.dlg-actions .btn-sun{height:46px;padding:0 20px;font-size:14px}
+.dlg-x{position:absolute;right:16px;top:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--hair);background:#fff;font-size:20px;line-height:1;color:var(--ink);cursor:pointer}
+.dlg-x:hover{background:var(--plum-50)}
+.toast{position:fixed;left:50%;top:104px;z-index:90;max-width:min(520px,calc(100vw - 32px));padding:12px 18px;border-radius:14px;background:var(--ink);color:var(--paper);font-size:14px;line-height:1.45;box-shadow:0 18px 40px rgba(18,1,31,.3);transform:translate(-50%,-10px);opacity:0;transition:opacity 260ms ease,transform 360ms var(--ease-soft)}
+.toast.open{opacity:1;transform:translate(-50%,0)}
+@media (max-width: 600px){.toast{left:12px;right:12px;top:auto;bottom:16px;max-width:none;transform:translateY(10px)}.toast.open{transform:none}}
+
+/* =================== Currency =================== */
+.flag{display:inline-block;width:20px;height:14px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.12);flex:none}
+.flag svg{display:block;width:100%;height:100%}
+.cur-btn .flag{margin-right:2px}
+.cur-menu button{align-items:center}
+.cur-menu .flag{width:22px;height:15px}
+.cur-menu button:focus-visible{outline:2px solid var(--purple);outline-offset:-2px}
+.lang .ar[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+
+/* =================== Responsive =================== */
+@media (max-width: 1100px){
+  .mv-inner,.cr-inner{grid-template-columns:1fr 1fr}
+  .cr-pts li{grid-template-columns:40px 1fr;row-gap:4px}
+  .cr-pts li span:last-child{grid-column:2}
+  .ft-top{grid-template-columns:1fr}
+}
+@media (max-width: 900px){
+  .hs-row{height:auto;flex-wrap:wrap;border-radius:24px}
+  .hs .seg{flex:1 1 45%;height:62px}
+  .hs .submit{flex:1 1 100%;height:56px;justify-content:center}
+  .ex-head,.ds-head{flex-direction:column;align-items:flex-start}
+  .mv-inner,.cr-inner,.rr-top,.fq-inner{grid-template-columns:1fr;gap:40px}
+  .mv-media{order:-1;max-width:420px}
+  .rr-photo{max-width:420px}
+  .rr-panel{grid-template-columns:1fr;padding:36px 32px;gap:0}
+  .rr-save{padding:0 0 26px;border-right:0;border-bottom:1px solid rgba(255,255,255,.14);min-height:0}
+  .rr-scale{margin:26px 0 0}
+  .cr-photo{max-width:420px}
+  .ft-cols{grid-template-columns:repeat(2,1fr);gap:28px}
+  .ft-offices{grid-template-columns:1fr}
+}
+@media (max-width: 600px){
+  .hero-inner{padding:150px 0 40px}
+  .hero-scroll{display:none}
+  .hs .seg{flex:1 1 100%}
+  .hero-proof{font-size:13px;gap:6px 16px}
+  .hero-proof li{gap:16px}.hero-proof li + li::before{margin-left:-16px}
+  .hero-proof{flex-direction:column;gap:6px}.hero-proof li + li::before{display:none}
+  .ex,.ds,.rr,.fq{padding:80px 0}
+  .stay{flex-basis:82%}
+  .city{flex-basis:78%;height:420px}.city:nth-child(even){height:420px;margin-top:0}
+  .mv-inner{padding:80px 0}.cr-inner{padding:88px 0}
+  .mv-panel > div{padding-left:0}
+  .mv-name{font-size:32px}
+  .rr-panel{padding:36px 24px}
+  .rr-save{padding:0 0 26px;border-right:0;border-bottom:1px solid rgba(255,255,255,.14);min-height:0}
+  .rr-scale{margin:26px 0 0;height:150px}
+  .rr-ticks span:nth-child(even){visibility:hidden}
+  .rr-pin:not(.est) .rr-lbl{display:none}.rr-pin:not(.est){--h:14px !important}
+  .rr-tag{padding:8px 12px}.rr-tag b{font-size:22px}.rr-tag img{height:14px}
+  .rr-legend{display:flex}
+  .rr-big{font-size:52px}
+  .fq-item button{font-size:18px}
+  .ft-bottom{flex-direction:column;align-items:flex-start}
+  .ft-top-btn{margin-left:0}
+  .pop{left:12px!important;right:12px!important;width:auto}
+}
+@media (prefers-reduced-motion: reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+  .hero-bg{animation:none;transform:none}
+  .hero-title span,.hero-title em{animation:none;opacity:1;transform:none}
+  .hero-scroll i::after,.spin{animation:none}
+  .mv-arch img,.mv-panel,.fq-panel,.stay,.city,.city img,.stay-img img,.rr-pin,.rr-fill{transition:none;animation:none}
+  .rr-pin{opacity:1;translate:none}
+}
+@media (max-width: 900px){.chip[data-top="true"]{opacity:0;pointer-events:none;visibility:hidden}}
+
+
+/* =================== Cursor animation language =================== */
+:root{--ease-arch:cubic-bezier(.76,0,.18,1);--n-fill-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2044%2048%22%3E%3Cpath%20d%3D%22M2%2044V20.2c0-2.7%201.2-5.2%203.3-6.9L18.8%202.4c1.9-1.6%204.5-1.6%206.4%200l13.5%2010.9c2.1%201.7%203.3%204.2%203.3%206.9V44a2%202%200%200%201-2%202H4a2%202%200%200%201-2-2Z%22/%3E%3C/svg%3E");--n-line-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2044%2048%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.5%22%20d%3D%22M2.75%2044V20.2c0-2.45%201.1-4.75%203.03-6.3L19.27%203c1.6-1.3%203.86-1.3%205.46%200l13.5%2010.9c1.92%201.55%203.02%203.85%203.02%206.3V44c0%20.7-.55%201.25-1.25%201.25H4c-.7%200-1.25-.55-1.25-1.25Z%22/%3E%3C/svg%3E")}
+@keyframes hero-open{0%{clip-path:inset(9% 33% 11% 33% round 17vw 17vw 0 0)}to{clip-path:inset(0% 0% 0% 0% round 0 0 0 0)}}
+@keyframes hero-settle{0%{transform:scale(1.35)}}
+@keyframes hero-in{0%{opacity:0;transform:translate3d(0,28px,0)}}
+@keyframes fade-in{0%{opacity:0}}
+@keyframes word-up{0%{transform:translate3d(0,115%,0)}}
+@keyframes reveal-up{0%{opacity:0;transform:translate3d(0,32px,0)}}
+@keyframes reveal-mask{0%{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes image-settle{0%{transform:scale(1.3)}}
+@keyframes n-in{0%{opacity:0;transform:translate3d(0,10px,0) scale(.86)}}
+
+/* Hero: the photo opens out of the arch, then the words rise out of their masks */
+.hero{background:#1c0731;border-radius:0 0 calc(var(--p,0) * 72px) calc(var(--p,0) * 72px)}
+.hero-photo{position:absolute;inset:0;overflow:hidden;animation:hero-open 1.8s var(--ease-arch) .2s backwards}
+.hero-photo .hero-bg{transform:none;animation:hero-settle 2.6s var(--ease-soft) .2s backwards;scale:calc(1.04 + var(--p,0) * .1);translate:0 calc(var(--p,0) * 7%)}
+.hero-veil{animation:fade-in 1.6s ease .9s backwards}
+.hero-title,.hero-lede{opacity:calc(1 - var(--p,0) * 1.5);translate:0 calc(var(--p,0) * -48px)}
+.hero .hero-title{text-shadow:0 2px 28px rgba(14,2,28,.45)}
+.hero .hero-title .is-accent{color:var(--lilac)}
+#hero [data-reveal],#hero [data-reveal].in{opacity:1;transform:none;transition:none;animation:hero-in 1.2s var(--ease-soft) var(--d,0ms) backwards}
+#hero .hero-lede{--d:1500ms}.hero .hs{--d:1760ms}.hero .hero-proof{--d:1900ms}
+.hero-scroll{animation:hero-in 1.2s var(--ease-soft) 2100ms backwards}
+
+/* Split headings: each word rises out of its own mask */
+.split-word{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.16em;margin-bottom:-.16em;padding-inline:.06em;margin-inline:-.06em}
+.split-word > *{display:inline-block;will-change:transform;opacity:1;transform:none;animation:none}
+.split:not(.in) .split-word > *{transform:translate3d(0,115%,0)}
+.split.in .split-word > *{animation:word-up 1.2s var(--ease-soft) calc(var(--delay,0ms) + var(--i,0) * 60ms) backwards}
+
+/* Section entrances: rise for copy, mask for imagery */
+[data-reveal]{opacity:0;transform:none;filter:none;transition:none}
+[data-reveal].in{opacity:1;animation:reveal-up 1.1s var(--ease-soft) var(--rd,0ms) backwards}
+figure[data-reveal].in{animation:reveal-mask 1.5s var(--ease-arch) var(--rd,0ms) backwards}
+figure[data-reveal] img{transform:scale(1.3)}
+figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-soft) var(--rd,0ms) backwards}
+.js .xp .scene{opacity:0;transform:none;transition:none}
+.js .xp.in .scene{opacity:1;animation:reveal-mask 1.5s var(--ease-arch) .15s backwards}
+.js .xp.in .scene .room{animation:image-settle 2s var(--ease-soft) .15s backwards}
+
+/* Final scene: the photo grows out of the same arch the hero opened from */
+.final{background:var(--paper);min-height:max(780px,104svh)}
+.final::before{display:none}
+.final-photo{position:absolute;inset:0;z-index:0;overflow:hidden;clip-path:inset(calc((1 - var(--p,0)) * 12%) calc((1 - var(--p,0)) * 30%) 0 calc((1 - var(--p,0)) * 30%) round calc((1 - var(--p,0)) * 20vw) calc((1 - var(--p,0)) * 20vw) 0 0)}
+.final-photo .final-bg{transform:none;transition:none;scale:calc(1.3 - var(--p,0) * .26)}
+.final-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(36,2,67,.78) 0%,rgba(36,2,67,.5) 52%,rgba(36,2,67,.3) 100%),linear-gradient(180deg,rgba(28,7,49,.15),rgba(28,7,49,.45))}
+.final-inner{opacity:clamp(0,calc((var(--p,1) - .5) * 3),1)}
+.final p,.final-cta{opacity:0}
+.final.in p{opacity:1;animation:reveal-up 1.1s var(--ease-soft) 160ms backwards}
+.final.in .final-cta{opacity:1;animation:reveal-up 1.1s var(--ease-soft) 260ms backwards}
+
+/* Buttons: a soft sweep instead of a flat colour change */
+.final-cta,.rr-cta,.btn-sun,.btn-cream{position:relative;overflow:hidden;isolation:isolate}
+.final-cta::before,.rr-cta::before,.btn-sun::before,.btn-cream::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sweep,rgba(207,171,244,.28));translate:-102% 0;transition:translate .56s var(--ease-soft)}
+.final-cta:hover::before,.final-cta:focus-visible::before,.rr-cta:hover::before,.rr-cta:focus-visible::before,.btn-sun:hover::before,.btn-sun:focus-visible::before,.btn-cream:hover::before,.btn-cream:focus-visible::before{translate:0 0}
+.final-cta{--sweep:var(--plum-50)}.final-cta:hover{background:#fff}
+.final-cta svg,.rr-cta svg,.btn-sun svg{transition:translate .36s var(--ease-soft)}
+.final-cta:hover svg,.rr-cta:hover svg,.btn-sun:hover svg{translate:5px 0}
+
+/* Account: icon and word at the top, icon alone once the visitor scrolls */
+.account{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:0 18px 0 15px;transition:padding .7s var(--ease-arch),gap .7s var(--ease-arch),border-color .36s var(--ease-soft),background-color .36s var(--ease-soft),color .36s var(--ease-soft)}
+.account svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.account span{display:block;max-width:80px;overflow:hidden;white-space:nowrap;transition:max-width .7s var(--ease-arch),opacity .4s ease}
+.account:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.site-header[data-docked="true"] .account{width:44px;padding:0;gap:0}
+.site-header[data-docked="true"] .account span{max-width:0;opacity:0}
+[data-tone="solid"] .account:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+
+/* Real Rate scale: two label tiers with real headroom, rightmost label anchored to its stem's left so it never meets the edge */
+.rr-panel{padding-top:64px;padding-bottom:58px}
+.rr-scale{--hi:124px;--lo:40px;height:300px}
+.rr-pin[data-tier="hi"]{--h:var(--hi)}.rr-pin[data-tier="lo"]{--h:var(--lo)}
+.rr-lbl{gap:6px;margin-bottom:12px}
+.rr-pin .rr-lbl{transform:translateX(calc(50% - 16px))}
+.rr-pin.rr-end .rr-lbl{justify-items:end;transform:translateX(calc(-50% + 16px))}
+.rr-pin.rr-mid .rr-lbl{justify-items:center;transform:none}
+@media (max-width: 1100px){.rr-scale{--hi:108px;--lo:34px;height:280px}.rr-lbl b{font-size:25px}.rr-brand{font-size:13.5px;gap:8px}.rr-brand .ic{width:28px;height:28px}}
+
+
+/* Destinations: the same arch as the Real Rate photo (semicircle top, 24px base corners) */
+.city{border-radius:170px 170px 24px 24px}
+.city-badge{left:50%;top:40px;translate:-50% 0}
+.ds-track{padding-bottom:64px;margin-bottom:-40px}
+@media (max-width: 600px){#ds-track{container-type:inline-size}.city{border-radius:39cqi 39cqi 22px 22px}}
+
+/* Carousels run to the right edge of the screen; the first card stays aligned with the section content */
+.ex-track,.ds-track{--bleed:calc((100vw - 100%) / 2);margin-right:calc(-1 * var(--bleed));padding-right:var(--bleed);scroll-padding-inline:4px var(--bleed)}
+.ex-track.grid{margin-right:-4px;padding-right:0}
+
+/* Why Estaie feature cards: editorial type scale */
+.feat{grid-template-columns:46px minmax(0,1fr);gap:6px 18px;padding-left:16px}
+.feat .ic{align-self:center}
+.feat b{font:400 clamp(20px,1.95vw,30px)/1.1 var(--display);letter-spacing:-.015em;color:var(--ink)}
+.feat p{font-size:clamp(14px,1.05vw,15px);line-height:1.45}
+@media (max-width: 1180px){.feat{grid-template-columns:38px minmax(0,1fr);gap:4px 14px}.feat b{font-size:20px}.feat p{font-size:13.5px}}
+@media (max-width: 600px){.feat{grid-template-columns:1fr}.feat b{font-size:17px;line-height:1.15}}
+
+/* =================== Typography system (hero and final section excluded) ===================
+   Display L  — image-led statement sections: The Real Rate, Monthly living, Estaiecare
+   Display M  — primary sections led by content (carousels, feature rows): Explore, Why, Moving, Destinations
+   Display S  — supporting section: FAQ
+   Feature L  — accordion statements (What's moving you) · Feature — Why cards (set above) · Card — city / stay names
+   Eyebrow    — 11.5px / 700 / .14em caps everywhere · Lede — 16–18px / 1.6, max 50ch                                   */
+:root{
+  --t-dl:300 clamp(40px,4.5vw,66px)/1.03 var(--display);
+  --t-dm:300 clamp(34px,3.75vw,54px)/1.06 var(--display);
+  --t-ds:300 clamp(30px,3.05vw,44px)/1.1 var(--display);
+}
+#realrate h2,#monthly h2,#care h2{font:var(--t-dl);letter-spacing:-.024em;margin-top:18px}
+#explore h2,#why h2,#moving h2,#destinations h2{font:var(--t-dm);letter-spacing:-.02em;margin-top:18px}
+#moving h2{margin-bottom:32px}
+#explore h2,#why h2,#moving h2,#destinations h2,#realrate h2,#monthly h2,#care h2,#faq h2{text-wrap:balance}
+#faq h2{font:var(--t-ds);letter-spacing:-.016em;margin-top:18px}
+.mv-name{font:300 clamp(28px,2.75vw,40px)/1.06 var(--display);letter-spacing:-.016em}
+.city-meta b{font:400 clamp(26px,2.2vw,32px)/1.02 var(--display);letter-spacing:-.01em}
+.fq-item button{font:400 clamp(17px,1.45vw,21px)/1.35 var(--display)}
+.rr-k{font-size:11.5px;font-weight:700;letter-spacing:.14em}
+.rr-lede,.ml-lede,.cr-lede,.ds-lede{font-size:clamp(16px,1.2vw,18px);line-height:1.6;max-width:50ch;margin-top:20px}
+.mv-panel p{font-size:clamp(15px,1.1vw,16px);line-height:1.65}
+@media (max-width: 600px){.mv-name{font-size:28px}.fq-item button{font-size:17px}.city-meta b{font-size:28px}}
+@media (max-width: 1180px){.ml-inner{gap:48px}.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}.ml-stop{padding:12px 12px 11px;min-width:0}}
+@media (max-width: 1023px){.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width: 600px){.ml-stops{grid-template-columns:1fr 1fr}}
+@media (max-width: 1240px){.dock-nav{left:200px;translate:none;gap:2px}.dock-nav a{padding-left:13px;padding-right:13px}}
+@media (max-width: 760px){.account{display:none}}
+
+/* N-shape icon system (Why Estaie, What's Moving You, Estaiecare) */
+.feat .ic,.mv-ic,.cr-ic{position:relative;isolation:isolate;display:grid;place-items:center;width:42px;height:46px;padding-top:8px;border:0;border-radius:0;background:none;--n-fill:var(--plum-50);--n-line:rgba(69,6,126,.24);color:var(--purple);transition:color .36s var(--ease-soft),translate .36s var(--ease-soft)}
+.feat .ic::before,.mv-ic::before,.cr-ic::before,.feat .ic::after,.mv-ic::after,.cr-ic::after{content:"";position:absolute;inset:0;z-index:-1;-webkit-mask:var(--n-fill-mask) center/100% 100% no-repeat;mask:var(--n-fill-mask) center/100% 100% no-repeat;background:var(--n-fill);transition:background-color .36s var(--ease-soft)}
+.feat .ic::after,.mv-ic::after,.cr-ic::after{-webkit-mask-image:var(--n-line-mask);mask-image:var(--n-line-mask);background:var(--n-line)}
+.feat .ic svg{width:20px;height:20px}
+.feat:hover .ic{translate:0 -2px}
+.feat[aria-selected="true"] .ic{--n-fill:var(--purple);--n-line:var(--purple);color:#fff;background:none}
+.mv-ic{--n-fill:rgba(207,171,244,.07);--n-line:rgba(207,171,244,.3);color:var(--lilac);opacity:.6}
+.mv-btn[aria-expanded="true"] .mv-ic{--n-fill:rgba(207,171,244,.18);--n-line:rgba(207,171,244,.62);opacity:1;background:none;border:0}
+.mv-btn:hover .mv-ic{translate:0 -2px;opacity:1}
+.cr-ic{--n-fill:rgba(207,171,244,.14);--n-line:rgba(207,171,244,.5);color:var(--lilac)}
+.cr-points li[data-reveal].in .cr-ic,.cr li.in .cr-ic{animation:n-in .9s var(--ease-soft) calc(var(--rd,0ms) + 120ms) backwards}
+@media (max-width: 1180px){.feat .ic{width:36px;height:40px;padding-top:7px}.feat .ic svg{width:18px;height:18px}}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-photo,.hero-photo .hero-bg,.hero-veil,.hero [data-reveal],.hero-scroll,.split .split-word > *,[data-reveal].in,figure[data-reveal].in,figure[data-reveal].in img,.js .xp.in .scene,.js .xp.in .scene .room,.final.in p,.final.in .final-cta,.cr-ic{animation:none!important}
+  .split:not(.in) .split-word > *,figure[data-reveal] img{transform:none}
+  [data-reveal],.final p,.final-cta{opacity:1}
+  .hero{border-radius:0}.hero-title,.hero-lede{opacity:1;translate:none}
+  .final-photo{clip-path:none}.final-photo .final-bg{scale:1}.final-inner{opacity:1}
+  .account,.account span,.final-cta::before,.rr-cta::before{transition:none}
+}
+html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="site-header" id="nav" data-tone="overlay" data-hidden="false">
+  <a class="dock-logo" href="#top" aria-label="Estaie home">
+    <img class="light" src="img/logo-white.svg" alt="" width="111" height="34"><img class="dark" src="img/logo-ink.svg" alt="" width="111" height="34">
+  </a>
+  <nav class="dock-nav" aria-label="Primary">
+    <a href="#explore" data-owner="explore">Explore stays</a>
+    <a href="#monthly" data-owner="monthly">Monthly living</a>
+    <a href="#realrate" data-owner="realrate">The Real Rate</a>
+    <a href="#care" data-owner="care">Estaiecare</a>
+  </nav>
+  <div class="dock-actions">
+    <div class="currency" id="currency" data-open="false">
+      <button class="cur-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Currency"><span class="flag cur-flag" aria-hidden="true"></span><span class="cur-code">EGP</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="cur-menu" role="menu" aria-label="Currency"></div>
+    </div>
+    <div class="lang" role="group" aria-label="Language"><span class="on">EN</span><span class="ar" lang="ar" aria-disabled="true" title="Arabic is coming later">العربية</span></div>
+    <button class="account" type="button" aria-label="Account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.7-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg><span>Account</span></button>
+  </div>
+</header>
+
+<main class="page" id="top">
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero-photo"><img class="hero-bg" src="img/hero-photo.jpg" alt="A bright living room with a linen sofa, tall windows, and a view over the city" fetchpriority="high"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1 id="hero-title" class="hero-title split in" aria-label="Find a place that feels like yours." style="--delay:1000ms"><span class="split-word" aria-hidden="true"><span style="--i:0">Find</span></span> <span class="split-word" aria-hidden="true"><span style="--i:1">a</span></span> <span class="split-word" aria-hidden="true"><span style="--i:2">place</span></span> <span class="split-word" aria-hidden="true"><span style="--i:3">that</span></span><br><span class="split-word" aria-hidden="true"><span style="--i:4">feels</span></span> <span class="split-word" aria-hidden="true"><span style="--i:5">like</span></span> <span class="split-word" aria-hidden="true"><span style="--i:6" class="is-accent">yours.</span></span></h1>
+      <p class="hero-lede" data-reveal>Furnished hotels, serviced apartments, studios and homes for stays from 15 nights to a year.</p>
+      <form class="hs" id="hero-search" role="search" aria-label="Search stays" novalidate data-reveal>
+        <div class="hs-row">
+          <button type="button" class="seg wide" data-panel="where" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6.5-5.2 6.5-10.2A6.5 6.5 0 0 0 5.5 10.8C5.5 15.8 12 21 12 21Z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span class="t"><small>Where</small><span data-val="where" class="ph">City, area, or hotel</span></span></button>
+          <button type="button" class="seg party" data-panel="party" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19c.8-3.2 3.2-4.8 6.2-4.8s5.4 1.6 6.2 4.8"/><circle cx="17" cy="9" r="2.4"/><path d="M15.2 14.4c2 .4 3.6 1.6 4.4 4.6"/></svg><span class="t"><small>Stay type and guests</small><span data-val="party">Any type · 2 adults, 1 room</span></span></button>
+          <button type="button" class="seg len" data-panel="length" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A7.6 7.6 0 0 1 9.4 4.5a7.6 7.6 0 1 0 10.1 10.1Z"/></svg><span class="t"><small>Length</small><span data-val="length" class="ph">Choose length</span></span></button>
+          <button type="submit" class="submit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="spin" aria-hidden="true"></span><span class="lbl">Search stays</span></button>
+        </div>
+        <p class="hs-error" role="alert" hidden></p>
+      </form>
+      <ul class="hero-proof" data-reveal>
+        <li>No annual lease</li><li>Bills included, priced up front</li><li>Cancellation terms before you confirm</li><li>24/7 Estaiecare for booked guests</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="ex" id="explore" aria-labelledby="ex-title">
+    <div class="ex-inner">
+      <div class="ex-head">
+        <div data-reveal>
+          <p class="kicker">Explore stays</p>
+          <h2 id="ex-title" class="h-xl">Find a place<br><em>to settle into.</em></h2>
+          <p class="ex-results" id="ex-results" aria-live="polite" hidden></p>
+        </div>
+        <div class="ex-ctrl" data-reveal>
+          <button type="button" class="btn-line" id="ex-all" aria-pressed="false">View all stays</button>
+          <button type="button" class="arrow" id="ex-prev" aria-label="Previous stays"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+          <button type="button" class="arrow" id="ex-next" aria-label="Next stays"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
+      </div>
+      <div class="ex-track" id="ex-track" tabindex="0" aria-label="Stays carousel. Use the arrows or scroll sideways."></div>
+      <div class="ex-empty" id="ex-empty" hidden></div>
+      <div class="ex-foot" data-reveal>
+        <div class="chips" role="group" aria-label="Destination">
+          <span class="chips-label">Destination</span>
+          <button type="button" class="chip-f" data-dest="all" aria-pressed="true">All destinations <b>6</b></button>
+          <button type="button" class="chip-f" data-dest="United Arab Emirates" aria-pressed="false">United Arab Emirates <b>6</b></button>
+          <button type="button" class="chip-f" data-dest="Egypt" aria-pressed="false">Egypt</button>
+          <button type="button" class="chip-f" data-dest="Saudi Arabia" aria-pressed="false">Saudi Arabia</button>
+          <button type="button" class="chip-f" data-dest="Portugal" aria-pressed="false">Portugal</button>
+          <button type="button" class="chip-f" data-dest="Spain" aria-pressed="false">Spain</button>
+          <button type="button" class="chip-f" data-dest="Netherlands" aria-pressed="false">Netherlands</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" id="why" aria-labelledby="why-title">
+    <div class="why-inner">
+      <div class="xp" id="xp">
+        <div class="xp-side">
+          <header class="why-head">
+            <p class="kicker">Why Estaie</p>
+            <h2 id="why-title">Your home for months, <em>without the friction</em> of a lease.</h2>
+          </header>
+          <div class="feats" role="tablist" aria-orientation="vertical" aria-label="Why Estaie features">
+            <button class="feat" role="tab" id="tab-flexible" aria-controls="scene" aria-selected="true" tabindex="0" data-feature="flexible">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/></svg></span>
+              <b>Flexible stays</b><p>15 nights to a year, through every season.</p></button>
+            <button class="feat" role="tab" id="tab-ready" aria-controls="scene" aria-selected="false" tabindex="-1" data-feature="ready">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V9.5A1.5 1.5 0 0 1 4.5 8H10a3 3 0 0 1 3 3v7"/><path d="M3 14h18"/><path d="M21 18v-5.5A1.5 1.5 0 0 0 19.5 11H13"/><path d="M3 18h18"/></svg></span>
+              <b>Move-in ready</b><p>Furnished and ready from day one.</p></button>
+            <button class="feat" role="tab" id="tab-pricing" aria-controls="scene" aria-selected="false" tabindex="-1" data-feature="pricing">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-3-1.8-3 1.8-3-1.8-3 1.8z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/></svg></span>
+              <b>Transparent pricing</b><p>Bills included, priced upfront.</p></button>
+            <button class="feat" role="tab" id="tab-support" aria-controls="scene" aria-selected="false" tabindex="-1" data-feature="support">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/></svg></span>
+              <b>Real support</b><p>24/7 Estaiecare for booked guests.</p></button>
+          </div>
+        </div>
+
+        <figure class="scene" id="scene" role="tabpanel" aria-labelledby="tab-flexible" data-feature="flexible" data-tod="summer" data-ready="done">
+          <div class="room">
+            <img class="base" src="img/apt-base.jpg" alt="A bright, furnished serviced apartment living room with a tall window, linen curtains, an armchair and a sofa" decoding="async">
+            <div class="tod tod-summer"></div><div class="tod tod-autumn"></div><div class="tod tod-winter"></div><div class="tod tod-spring"></div>
+            <div class="win win-summer"><img src="img/win-summer.png" alt="" decoding="async"></div>
+            <div class="win win-autumn"><img src="img/win-autumn.png" alt="" decoding="async"></div>
+            <div class="win win-winter"><img src="img/win-winter.png" alt="" decoding="async"></div>
+            <div class="win win-spring"><img src="img/win-spring.png" alt="" decoding="async"></div>
+            <div class="glass"><div class="snow" id="snow"></div></div>
+            <div class="beam"></div>
+            <div class="curtain cl"></div><div class="curtain cr"></div>
+            <div class="dim"></div>
+            <div class="warm"></div>
+            <div class="glow down1"></div><div class="glow down2"></div>
+            <div class="glow c1"></div><div class="glow c2"></div>
+          </div>
+
+          <div class="hud">
+            <div class="tod-ctrl glassy" role="group" aria-label="Season outside the window">
+              <button type="button" data-tod="summer" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>Summer</button>
+              <button type="button" data-tod="autumn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/></svg>Autumn</button>
+              <button type="button" data-tod="winter" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 2.5v19M3.8 7.25l16.4 9.5M3.8 16.75l16.4-9.5M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5"/></svg>Winter</button>
+              <button type="button" data-tod="spring" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="10" r="2.2"/><path d="M12 7.8c-1.6-3 1.6-4.6 0-4.6s1.6 1.6 0 4.6M14.2 10c3-1.6 4.6 1.6 4.6 0s-1.6 1.6-4.6 0M12 12.2c1.6 3-1.6 4.6 0 4.6s-1.6-1.6 0-4.6M9.8 10c-3 1.6-4.6-1.6-4.6 0s1.6-1.6 4.6 0M12 16.8V21"/></svg>Spring</button>
+            </div>
+
+            <p class="tag tag-ready glassy"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Ready from day one.</p>
+
+            <div class="price glassy">
+              <p class="eyebrow"><span>The Real Rate</span><span class="badge">Captured quote</span></p>
+              <ul>
+                <li><span>Accommodation</span><em class="inc">In the online total</em><small>Nasma Luxury Stays — The Nook 1, Dubai · 15 nights · 2 guests</small></li>
+                <li><span>Bills</span><em class="inc">Included</em></li>
+                <li><span>Local tax</span><em data-fx="150 AED small">AED 150</em><small>Paid at the property, shown before you book. Not added to the total.</small></li>
+              </ul>
+              <div class="total"><span>Total paid online</span><div><b><small data-fx-code>EGP</small><span id="total" style="font:inherit;letter-spacing:inherit;text-transform:none;color:inherit">159,443</span></b><span class="plus">+ <span data-fx="150 AED small">AED 150</span> local tax at the property</span></div></div>
+              <p class="note">A captured rate from estaie.com, not a live price. A monthly total shows for stays of 28 nights or more once a 30-night rate is captured.</p>
+            </div>
+
+            <div class="care glassy" id="care-chat" data-step="0" aria-live="polite">
+              <div class="care-head">
+                <span class="mark" aria-hidden="true"><img src="img/logo-light.svg" alt=""></span>
+                <div><b>Estaiecare</b><small><span class="live" aria-hidden="true"></span>Available 24/7 for booked guests</small></div>
+                <span class="care-clock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line class="cm" x1="12" y1="12" x2="12" y2="6.5"/><line class="ch" x1="12" y1="12" x2="15.5" y2="12"/></svg></span>
+              </div>
+              <div class="msgs">
+                <p class="msg guest" style="margin:0">I need help with my stay.</p>
+                <span class="typing" aria-label="Estaiecare is typing"><i></i><i></i><i></i></span>
+                <p class="msg reply" style="margin:0"><span class="who">Estaiecare</span>We're here to help. How can we assist?</p>
+              </div>
+            </div>
+          </div>
+          <figcaption class="sr" id="scene-caption">Flexible stays: summer outside the window.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="mv" id="moving" aria-labelledby="mv-title">
+    <div class="mv-inner">
+      <div class="mv-copy">
+        <p class="kicker light" data-reveal>What's moving you?</p>
+        <h2 id="mv-title" class="mv-title" data-reveal>Every long stay starts with a <em>reason.</em></h2>
+        <div class="mv-list" id="mv-list">
+          <div class="mv-item" data-i="0">
+            <h3><button type="button" class="mv-btn" aria-expanded="true" aria-controls="mv-p0" id="mv-b0"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16.5 6.5l2 2M14.5 8.5l1.5 1.5"/></svg></span><span class="mv-name">A new chapter</span></button></h3>
+            <div class="mv-panel" id="mv-p0" role="region" aria-labelledby="mv-b0"><div><p>Starting a job or a life in a new city? Settle in first, then take your time finding the neighborhood that fits.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="1">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p1" id="mv-b1"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="5.5" width="15" height="10" rx="1.6"/><path d="M2.5 18.5h19"/></svg></span><span class="mv-name">Work that travels</span></button></h3>
+            <div class="mv-panel" id="mv-p1" role="region" aria-labelledby="mv-b1"><div><p>A long project or a remote contract. A furnished place with the bills sorted lets you keep your focus on the work.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="2">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p2" id="mv-b2"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5v-5h4v5"/></svg></span><span class="mv-name">Between homes</span></button></h3>
+            <div class="mv-panel" id="mv-p2" role="region" aria-labelledby="mv-b2"><div><p>Renovating, waiting for keys, or between leases. A comfortable furnished base for as long as you need it.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="3">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p3" id="mv-b3"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/></svg></span><span class="mv-name">A slower season</span></button></h3>
+            <div class="mv-panel" id="mv-p3" role="region" aria-labelledby="mv-b3"><div><p>Spend a season somewhere new. Cook, unwind and get to know a neighborhood the way a local does.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mv-media" data-reveal>
+        <div class="mv-arch">
+          <img class="on" src="img/mv-chapter.jpg" alt="A woman smiling beside a tall window with a view over the city" style="object-position:30% 40%">
+          <img src="img/mv-work.jpg" alt="A furnished living room with a desk set up beside a tall window" loading="lazy">
+          <img src="img/mv-between.jpg" alt="A calm living room with a sofa, armchair and soft daylight" loading="lazy" style="object-position:50% 55%">
+          <img src="img/mv-season.jpg" alt="A calm kitchen and dining table in a furnished apartment" loading="lazy">
+        </div>
+        <div class="mv-nav">
+          <button type="button" class="arrow light" id="mv-prev" aria-label="Previous reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+          <div class="mv-dots" role="tablist" aria-label="Reasons">
+            <button type="button" role="tab" aria-selected="true" aria-label="A new chapter"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="Work that travels"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="Between homes"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="A slower season"></button>
+          </div>
+          <button type="button" class="arrow light" id="mv-next" aria-label="Next reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rr" id="realrate" aria-labelledby="rr-title">
+    <div class="rr-inner">
+      <div class="rr-top">
+        <div class="rr-copy">
+          <p class="kicker" data-reveal>The Real Rate</p>
+          <h2 id="rr-title" class="h-xl" data-reveal>No surprise fees.<br><em>Just The Real Rate.</em></h2>
+          <p class="rr-lede" data-reveal>One clear price for the month, with bills included. Here’s how it sits next to short-stay platforms.</p>
+          <ul class="rr-chips" data-reveal><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Bills included</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Monthly from 30 nights</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Furnished from the first night</li></ul>
+          <button type="button" class="btn-sun rr-cta" id="rr-cta" data-reveal>See stays with the Real Rate <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
+        <figure class="rr-photo" data-reveal><img src="img/p-realrate.jpg" alt="A guest sitting by a tall window in a furnished apartment" loading="lazy"></figure>
+      </div>
+      <div class="rr-panel" id="rr-panel" data-reveal>
+        <div class="rr-save">
+          <p class="rr-k">Estimated saving</p>
+          <p class="rr-big"><small>Up to</small> <b>32%</b> <small>/month</small></p>
+          <p class="rr-sub">vs comparable short-stay rates, same property class.</p>
+          <p class="rr-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg>All taxes shown before you book.</p>
+        </div>
+        <div class="rr-scale" role="img" aria-label="Monthly prices in USD: Estaie 2,400; Agoda 3,332; Booking.com 3,720; Airbnb 4,062.">
+          <div class="rr-track"><i class="rr-fill"></i></div>
+          <div class="rr-ticks"><span style="--v:2000">2,000</span><span style="--v:2400" class=on>2,400</span><span style="--v:2800">2,800</span><span style="--v:3200">3,200</span><span style="--v:3600">3,600</span><span style="--v:4000">4,000</span><span style="--v:4400">4,400</span></div>
+          <div class="rr-pin est" style="--v:2400;--h:26px"><div class="rr-tag"><img src="img/logo-dark.svg" alt="estaie"><b>$2,400</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin" style="--v:3332" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ag">a</i>Agoda</span><b>$3,332</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin rr-mid" style="--v:3720" data-tier="lo"><div class="rr-lbl"><span class="rr-brand"><i class="ic bk">B.</i>Booking.com</span><b>$3,720</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin rr-end" style="--v:4062" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ab">a</i>Airbnb</span><b>$4,062</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+        </div>
+        <ul class="rr-legend" aria-hidden="true"><li><i class="ic ag">a</i>Agoda <b>$3,332</b></li><li><i class="ic bk">B.</i>Booking.com <b>$3,720</b></li><li><i class="ic ab">a</i>Airbnb <b>$4,062</b></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ml" id="monthly" aria-labelledby="ml-title">
+    <div class="ml-inner">
+      <figure class="ml-photo">
+        <img src="img/monthly-work.jpg" alt="A furnished living room with a desk by a tall window" loading="lazy" decoding="async">
+        <figcaption class="ml-chip" aria-hidden="true">
+          <span class="ml-chip-top"><b id="ml-chip-name">A month</b><span id="ml-chip-n">30 nights</span></span>
+          <span class="ml-months" id="ml-months"></span>
+        </figcaption>
+      </figure>
+
+      <div class="ml-copy">
+        <p class="ml-kicker">Monthly living</p>
+        <h2 id="ml-title">From 30 nights, the stay is priced like a <em>month.</em></h2>
+        <p class="ml-lede"><b>A month, a season, or a year.</b> Monthly living runs from 30 to 365 nights. Shorter plans start from 15.</p>
+
+        <div class="ml-picker">
+          <p class="ml-label" id="ml-pick-label">Pick a length in nights, from 15 to 365</p>
+          <div class="ml-stops" role="radiogroup" aria-labelledby="ml-pick-label">
+            <button type="button" role="radio" class="ml-stop" data-n="15" data-name="Extended stay" aria-checked="false" tabindex="-1"><b>15</b><small>nights</small><span>Extended stay</span></button>
+            <button type="button" role="radio" class="ml-stop" data-n="30" data-name="A month" aria-checked="true" tabindex="0"><b>30</b><small>nights</small><span>A month</span></button>
+            <button type="button" role="radio" class="ml-stop" data-n="90" data-name="A season" aria-checked="false" tabindex="-1"><b>90</b><small>nights</small><span>A season</span></button>
+            <button type="button" role="radio" class="ml-stop" data-n="365" data-name="A year" aria-checked="false" tabindex="-1"><b>365</b><small>nights</small><span>A year</span></button>
+          </div>
+          <div class="ml-bands" aria-hidden="true">
+            <span class="ml-band ext"><i></i>Extended stay · 15–29 nights</span>
+            <span class="ml-band mon"><i></i>Monthly living · 30–365 nights, priced like a month</span>
+          </div>
+          <p class="ml-result" id="ml-result" aria-live="polite"><b>30 nights is monthly living</b>, priced like a month.</p>
+        </div>
+
+        <ul class="ml-incl" aria-label="Included in every stay">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Furnished from the first night.</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>One rate for living, not just sleeping.</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Someone to call, for the whole stay.</li>
+        </ul>
+
+        <div class="ml-actions">
+          <button type="button" class="ml-cta" id="ml-cta"><span id="ml-cta-text">Plan 30 nights</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+          <p class="ml-note" id="ml-note">A monthly equivalent appears when a real rate exists.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="ds" id="destinations" aria-labelledby="ds-title">
+    <div class="ds-inner">
+      <div class="ds-head">
+        <div data-reveal>
+          <p class="kicker">Destinations</p>
+          <h2 id="ds-title" class="h-xl">Cities to <em>settle</em><br>into for a while.</h2>
+        </div>
+        <div class="ex-ctrl" data-reveal>
+          <button type="button" class="arrow" id="ds-prev" aria-label="Previous cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+          <button type="button" class="arrow" id="ds-next" aria-label="More cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
+      </div>
+      <div class="ds-track" id="ds-track" tabindex="0" aria-label="Destinations. Scroll sideways for more.">
+        <button type="button" class="city" data-city="London"><img src="img/city-london.jpg" alt="A quiet London street of stucco townhouses in late sun" loading="lazy"><span class="city-meta"><small>United Kingdom</small><b>London</b><span class="city-go">Start a search in London <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Lisbon"><img src="img/city-lisbon.jpg" alt="Terracotta rooftops and a white-domed church in Lisbon" loading="lazy"><span class="city-meta"><small>Portugal</small><b>Lisbon</b><span class="city-go">Start a search in Lisbon <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Barcelona"><img src="img/city-barcelona.jpg" alt="A cream apartment block with wrought-iron balconies in Barcelona" loading="lazy"><span class="city-meta"><small>Spain</small><b>Barcelona</b><span class="city-go">Start a search in Barcelona <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Amsterdam"><img src="img/city-amsterdam.jpg" alt="A canal lined with boats and trees in Amsterdam" loading="lazy"><span class="city-meta"><small>Netherlands</small><b>Amsterdam</b><span class="city-go">Start a search in Amsterdam <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Dubai"><img src="img/city-dubai.jpg" alt="The Dubai skyline across a fountain at dusk" loading="lazy"><span class="city-badge">Example rates</span><span class="city-meta"><small>United Arab Emirates</small><b>Dubai</b><span class="city-go">Start a search in Dubai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="cr" id="care" aria-labelledby="cr-title">
+    <div class="cr-inner">
+      <div class="cr-copy">
+        <p class="kicker light" data-reveal>Estaiecare</p>
+        <h2 id="cr-title" class="cr-title" data-reveal><em>Real support,</em><br>not just a booking confirmation.</h2>
+        <p class="cr-lede" data-reveal>Estaiecare connects you with a real person — before you book, during your stay, and after.</p>
+        <button type="button" class="btn-cream" data-open="care-dialog" data-reveal>Talk to Estaiecare <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        <ul class="cr-pts">
+          <li data-reveal><span class="cr-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.7-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></span><b>A real person to reach</b><span>Support whenever you need a helping hand.</span></li>
+          <li data-reveal><span class="cr-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5v4.5l3 2"/></svg></span><b>24/7 support</b><span>For booked guests, around the clock.</span></li>
+          <li data-reveal><span class="cr-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 20.5V4.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v16"/><path d="M3.5 20.5h17"/><circle cx="14.5" cy="12.5" r=".6"/></svg></span><b>Arrival assistance</b><span>If something is wrong when you arrive, we help make it right.</span></li>
+        </ul>
+      </div>
+      <figure class="cr-photo" data-reveal><img src="img/p-care.jpg" alt="A member of the Estaie team welcoming a guest at the door" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="fq" id="faq" aria-labelledby="fq-title">
+    <div class="fq-inner">
+      <div class="fq-head" data-reveal>
+        <p class="kicker">Good to know</p>
+        <h2 id="fq-title" class="h-lg">The practical questions, answered.</h2>
+        <button type="button" class="btn-line" data-open="care-dialog">Still deciding? Talk to us</button>
+      </div>
+      <div class="fq-list">
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="true" aria-controls="fq0" id="fqb0">What is Estaie?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq0" role="region" aria-labelledby="fqb0"><div><p>Estaie offers furnished stays from 15 nights and monthly living from 30 nights, in hotels, serviced apartments, studios and homes selected for longer living. The Real Rate shows what you pay online and what you pay at the property, before you book.</p></div></div></div>
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="fq1" id="fqb1">What is By The Month Living?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq1" role="region" aria-labelledby="fqb1"><div><p>From 30 nights, the stay is priced like a month. Monthly living runs from 30 to 365 nights. Shorter plans start from 15.</p></div></div></div>
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="fq2" id="fqb2">Are all listings verified the same way?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq2" role="region" aria-labelledby="fqb2"><div><p>Hotels and serviced apartments are selected for longer living, with the stay type named clearly on every card.</p></div></div></div>
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="fq3" id="fqb3">What happens if a stay doesn’t match the listing?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq3" role="region" aria-labelledby="fqb3"><div><p>If something is wrong when you arrive, Estaiecare helps make it right. Support is available 24/7 for booked guests.</p></div></div></div>
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="fq4" id="fqb4">Are utilities and fees included in the price?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq4" role="region" aria-labelledby="fqb4"><div><p>Bills sit inside the online rate, so there is one number to plan around. Local taxes due at the property stay separate and visible before you book.</p></div></div></div>
+        <div class="fq-item" data-reveal><h3><button type="button" aria-expanded="false" aria-controls="fq5" id="fqb5">Can I change or extend my stay?<i aria-hidden="true"></i></button></h3><div class="fq-panel" id="fq5" role="region" aria-labelledby="fqb5"><div><p class="fq-pending">This answer is still being confirmed. Estaiecare can help with changes to a booked stay in the meantime.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="final" aria-labelledby="final-title">
+    <div class="final-photo" aria-hidden="true"><img class="final-bg" src="img/apt-base.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="final-inner">
+      <h2 id="final-title">Stay long enough<br>to feel at <em>home.</em></h2>
+      <p>Every stay shows what you pay online, what you pay at the property, and any deposit, before you book.</p>
+      <a class="final-cta" href="#top" id="final-cta">Find your stay
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+  </section>
+  <footer class="ft" id="footer">
+    <div class="ft-inner">
+      <div class="ft-top">
+        <div class="ft-brand">
+          <img src="img/logo-light.svg" alt="Estaie" width="118" height="34">
+          <p>For the stay between a holiday and a home.</p>
+        </div>
+        <nav class="ft-cols" aria-label="Footer">
+          <div><h3>Discover</h3><ul>
+            <li><button type="button" class="ft-link" data-city="Cairo">Cairo</button></li>
+            <li><button type="button" class="ft-link" data-city="Rome">Rome</button></li>
+            <li><button type="button" class="ft-link" data-city="Riyadh">Riyadh</button></li>
+            <li><a href="#destinations">All destinations</a></li></ul></div>
+          <div><h3>Company</h3><ul>
+            <li><a href="https://estaie.com" target="_blank" rel="noopener">About us<span class="ext" aria-label="opens estaie.com"></span></a></li>
+            <li><a href="#why">How it works</a></li>
+            <li><a href="https://estaie.com" target="_blank" rel="noopener">Corporates<span class="ext" aria-label="opens estaie.com"></span></a></li>
+            <li><a href="https://estaie.com" target="_blank" rel="noopener">Blog<span class="ext" aria-label="opens estaie.com"></span></a></li></ul></div>
+          <div><h3>Inquire</h3><ul>
+            <li><a href="https://estaie.com" target="_blank" rel="noopener">Partners<span class="ext" aria-label="opens estaie.com"></span></a></li>
+            <li><a href="https://estaie.com" target="_blank" rel="noopener">Investors<span class="ext" aria-label="opens estaie.com"></span></a></li></ul></div>
+          <div><h3>Support</h3><ul>
+            <li><a href="#faq">Help &amp; FAQ</a></li>
+            <li><button type="button" class="ft-link" data-open="care-dialog">Contact</button></li></ul></div>
+        </nav>
+      </div>
+      <div class="ft-offices">
+        <address><b>estaie Tech LLC</b>Office 10, In5 Media, Dubai Production City<br>Dubai, UAE</address>
+        <address><b>estaie Tech FZE</b>Building 7930, King Abdul Aziz, Al Sahafah District<br>Riyadh, KSA</address>
+        <address><b>estaie Holding LTD</b>Office 7, Level 15, WeWork, Hub71, ADGM<br>Abu Dhabi, UAE</address>
+      </div>
+      <div class="ft-bottom">
+        <p>© 2026 estaie. All rights reserved.</p>
+        <ul class="ft-legal">
+          <li><a href="https://estaie.com" target="_blank" rel="noopener">Privacy Policy</a></li>
+          <li><a href="https://estaie.com" target="_blank" rel="noopener">Terms &amp; Conditions</a></li>
+          <li><a href="https://estaie.com" target="_blank" rel="noopener">Cookie Policy</a></li>
+          <li><a href="https://estaie.com" target="_blank" rel="noopener">Payments &amp; Cancellation Policy</a></li>
+        </ul>
+        <button type="button" class="ft-top-btn" id="to-top">Back to top <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-5 5 5-5 5 5"/></svg></button>
+      </div>
+      <p class="ft-fine">This preview holds captured Dubai rates only. It shows no review scores, guest counts, or savings claims. Deposits appear only when a property supplies one. The “up to 32%” line on the current site is illustrative.</p>
+    </div>
+  </footer>
+</main>
+
+<form class="float-search" id="float" data-visible="false" role="search" aria-label="Search stays" aria-hidden="true" inert novalidate>
+  <div class="float-row">
+    <button type="button" class="seg wide" data-panel="where" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6.5-5.2 6.5-10.2A6.5 6.5 0 0 0 5.5 10.8C5.5 15.8 12 21 12 21Z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span class="t"><small>Where</small><span data-val="where" class="ph">City, area, or hotel</span></span></button>
+    <button type="button" class="seg party" data-panel="party" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19c.8-3.2 3.2-4.8 6.2-4.8s5.4 1.6 6.2 4.8"/><circle cx="17" cy="9" r="2.4"/><path d="M15.2 14.4c2 .4 3.6 1.6 4.4 4.6"/></svg><span class="t"><small>Stay type and guests</small><span data-val="party">Any type · 2 adults, 1 room</span></span></button>
+    <button type="button" class="seg len" data-panel="length" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A7.6 7.6 0 0 1 9.4 4.5a7.6 7.6 0 1 0 10.1 10.1Z"/></svg><span class="t"><small>Length</small><span data-val="length" class="ph">Choose length</span></span></button>
+    <button type="button" class="describe" data-panel="describe" aria-haspopup="dialog" aria-expanded="false" aria-label="Describe a stay" title="Describe a stay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9 12 3.5Zm6.5 11.5.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></svg><span>Describe</span></button>
+    <button type="submit" class="submit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="spin" aria-hidden="true"></span><span class="lbl">Search stays</span></button>
+  </div>
+  <p class="float-caption" style="margin:0"><span>No annual lease</span><i></i><span>Bills included, priced up front</span><i></i><span>Cancellation terms before you confirm</span><i></i><span>24/7 Estaiecare for booked guests</span></p>
+  <p class="hs-error float-error" role="alert" hidden></p>
+</form>
+
+<button class="chip" id="chip" type="button" data-visible="true" data-panel="describe" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9 12 3.5Zm6.5 11.5.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></svg>Describe a stay</button>
+
+<!-- One popover serves every search surface; it is placed next to whichever field opened it. -->
+<div class="pop" id="pop" role="dialog" aria-modal="false" aria-label="Search" hidden>
+  <div class="pop-panel" data-for="where">
+    <label class="pop-field"><span class="sr">Where</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="pop-q" type="text" autocomplete="off" placeholder="City, area, or hotel" aria-controls="pop-cities"></label>
+    <p class="pop-k">Destinations</p>
+    <ul class="pop-cities" id="pop-cities" role="listbox" aria-label="Destinations"></ul>
+    <p class="pop-empty" hidden>No matching city in this preview.</p>
+  </div>
+  <div class="pop-panel" data-for="party">
+    <p class="pop-k">Accommodation</p>
+    <div class="pop-types" role="radiogroup" aria-label="Stay type"></div>
+    <div class="pop-step"><span>Adults</span><div><button type="button" data-step="adults" data-d="-1" aria-label="Fewer adults">−</button><output id="pop-adults">2</output><button type="button" data-step="adults" data-d="1" aria-label="More adults">+</button></div></div>
+    <div class="pop-step"><span>Rooms</span><div><button type="button" data-step="rooms" data-d="-1" aria-label="Fewer rooms">−</button><output id="pop-rooms">1</output><button type="button" data-step="rooms" data-d="1" aria-label="More rooms">+</button></div></div>
+    <button type="button" class="pop-next" data-goto="length">Continue to length <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+  </div>
+  <div class="pop-panel" data-for="length">
+    <p class="pop-note">Nothing is selected until you choose. Extended stays are 15–29 nights. Monthly living starts at 30 nights.</p>
+    <div class="pop-presets" role="radiogroup" aria-label="Stay length">
+      <button type="button" role="radio" data-n="15" aria-checked="false"><b>15</b> nights<small>Extended stay · minimum</small></button>
+      <button type="button" role="radio" data-n="30" aria-checked="false"><b>30</b> nights<small>Monthly living</small></button>
+      <button type="button" role="radio" data-n="90" aria-checked="false"><b>90</b> nights<small>Monthly living</small></button>
+      <button type="button" role="radio" data-n="365" aria-checked="false"><b>365</b> nights<small>Monthly living</small></button>
+    </div>
+    <div class="pop-dates">
+      <div class="pop-dates-row"><label>Check in<input type="date" id="pop-in"></label><label>Check out<input type="date" id="pop-out"></label></div>
+      <p class="pop-sum" id="pop-date-sum" aria-live="polite"></p>
+      <p class="pop-err" id="pop-date-err" role="alert" hidden></p>
+      <button type="button" class="pop-next" id="pop-use-dates">Done</button>
+    </div>
+  </div>
+  <div class="pop-panel" data-for="describe">
+    <label class="pop-k" for="pop-desc">Describe the stay you're looking for</label>
+    <textarea id="pop-desc" rows="3" placeholder="A quiet apartment for remote work, a furnished place near the centre, a monthly stay for a couple…"></textarea>
+    <p class="pop-err" id="pop-desc-msg" role="status" hidden></p>
+    <button type="button" class="pop-next" id="pop-ask"><span class="spin" aria-hidden="true"></span><span class="lbl">Ask Estaie</span></button>
+  </div>
+</div>
+
+<div class="dlg-back" id="dlg-back" hidden></div>
+<div class="dlg" id="care-dialog" role="dialog" aria-modal="true" aria-labelledby="care-dlg-title" hidden>
+  <button type="button" class="dlg-x" data-close aria-label="Close">×</button>
+  <span class="dlg-mark" aria-hidden="true"><img src="img/logo-light.svg" alt=""></span>
+  <h2 id="care-dlg-title">Talk to Estaiecare</h2>
+  <p>Estaiecare is a real person you can reach before you book, during your stay, and after. Live chat and calls aren't connected in this preview, so nothing you type here is sent.</p>
+  <p class="dlg-k"><span class="live" aria-hidden="true"></span>24/7 for booked guests</p>
+  <div class="dlg-actions"><a class="btn-sun" href="https://estaie.com" target="_blank" rel="noopener">Help on estaie.com <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><button type="button" class="btn-line" data-close>Close</button></div>
+</div>
+<div class="dlg" id="account-dialog" role="dialog" aria-modal="true" aria-labelledby="acc-dlg-title" hidden>
+  <button type="button" class="dlg-x" data-close aria-label="Close">×</button>
+  <h2 id="acc-dlg-title">Your account</h2>
+  <p>Sign in and bookings need the Estaie account service, which isn't connected in this preview.</p>
+  <div class="dlg-actions"><button type="button" class="btn-line" data-close>Close</button></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<div class="debug" id="debug"></div>
+
+<script>
+/* =================== Money: one place for currency, rates and formatting ===================
+   The captured quotes come in EGP (online totals) and in the property's own currency (local tax).
+   There was no exchange-rate data in the project, so this is a dated reference snapshot:
+     USD→EGP 53.46  National Bank of Egypt selling rate, 12 Nov 2026 (reported by Arab Finance)
+     USD→AED 3.6725 Central Bank of the UAE fixed peg · USD→SAR 3.75 Saudi Central Bank fixed peg
+     EUR→USD 1.1127, EUR→GBP 0.83618  ECB euro reference rates, 11 Nov 2026
+   Replace RATES with a live rates feed in production; everything else reads from here.            */
+(() => {
+  const RATES = { USD: 1, EGP: 53.46, AED: 3.6725, SAR: 3.75, EUR: 1 / 1.1127, GBP: 0.83618 / 1.1127 };
+  const ASOF = '11–12 Nov 2026';
+  let current = 'EGP';
+  try { const c = localStorage.getItem('estaie-currency'); if (c && RATES[c]) current = c; } catch (e) {}
+  const convert = (amount, from, to = current) => amount / RATES[from] * RATES[to];
+  // Totals: whole units. Small amounts (taxes): whole EGP, otherwise up to 2 decimals.
+  const num = (v, cur, small) => { const r = small && cur !== 'EGP' ? Math.round(v * 100) / 100 : Math.round(v); const d = Number.isInteger(r) ? 0 : 2; return r.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  window.estaieFX = {
+    RATES, ASOF,
+    get code() { return current; },
+    set(code) { if (!RATES[code] || code === current) return; current = code; window.dispatchEvent(new CustomEvent('estaie:currency', { detail: code })); },
+    convert,
+    // value in the selected currency, rounded the way it will be shown
+    value: (amount, from, small) => { const v = convert(amount, from); return small && current !== 'EGP' ? Math.round(v * 100) / 100 : Math.round(v); },
+    text: (amount, from, small) => `${current} ${num(convert(amount, from), current, small)}`,
+    num: (amount, from, small) => num(convert(amount, from), current, small)
+  };
+})();
+</script>
+<script>
+/* ---------- Header and floating search: hide on the way down, return on the way up ---------- */
+(() => {
+  const nav = document.getElementById('nav');
+  const bar = document.getElementById('float');
+  const chip = document.getElementById('chip');
+  const sentinel = document.getElementById('hero-search');
+  const debug = document.getElementById('debug');
+  const hero = document.querySelector('.hero');
+  const links = [...nav.querySelectorAll('.dock-nav a')];
+  const NAV_BOTTOM = 86;
+  const TOP = 160;          // always shown above this
+  const HIDE_AFTER = 24;    // px of continuous downward travel before hiding
+  const SHOW_AFTER = 10;    // px of continuous upward travel before revealing
+  let lastY = window.scrollY, travelled = 0, hidden = false, frame = 0;
+
+  const engaged = () => nav.matches(':focus-within') || document.getElementById('currency').dataset.open === 'true' || bar.matches(':focus-within') || bar.matches(':hover');
+
+  function read() {
+    frame = 0;
+    const y = window.scrollY;
+    const delta = y - lastY;
+    lastY = y;
+    if (y <= TOP) { travelled = 0; hidden = false; }
+    else if (Math.abs(delta) >= 1) {
+      travelled = Math.sign(delta) === Math.sign(travelled) ? travelled + delta : delta;
+      if (travelled > HIDE_AFTER) hidden = true;
+      else if (travelled < -SHOW_AFTER) hidden = false;
+    }
+    if (engaged()) hidden = false;
+    const heroLeft = sentinel.getBoundingClientRect().bottom < NAV_BOTTOM + 10;
+    const overPhoto = hero.getBoundingClientRect().bottom > NAV_BOTTOM;
+
+    nav.dataset.hidden = hidden;
+    nav.dataset.tone = overPhoto ? 'overlay' : 'solid';
+    nav.dataset.scrolled = !overPhoto;
+    if (forced && Math.abs(delta) > 0 && hidden) forced = false;
+    const barOn = (heroLeft || forced) && !hidden;
+    bar.dataset.visible = barOn;
+    bar.toggleAttribute('inert', !barOn);
+    bar.setAttribute('aria-hidden', !barOn);
+    chip.dataset.visible = !heroLeft;
+
+    const line = window.innerHeight * 0.4; let owner = y < window.innerHeight * 0.6 ? 'explore' : null;
+    for (const id of ['explore','why','moving','realrate','monthly','destinations','care']) {
+      const r = document.getElementById(id).getBoundingClientRect();
+      if (r.top <= line && r.bottom > line) owner = {why:'explore',moving:'explore',destinations:'explore'}[id] || id;
+    }
+    links.forEach(a => a.dataset.owner === owner ? a.setAttribute('aria-current','location') : a.removeAttribute('aria-current'));
+    debug.textContent = `scrollY ${Math.round(y)} · travelled ${Math.round(travelled)}\nnav ${hidden ? 'hidden' : 'shown'} · ${nav.dataset.tone}\nhero search ${heroLeft ? 'scrolled away' : 'on screen'}\nfloating search ${barOn ? 'shown' : 'hidden'}`;
+  }
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(read); };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  nav.addEventListener('focusin', schedule); bar.addEventListener('focusin', schedule);
+  // Another section can ask for the search (for example after choosing a length): reveal it even mid-page.
+  let forced = false;
+  window.addEventListener('estaie:open-search', () => { forced = true; hidden = false; travelled = 0; read(); });
+  read();
+
+  // Keep the header visible while the currency menu is open (the menu itself lives in app.js).
+  const curEl = document.getElementById('currency');
+  new MutationObserver(() => { if (curEl.dataset.open === 'true') { hidden = false; schedule(); } }).observe(curEl, { attributes: true, attributeFilter: ['data-open'] });
+  bar.addEventListener('submit', e => e.preventDefault());
+  document.getElementById('final-cta').addEventListener('click', e => { e.preventDefault(); window.estaieOpenPanel('where'); });
+  addEventListener('keydown', e => { if (e.target.closest && e.target.closest('input,textarea,select,[contenteditable]')) return; if ((e.key === 'd' || e.key === 'D') && !e.metaKey && !e.ctrlKey && !e.altKey) debug.classList.toggle('on'); });
+})();
+
+/* ---------- Monthly living: one length picker that feeds the search ---------- */
+(() => {
+  const sec = document.getElementById('monthly');
+  const stops = [...sec.querySelectorAll('.ml-stop')];
+  const months = document.getElementById('ml-months');
+  for (let i = 0; i < 12; i++) { const m = document.createElement('i'); m.style.setProperty('--i', i); months.appendChild(m); }
+  const bars = [...months.children];
+  const result = document.getElementById('ml-result'), note = document.getElementById('ml-note');
+  const ctaText = document.getElementById('ml-cta-text');
+  let nights = 30;
+  function pick(n, focus) {
+    nights = n;
+    stops.forEach(b => { const on = +b.dataset.n === n; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
+    const band = n < 30 ? 'extended' : 'monthly';
+    sec.dataset.band = band;
+    const stop = stops.find(b => +b.dataset.n === n);
+    document.getElementById('ml-chip-name').textContent = stop.dataset.name === 'Extended stay' ? 'Two weeks and more' : stop.dataset.name;
+    document.getElementById('ml-chip-n').textContent = `${n} nights`;
+    const filled = Math.min(12, n / 30);           // one bar per month
+    bars.forEach((b, i) => b.style.setProperty('--f', Math.max(0, Math.min(1, filled - i)).toFixed(2)));
+    result.innerHTML = band === 'monthly'
+      ? `<b>${n} nights is monthly living</b>, priced like a month.`
+      : `<b>${n} nights is an extended stay</b>, priced for the stay.`;
+    note.textContent = band === 'monthly' ? 'A monthly equivalent appears when a real rate exists.' : 'No monthly comparison for extended stays.';
+    ctaText.textContent = `Plan ${n} nights`;
+  }
+  stops.forEach((b, i) => {
+    b.addEventListener('click', () => pick(+b.dataset.n));
+    b.addEventListener('keydown', e => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      let j = step ? (i + step + stops.length) % stops.length : e.key === 'Home' ? 0 : e.key === 'End' ? stops.length - 1 : null;
+      if (j !== null) { e.preventDefault(); pick(+stops[j].dataset.n, true); }
+    });
+  });
+  // "Plan N nights" carries the length into the search and opens it at Where.
+  document.getElementById('ml-cta').addEventListener('click', () => { window.estaieSetNights(nights); window.estaieOpenPanel('where'); });
+  pick(30);
+})();
+
+/* ---------- Why Estaie: one apartment, four demonstrations ---------- */
+(() => {
+  const xp = document.getElementById('xp');
+  const scene = document.getElementById('scene');
+  const tabs = [...xp.querySelectorAll('[role=tab]')];
+  const caption = document.getElementById('scene-caption');
+  const totalEl = document.getElementById('total');
+  const care = document.getElementById("care-chat");
+  const todBtns = [...scene.querySelectorAll('.tod-ctrl button')];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const TOD_TEXT = { summer: 'summer: bright sun, blue sky and green trees', autumn: 'autumn: amber light and golden foliage', winter: 'winter: cool daylight and snow outside', spring: 'spring: fresh greenery in blossom' };
+  const CAPTIONS = {
+    ready: 'Move-in ready: the curtains open, the lights come on and the furnished apartment is ready from day one.',
+    pricing: 'Transparent pricing: a captured Real Rate with accommodation and bills in the online total, and local tax shown separately.',
+    support: 'Real support: Estaiecare answers a guest, available 24/7 for booked guests.'
+  };
+  const timers = new Set();
+  const later = (fn, ms) => { const t = setTimeout(() => { timers.delete(t); fn(); }, ms); timers.add(t); };
+  const clearAll = () => { timers.forEach(clearTimeout); timers.clear(); };
+
+  // Snow falls only inside the window glass.
+  const snow = document.getElementById('snow');
+  for (let i = 0; i < 46; i++) {
+    const f = document.createElement('i'), s = 1.5 + Math.random() * 3;
+    f.style.left = `${Math.random() * 100}%`; f.style.width = f.style.height = `${s}px`;
+    f.style.opacity = (.45 + Math.random() * .5).toFixed(2);
+    f.style.setProperty('--dx', `${(Math.random() * 24 - 8).toFixed(0)}px`);
+    f.style.animationDuration = `${(5 + Math.random() * 6).toFixed(1)}s`;
+    f.style.animationDelay = `-${(Math.random() * 10).toFixed(1)}s`;
+    snow.appendChild(f);
+  }
+
+  let tod = 'summer';
+  function setTod(next) {
+    tod = next; scene.dataset.tod = next;
+    todBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.tod === next));
+    if (scene.dataset.feature === 'flexible') caption.textContent = `Flexible stays: the same apartment in ${TOD_TEXT[next]}.`;
+  }
+  todBtns.forEach(b => b.addEventListener('click', () => setTod(b.dataset.tod)));
+
+  function countUp(el, to, ms) {
+    if (reduce.matches) { el.textContent = to.toLocaleString('en-US'); return; }
+    const t0 = performance.now(), ease = t => 1 - Math.pow(1 - t, 3);
+    const step = t => { const k = Math.min(1, (t - t0) / ms); el.textContent = Math.round(to * ease(k)).toLocaleString('en-US'); if (k < 1 && scene.dataset.feature === 'pricing') requestAnimationFrame(step); else if (k < 1) el.textContent = to.toLocaleString('en-US'); };
+    requestAnimationFrame(step);
+  }
+
+  function select(feature, { focus = false } = {}) {
+    clearAll();
+    tabs.forEach(t => { const on = t.dataset.feature === feature; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+    scene.setAttribute('aria-labelledby', `tab-${feature}`);
+    scene.dataset.feature = feature;
+    // Only the overlay for the selected feature can be reached by touch, pointer, keyboard or a screen reader.
+    const owner = { flexible: '.tod-ctrl', ready: '.tag-ready', pricing: '.price', support: '.care' }[feature];
+    scene.querySelectorAll('.hud > *').forEach(el => { const on = el.matches(owner); el.toggleAttribute('inert', !on); el.setAttribute('aria-hidden', !on); });
+    // Every other feature is shown in the daytime room; Flexible stays keeps the visitor's last choice.
+    scene.dataset.tod = feature === 'flexible' ? tod : 'summer';
+    caption.textContent = feature === 'flexible' ? `Flexible stays: the same apartment in ${TOD_TEXT[tod]}.` : CAPTIONS[feature];
+
+    if (feature === 'ready' && !reduce.matches) {
+      scene.dataset.ready = 'dark';                         // subdued room, curtains drawn
+      later(() => scene.dataset.ready = 'lights', 450);      // lights switch on
+      later(() => scene.dataset.ready = 'open', 1050);       // curtains open, daylight fills the room
+      later(() => scene.dataset.ready = 'done', 2300);       // "Ready from day one."
+    } else scene.dataset.ready = 'done';
+
+    if (feature === 'pricing') { totalEl.textContent = '0'; later(() => countUp(totalEl, estaieFX.value(159443, 'EGP'), 900), reduce.matches ? 0 : 640); }
+
+    if (feature === 'support') {
+      if (reduce.matches) care.dataset.step = '3';
+      else { care.dataset.step = '0'; later(() => care.dataset.step = '1', 600); later(() => care.dataset.step = '2', 1250); later(() => care.dataset.step = '3', 2350); }
+    } else care.dataset.step = '0';
+  }
+
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t.dataset.feature));
+    t.addEventListener('keydown', e => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      let j = step ? (i + step + tabs.length) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
+      if (j !== null) { e.preventDefault(); select(tabs[j].dataset.feature, { focus: true }); }
+    });
+  });
+
+  // Entrance on scroll into view.
+  if (reduce.matches || !('IntersectionObserver' in window)) xp.classList.add('in');
+  else { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { xp.classList.add('in'); io.disconnect(); } }, { threshold: .2 }); io.observe(xp); }
+  select('flexible');
+})();
+/* =================== Site: search, overlays, sections =================== */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const fmt = n => n.toLocaleString('en-US');
+
+  /* ---------- Toast ---------- */
+  const toastEl = $('#toast'); let toastT;
+  window.estaieToast = (msg, ms = 4200) => {
+    toastEl.textContent = msg; toastEl.hidden = false; requestAnimationFrame(() => toastEl.classList.add('open'));
+    clearTimeout(toastT); toastT = setTimeout(() => { toastEl.classList.remove('open'); setTimeout(() => toastEl.hidden = true, 300); }, ms);
+  };
+
+  /* ---------- Dialogs ---------- */
+  const back = $('#dlg-back'); let openDlg = null, lastFocus = null;
+  function showDialog(id) {
+    const d = document.getElementById(id); if (!d) return;
+    lastFocus = document.activeElement; openDlg = d;
+    back.hidden = false; d.hidden = false;
+    requestAnimationFrame(() => { back.classList.add('open'); d.classList.add('open'); });
+    (d.querySelector('[data-close].btn-line') || d.querySelector('button,a')).focus();
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeDialog() {
+    if (!openDlg) return; const d = openDlg; openDlg = null;
+    back.classList.remove('open'); d.classList.remove('open');
+    setTimeout(() => { back.hidden = true; d.hidden = true; }, 300);
+    document.documentElement.style.overflow = '';
+    lastFocus && lastFocus.focus();
+  }
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-open]'); if (o) { e.preventDefault(); showDialog(o.dataset.open); }
+    if (e.target.closest('[data-close]') || e.target === back) closeDialog();
+  });
+  document.addEventListener('keydown', e => {
+    if (!openDlg) return;
+    if (e.key === 'Escape') closeDialog();
+    if (e.key === 'Tab') { // keep focus inside the dialog
+      const f = $$('button,a[href],input,textarea', openDlg); const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  $('.account').addEventListener('click', () => showDialog('account-dialog'));
+
+  /* ---------- Search state (shared by the hero search and the floating bar) ---------- */
+  const CITIES = [['Dubai','United Arab Emirates'],['Cairo','Egypt'],['London','United Kingdom'],['Rome','Italy'],['Riyadh','Saudi Arabia'],['Paris','France'],['Lisbon','Portugal'],['Barcelona','Spain'],['Amsterdam','Netherlands']];
+  const TYPES = ['Any type','Hotel','Serviced apartment','Studio','Furnished home'];
+  const S = { city: null, type: 'Any type', adults: 2, rooms: 1, nights: null, dates: null };
+  window.estaieSearch = S;
+  const partyText = () => `${S.type} · ${S.adults} ${S.adults === 1 ? 'adult' : 'adults'}, ${S.rooms} ${S.rooms === 1 ? 'room' : 'rooms'}`;
+  const lengthText = () => S.dates ? `${S.nights} nights · ${S.dates.label}` : (S.nights ? `${S.nights} nights` : 'Choose length');
+  function render() {
+    $$('[data-val="where"]').forEach(el => { el.textContent = S.city || 'City, area, or hotel'; el.classList.toggle('ph', !S.city); });
+    $$('[data-val="party"]').forEach(el => el.textContent = partyText());
+    $$('[data-val="length"]').forEach(el => { el.textContent = lengthText(); el.classList.toggle('ph', !S.nights); });
+    if (S.city) $$('.seg[data-panel="where"]').forEach(s => s.classList.remove('is-invalid'));
+    if (S.nights) $$('.seg[data-panel="length"]').forEach(s => s.classList.remove('is-invalid'));
+    $$('.hs-error').forEach(err => { // keep a visible error in step with what is still missing
+      if (err.hidden) return;
+      const missing = [];
+      if (!S.city) missing.push('Choose a destination.');
+      if (!S.nights) missing.push('Choose a stay length. The minimum is 15 nights.');
+      if (missing.length) err.textContent = 'Search needs a few choices. ' + missing.join(' '); else err.hidden = true;
+    });
+  }
+  window.estaieSetNights = n => { S.nights = n; S.dates = null; render(); if (window.estaieSyncDates) estaieSyncDates(); };
+  window.estaieSetCity = c => { S.city = c; render(); };
+
+  /* ---------- Popover ---------- */
+  const pop = $('#pop'); let popAnchor = null;
+  const q = $('#pop-q'), list = $('#pop-cities'), empty = $('.pop-empty', pop);
+  const pinSvg = '<svg viewBox="0 0 24 24"><path d="M12 21s6.5-5.2 6.5-10.2A6.5 6.5 0 0 0 5.5 10.8C5.5 15.8 12 21 12 21Z"/><circle cx="12" cy="10.5" r="2.2"/></svg>';
+  function renderCities() {
+    const term = q.value.trim().toLowerCase();
+    const items = CITIES.filter(([c, k]) => !term || c.toLowerCase().includes(term) || k.toLowerCase().includes(term));
+    list.innerHTML = items.map(([c, k], i) => `<li role="option" id="city-${c}" data-city="${c}" aria-selected="${S.city === c}" ${i === 0 && term ? 'class="kb"' : ''}><span class="pin">${pinSvg}</span><span><b>${c}</b><small>${k}</small></span>${c === 'Dubai' ? '<span class="tagx">Example rates</span>' : ''}</li>`).join('');
+    empty.hidden = items.length > 0;
+  }
+  const typesEl = $('.pop-types', pop);
+  typesEl.innerHTML = TYPES.map(t => `<button type="button" role="radio" aria-checked="${t === S.type}" data-type="${t}">${t}</button>`).join('');
+  function syncParty() {
+    $$('button', typesEl).forEach(b => b.setAttribute('aria-checked', b.dataset.type === S.type));
+    $('#pop-adults').textContent = S.adults; $('#pop-rooms').textContent = S.rooms;
+    $$('[data-step]', pop).forEach(b => { const v = S[b.dataset.step], d = +b.dataset.d, max = b.dataset.step === 'adults' ? 8 : 4; b.disabled = (d < 0 && v <= 1) || (d > 0 && v >= max); });
+  }
+  function syncLength() { $$('.pop-presets button', pop).forEach(b => b.setAttribute('aria-checked', +b.dataset.n === S.nights)); if (window.estaieSyncDates) estaieSyncDates(); }
+
+  function placePop() {
+    if (!popAnchor) return;
+    const r = popAnchor.getBoundingClientRect(), w = Math.min(380, innerWidth - 24);
+    const inBar = !!popAnchor.closest('#float');
+    let left = Math.min(Math.max(12, r.left), innerWidth - w - 12);
+    pop.style.left = left + 'px'; pop.style.width = w + 'px';
+    const above = r.top - 22, below = innerHeight - r.bottom - 22;
+    const up = inBar || (below < 360 && above > below);
+    pop.style.maxHeight = Math.max(220, up ? above : below) + 'px'; pop.style.overflowY = 'auto';
+    if (up) { pop.style.top = ''; pop.style.bottom = (innerHeight - r.top + 10) + 'px'; pop.classList.add('up'); }
+    else { pop.style.bottom = ''; pop.style.top = (r.bottom + 10) + 'px'; pop.classList.remove('up'); }
+  }
+  function openPop(panel, anchor) {
+    if (popAnchor) popAnchor.setAttribute('aria-expanded', 'false');
+    popAnchor = anchor; anchor.setAttribute('aria-expanded', 'true');
+    pop.dataset.panel = panel; pop.hidden = false; pop.setAttribute('aria-label', { where: 'Where', party: 'Stay type and guests', length: 'Length', describe: 'Describe a stay' }[panel]);
+    if (innerWidth < 760 && !anchor.closest('#float')) { const ar = anchor.getBoundingClientRect(); if (ar.top > 140 || ar.top < 70) scrollTo({ top: scrollY + ar.top - 90, behavior: 'auto' }); }
+    placePop(); requestAnimationFrame(() => pop.classList.add('open'));
+    if (panel === 'where') { q.value = ''; renderCities(); setTimeout(() => q.focus(), 30); }
+    if (panel === 'party') { syncParty(); setTimeout(() => $('button[aria-checked="true"]', typesEl).focus(), 30); }
+    if (panel === 'length') { syncLength(); setTimeout(() => ($('.pop-presets [aria-checked="true"]', pop) || $('.pop-presets button', pop)).focus(), 30); }
+    if (panel === 'describe') { $('#pop-desc-msg').hidden = true; setTimeout(() => $('#pop-desc').focus(), 30); }
+    if (anchor.closest('#float')) window.dispatchEvent(new CustomEvent('estaie:open-search'));
+  }
+  function closePop(refocus) {
+    if (pop.hidden) return; pop.classList.remove('open');
+    const a = popAnchor; popAnchor = null; a && a.setAttribute('aria-expanded', 'false');
+    setTimeout(() => { if (!popAnchor) pop.hidden = true; }, 220);
+    if (refocus && a) a.focus();
+  }
+  window.estaieOpenPanel = (panel) => { // open a panel on whichever search surface is on screen
+    const bar = $('#float'), heroSearch = $('#hero-search');
+    const heroVisible = heroSearch.getBoundingClientRect().bottom > 90 && heroSearch.getBoundingClientRect().top < innerHeight;
+    const host = heroVisible ? heroSearch : bar;
+    if (!heroVisible) window.dispatchEvent(new CustomEvent('estaie:open-search'));
+    setTimeout(() => openPop(panel, $(`[data-panel="${panel}"]`, host)), heroVisible ? 0 : 120);
+  };
+  document.addEventListener('click', e => {
+    if (!e.target.isConnected) return; // the click re-rendered its own target inside the popover
+    const seg = pop.contains(e.target) ? null : e.target.closest('[data-panel]');
+    if (seg) { e.preventDefault(); if (popAnchor === seg) closePop(); else openPop(seg.dataset.panel, seg); return; }
+    if (!pop.hidden && !pop.contains(e.target)) closePop();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) closePop(true); });
+  addEventListener('resize', placePop); addEventListener('scroll', () => { if (!pop.hidden) placePop(); }, { passive: true });
+
+  // Where
+  q.addEventListener('input', renderCities);
+  q.addEventListener('keydown', e => {
+    const opts = $$('li', list); if (!opts.length) return;
+    let i = opts.findIndex(o => o.classList.contains('kb'));
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); opts.forEach(o => o.classList.remove('kb')); i = e.key === 'ArrowDown' ? Math.min(opts.length - 1, i + 1) : Math.max(0, i - 1); opts[i].classList.add('kb'); q.setAttribute('aria-activedescendant', opts[i].id); opts[i].scrollIntoView({ block: 'nearest' }); }
+    if (e.key === 'Enter') { e.preventDefault(); const o = opts[Math.max(0, i)]; pickCity(o.dataset.city); }
+  });
+  list.addEventListener('click', e => { const li = e.target.closest('li'); if (li) pickCity(li.dataset.city); });
+  function pickCity(c) { S.city = c; render(); openPop('party', $('[data-panel="party"]', popAnchor.closest('form'))); }
+  // Party
+  typesEl.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; S.type = b.dataset.type; syncParty(); render(); });
+  typesEl.addEventListener('keydown', e => {
+    const bs = $$('button', typesEl), i = bs.indexOf(document.activeElement); const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (d != null && i > -1) { e.preventDefault(); const n = bs[(i + d + bs.length) % bs.length]; n.focus(); S.type = n.dataset.type; syncParty(); render(); }
+  });
+  $$('[data-step]', pop).forEach(b => b.addEventListener('click', () => { const k = b.dataset.step, max = k === 'adults' ? 8 : 4; S[k] = Math.min(max, Math.max(1, S[k] + +b.dataset.d)); syncParty(); render(); }));
+  $('[data-goto="length"]', pop).addEventListener('click', () => openPop('length', $('[data-panel="length"]', popAnchor.closest('form'))));
+  // Length
+  // Length: nights and dates are one value. Picking nights fills the dates; picking dates sets the nights.
+  const din = $('#pop-in'), dout = $('#pop-out'), derr = $('#pop-date-err'), dsum = $('#pop-date-sum');
+  const DAY = 864e5, iso = d => d.toISOString().slice(0, 10), parse = v => v ? new Date(v + 'T00:00:00Z') : null;
+  const todayUTC = () => { const t = new Date(); return new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate())); };
+  const fmtD = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  const fmtY = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  din.min = iso(todayUTC());
+  function setLimits() { const a = parse(din.value); dout.min = iso(new Date((a || todayUTC()).getTime() + 15 * DAY)); dout.max = iso(new Date((a || todayUTC()).getTime() + 365 * DAY)); }
+  function commit(a, n) { // a = check-in date, n = nights
+    const b = new Date(a.getTime() + n * DAY);
+    S.nights = n; S.dates = { in: iso(a), out: iso(b), label: `${fmtD(a)} – ${fmtD(b)}` };
+    din.value = S.dates.in; dout.value = S.dates.out; setLimits();
+    derr.hidden = true; dsum.innerHTML = `<b>${n} nights</b> · ${fmtY(a)} to ${fmtY(b)}`;
+    $$('.pop-presets button', pop).forEach(x => x.setAttribute('aria-checked', +x.dataset.n === n));
+    render();
+  }
+  window.estaieSyncDates = () => {
+    if (S.dates) { din.value = S.dates.in; dout.value = S.dates.out; setLimits(); dsum.innerHTML = `<b>${S.nights} nights</b> · ${fmtY(parse(S.dates.in))} to ${fmtY(parse(S.dates.out))}`; }
+    else if (S.nights) commit(parse(din.value) || todayUTC(), S.nights);
+    else { setLimits(); dsum.textContent = 'Pick a length, or choose a check-in and check-out for a custom stay (15 to 365 nights).'; }
+  };
+  $$('.pop-presets button', pop).forEach(b => b.addEventListener('click', () => commit(parse(din.value) || todayUTC(), +b.dataset.n)));
+  din.addEventListener('change', () => {
+    const a = parse(din.value); if (!a) return;
+    if (S.nights) { commit(a, S.nights); return; }
+    setLimits(); dsum.textContent = 'Now choose a check-out, at least 15 nights later.';
+    if (dout.showPicker) try { dout.focus(); } catch (e) {}
+  });
+  dout.addEventListener('change', () => {
+    const a = parse(din.value), b = parse(dout.value); let msg = '';
+    if (!a) msg = 'Choose a check-in first.';
+    else if (!b || b <= a) msg = 'Check-out needs to be after check-in.';
+    const n = a && b ? Math.round((b - a) / DAY) : 0;
+    if (!msg && n < 15) msg = 'Estaie stays start at 15 nights. Choose a later check-out.';
+    if (!msg && n > 365) msg = 'Monthly living runs up to 365 nights. Choose an earlier check-out.';
+    if (msg) { derr.textContent = msg; derr.hidden = false; return; }
+    commit(a, n);
+  });
+  $('#pop-use-dates').addEventListener('click', () => {
+    if (!S.nights) { derr.textContent = 'Pick a length or choose your dates.'; derr.hidden = false; return; }
+    closePop(true);
+  });
+  // Describe (discovery search is not connected: say so honestly)
+  $('#pop-ask').addEventListener('click', () => {
+    const t = $('#pop-desc').value.trim(), m = $('#pop-desc-msg'), btn = $('#pop-ask');
+    if (!t) { m.textContent = 'Describe the stay, or use the booking search.'; m.className = 'pop-err'; m.hidden = false; return; }
+    btn.classList.add('is-busy'); $('.lbl', btn).textContent = 'Asking…';
+    setTimeout(() => { btn.classList.remove('is-busy'); $('.lbl', btn).textContent = 'Ask Estaie'; m.textContent = 'Discovery search is not connected in this preview. Use the booking search to continue.'; m.className = 'pop-err ok'; m.hidden = false; }, 700);
+  });
+
+  /* ---------- Submit: validate, show a loading state, then real results from the captured set ---------- */
+  function submit(form) {
+    const err = $('.hs-error', form); const missing = [];
+    if (!S.city) missing.push('Choose a destination.');
+    if (!S.nights) missing.push('Choose a stay length. The minimum is 15 nights.');
+    $$('.seg[data-panel="where"]', form).forEach(s => s.classList.toggle('is-invalid', !S.city));
+    $$('.seg[data-panel="length"]', form).forEach(s => s.classList.toggle('is-invalid', !S.nights));
+    if (missing.length) { err.textContent = 'Search needs a few choices. ' + missing.join(' '); err.hidden = false; openPop(!S.city ? 'where' : 'length', $(`[data-panel="${!S.city ? 'where' : 'length'}"]`, form)); return; }
+    err.hidden = true; closePop();
+    const btn = $('.submit', form); btn.classList.add('is-busy'); $('.lbl', btn).textContent = 'Searching…'; btn.disabled = true;
+    setTimeout(() => {
+      btn.classList.remove('is-busy'); $('.lbl', btn).textContent = 'Search stays'; btn.disabled = false;
+      window.estaieShowResults(); document.getElementById('explore').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth' });
+    }, 650);
+  }
+  $$('#hero-search, #float').forEach(f => f.addEventListener('submit', e => { e.preventDefault(); submit(f); }));
+
+  /* ---------- Explore stays ---------- */
+  const STAYS = [
+    { id: 'marriott', img: 'p-ex1', type: 'Hotel', name: 'Marriott Marquis Dubai Creek', room: 'City deluxe room, twin', total: 104152, tax: [300, 'AED'] },
+    { id: 'nasma', img: 'p-ex2', type: 'Serviced apartment', name: 'Nasma Luxury Stays — The Nook 1', room: 'Deluxe apartment, 2 king beds', total: 159443, tax: [150, 'AED'] },
+    { id: 'cheval', img: 'p-ex3', type: 'Studio', name: 'Cheval Maison Expo City Dubai', room: 'Luxury studio apartment', total: 178785, tax: [300, 'AED'] },
+    { id: 'westminster', img: 'p-ex4', type: 'Studio', name: 'Westminster Dubai Mall', room: 'Premier studio with a partial Burj Khalifa view', total: 188319, tax: null },
+    { id: 'residences', img: 'p-ex5', type: 'Serviced apartment', name: 'The Residences 601', room: 'Executive apartment, 1 king and 1 queen', total: 340019, tax: [700, 'AED'] },
+    { id: 'mandarin', img: 'p-ex6', type: 'Hotel', name: 'Mandarin Oriental Downtown, Dubai', room: 'Superior room, 1 king bed', total: 509122, tax: [81.69, 'USD'] }];
+  const track = $('#ex-track'), exEmpty = $('#ex-empty'), exRes = $('#ex-results');
+  function card(s) {
+    return `<article class="stay"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-rep">Representative image</span>
+      <div class="stay-txt"><small>${s.type} · Dubai</small><b>${s.name}</b><span>${s.room}</span></div></div>
+      <div class="stay-price"><small>Captured 15-night total</small><b><i>${estaieFX.code}</i>${estaieFX.num(s.total, 'EGP')}</b><span>${s.tax ? `+ ${estaieFX.text(s.tax[0], s.tax[1], true)} local tax, paid at the property` : 'No property tax in the captured quote'}</span></div></article>`;
+  }
+  let shown = STAYS;
+  window.addEventListener('estaie:currency', () => { const x = track.scrollLeft; track.innerHTML = shown.map(card).join(''); track.scrollLeft = x; });
+  function showStays(items) { shown = items; track.innerHTML = items.map(card).join(''); track.hidden = !items.length; track.scrollLeft = 0; updateArrows(track, $('#ex-prev'), $('#ex-next')); }
+  showStays(STAYS);
+  window.estaieShowResults = () => {
+    const head = `${S.city} · ${lengthText()} · ${S.adults} ${S.adults === 1 ? 'adult' : 'adults'}`;
+    exRes.hidden = false;
+    if (S.city !== 'Dubai') {
+      exRes.textContent = head; showStays([]);
+      exEmpty.innerHTML = `<b>No stays in this preview</b>${S.city} is a real Estaie destination, but this preview only holds captured Dubai rates. Try Dubai to see The Real Rate breakdown.`; exEmpty.hidden = false; return;
+    }
+    let items = STAYS.filter(s => S.type === 'Any type' || s.type === S.type);
+    if (S.adults !== 2 || S.rooms !== 1) items = [];
+    exRes.textContent = `${head} · ${items.length} ${items.length === 1 ? 'stay' : 'stays'}`;
+    if (!items.length) { exEmpty.innerHTML = '<b>No stays in this preview</b>Nothing in the captured Dubai set matches this stay type, guest count, or room count. The quotes are for 2 adults and 1 room.'; exEmpty.hidden = false; }
+    else exEmpty.hidden = true;
+    showStays(items);
+  };
+  $$('.chip-f').forEach(c => c.addEventListener('click', () => {
+    $$('.chip-f').forEach(x => x.setAttribute('aria-pressed', x === c)); exRes.hidden = true; exEmpty.hidden = true;
+    const d = c.dataset.dest;
+    if (d === 'all' || d === 'United Arab Emirates') { showStays(STAYS); return; }
+    showStays([]); exEmpty.innerHTML = `<b>No stays in ${d} yet</b>Only Dubai rates are loaded in this preview.`; exEmpty.hidden = false;
+  }));
+  $('#ex-all').addEventListener('click', e => {
+    const on = !track.classList.toggle('grid') ? false : true; e.currentTarget.setAttribute('aria-pressed', on);
+    e.currentTarget.textContent = on ? 'Show as carousel' : 'View all stays';
+    $('#ex-prev').hidden = $('#ex-next').hidden = on; updateArrows(track, $('#ex-prev'), $('#ex-next'));
+  });
+
+  /* ---------- Carousels: arrows, keyboard, mouse drag; touch scrolls natively ---------- */
+  function updateArrows(t, p, n) { if (!p) return; p.disabled = t.scrollLeft <= 4; n.disabled = t.scrollLeft + t.clientWidth >= t.scrollWidth - 4; }
+  function carousel(t, p, n) {
+    const step = () => { const c = t.firstElementChild; return c ? c.getBoundingClientRect().width + 24 : 300; };
+    p.addEventListener('click', () => t.scrollBy({ left: -step(), behavior: reduce.matches ? 'auto' : 'smooth' }));
+    n.addEventListener('click', () => t.scrollBy({ left: step(), behavior: reduce.matches ? 'auto' : 'smooth' }));
+    t.addEventListener('scroll', () => updateArrows(t, p, n), { passive: true });
+    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); n.click(); } if (e.key === 'ArrowLeft') { e.preventDefault(); p.click(); } });
+    let down = false, sx = 0, sl = 0, moved = false;
+    t.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || t.classList.contains('grid')) return; down = true; moved = false; sx = e.clientX; sl = t.scrollLeft; });
+    addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) { moved = true; t.classList.add('drag'); } t.scrollLeft = sl - dx; });
+    addEventListener('pointerup', () => { if (!down) return; down = false; t.classList.remove('drag'); });
+    t.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    updateArrows(t, p, n); addEventListener('resize', () => updateArrows(t, p, n));
+  }
+  carousel(track, $('#ex-prev'), $('#ex-next'));
+  carousel($('#ds-track'), $('#ds-prev'), $('#ds-next'));
+
+  /* ---------- Destinations and footer cities fill the search ---------- */
+  document.addEventListener('click', e => {
+    const c = e.target.closest('.city, .ft-link[data-city]'); if (!c) return;
+    S.city = c.dataset.city; render();
+    estaieToast(`${S.city} is set as your destination. Choose a length to search.`);
+    window.estaieOpenPanel('length');
+  });
+
+  /* ---------- What's moving you ---------- */
+  const mvItems = $$('.mv-item'), mvImgs = $$('.mv-arch img'), mvDots = $$('.mv-dots button'); let mvI = 0;
+  function mvSet(i, focusBtn) {
+    mvI = (i + 4) % 4;
+    mvItems.forEach((it, k) => { it.classList.toggle('open', k === mvI); $('.mv-btn', it).setAttribute('aria-expanded', k === mvI); });
+    mvImgs.forEach((im, k) => im.classList.toggle('on', k === mvI));
+    mvDots.forEach((d, k) => { d.setAttribute('aria-selected', k === mvI); d.tabIndex = k === mvI ? 0 : -1; });
+    if (focusBtn) $('.mv-btn', mvItems[mvI]).focus();
+  }
+  mvItems.forEach((it, k) => $('.mv-btn', it).addEventListener('click', () => mvSet(k)));
+  mvDots.forEach((d, k) => { d.addEventListener('click', () => mvSet(k)); d.addEventListener('keydown', e => { const s = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (s) { e.preventDefault(); mvSet(mvI + s); mvDots[mvI].focus(); } }); });
+  $('#mv-prev').addEventListener('click', () => mvSet(mvI - 1));
+  $('#mv-next').addEventListener('click', () => mvSet(mvI + 1));
+  mvSet(0);
+  $$('.mv-plan').forEach(b => b.addEventListener('click', () => { window.estaieSetNights(+b.dataset.nights); window.estaieOpenPanel('where'); }));
+
+  /* ---------- Real Rate CTA ---------- */
+  $('#rr-cta').addEventListener('click', () => { exRes.hidden = true; exEmpty.hidden = true; showStays(STAYS); document.getElementById('explore').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth' }); });
+
+  /* ---------- FAQ: one answer open at a time ---------- */
+  const fq = $$('.fq-item');
+  fq.forEach(it => { const b = $('button', it); if (b.getAttribute('aria-expanded') === 'true') it.classList.add('open');
+    b.addEventListener('click', () => { const open = b.getAttribute('aria-expanded') !== 'true';
+      fq.forEach(o => { o.classList.remove('open'); $('button', o).setAttribute('aria-expanded', 'false'); });
+      if (open) { it.classList.add('open'); b.setAttribute('aria-expanded', 'true'); } }); });
+
+  /* ---------- Back to top, hero CTA, final CTA open the search ---------- */
+  $('#to-top').addEventListener('click', () => scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' }));
+
+  /* ---------- Scroll reveals (once, never replayed) ---------- */
+  const rv = $$('[data-reveal]');
+  if (reduce.matches || !('IntersectionObserver' in window)) rv.forEach(el => el.classList.add('in'));
+  else { const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .12 }); rv.forEach(el => io.observe(el)); }
+
+  render();
+})();
+
+/* =================== Currency selector with flags =================== */
+(() => {
+  const FLAGS = {
+    EGP: '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#CE1126"/><rect y="4.67" width="20" height="4.67" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#000"/><circle cx="10" cy="7" r="1.5" fill="#C09300"/></svg>',
+    USD: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><g fill="#B22234"><rect width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.31" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.5" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.4" cy="1.3" r=".45"/><circle cx="3.5" cy="1.3" r=".45"/><circle cx="5.6" cy="1.3" r=".45"/><circle cx="7.4" cy="1.3" r=".45"/><circle cx="2.4" cy="3.1" r=".45"/><circle cx="4.5" cy="3.1" r=".45"/><circle cx="6.6" cy="3.1" r=".45"/><circle cx="1.4" cy="4.9" r=".45"/><circle cx="3.5" cy="4.9" r=".45"/><circle cx="5.6" cy="4.9" r=".45"/><circle cx="7.4" cy="4.9" r=".45"/><circle cx="2.4" cy="6.6" r=".45"/><circle cx="4.5" cy="6.6" r=".45"/><circle cx="6.6" cy="6.6" r=".45"/></g></svg>',
+    SAR: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#006C35"/><path d="M5 5.6h10M5.8 6.9h8.4M7 4.3h6" stroke="#fff" stroke-width=".7" stroke-linecap="round" stroke-dasharray="1.1 .5"/><path d="M5.2 9.6h8.6l1.2-.6" stroke="#fff" stroke-width=".7" stroke-linecap="round"/></svg>',
+    AED: '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#00732F"/><rect y="4.67" width="20" height="4.67" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#000"/><rect width="5.2" height="14" fill="#FF0000"/></svg>',
+    GBP: '<svg viewBox="0 0 60 42"><rect width="60" height="42" fill="#012169"/><path d="M0 0l60 42M60 0L0 42" stroke="#fff" stroke-width="8.4"/><path d="M0 0l60 42M60 0L0 42" stroke="#C8102E" stroke-width="2.8"/><path d="M30 0v42M0 21h60" stroke="#fff" stroke-width="12"/><path d="M30 0v42M0 21h60" stroke="#C8102E" stroke-width="7"/></svg>',
+    EUR: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#039"/><g fill="#FC0">' + Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6; return `<circle cx="${(10 + 4.2 * Math.sin(a)).toFixed(2)}" cy="${(7 - 4.2 * Math.cos(a)).toFixed(2)}" r=".62"/>`; }).join('') + '</g></svg>'
+  };
+  const NAMES = { EGP: 'Egyptian pound', USD: 'US dollar', SAR: 'Saudi riyal', AED: 'UAE dirham', GBP: 'British pound', EUR: 'Euro' };
+  const cur = document.getElementById('currency'), btn = cur.querySelector('.cur-btn'), menu = cur.querySelector('.cur-menu');
+  menu.innerHTML = Object.keys(FLAGS).map(c => `<button type="button" role="menuitemradio" aria-checked="false" data-code="${c}" tabindex="-1"><span class="flag" aria-hidden="true">${FLAGS[c]}</span><b>${c}</b><span>${NAMES[c]}</span></button>`).join('');
+  const items = [...menu.querySelectorAll('[role=menuitemradio]')];
+  let code = 'EGP'; try { code = localStorage.getItem('estaie-currency') || 'EGP'; } catch (e) {}
+  if (!FLAGS[code]) code = 'EGP';
+  function apply(c, announce) {
+    code = c; btn.querySelector('.cur-flag').innerHTML = FLAGS[c]; btn.querySelector('.cur-code').textContent = c;
+    btn.setAttribute('aria-label', `Currency: ${NAMES[c]}`);
+    items.forEach(i => i.setAttribute('aria-checked', i.dataset.code === c));
+    try { localStorage.setItem('estaie-currency', c); } catch (e) {}
+    window.estaieFX && estaieFX.set(c);
+    if (announce) window.estaieToast && estaieToast(c === 'EGP' ? 'Prices shown in EGP.' : `Prices shown in ${c}, converted from the captured EGP and property-currency amounts at reference rates from ${estaieFX.ASOF}.`, 4800);
+  }
+  const open = o => { cur.dataset.open = o; btn.setAttribute('aria-expanded', o); if (o) (items.find(i => i.dataset.code === code) || items[0]).focus(); };
+  btn.addEventListener('click', () => open(cur.dataset.open !== 'true'));
+  btn.addEventListener('keydown', e => { if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(true); } });
+  menu.addEventListener('click', e => { const o = e.target.closest('[role=menuitemradio]'); if (!o) return; apply(o.dataset.code, true); open(false); btn.focus(); });
+  menu.addEventListener('keydown', e => {
+    const i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
+    if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
+    if (e.key === 'Escape' || e.key === 'Tab') { open(false); if (e.key === 'Escape') btn.focus(); }
+  });
+  addEventListener('click', e => { if (!cur.contains(e.target)) open(false); });
+  apply(code, false);
+})();
+
+/* Mobile: the Describe chip waits until the hero search is off screen, so it never covers the hero proof line. */
+(() => {
+  const chip = document.getElementById('chip'), hs = document.getElementById('hero-search');
+  const upd = () => { chip.dataset.top = hs.getBoundingClientRect().bottom > 120 ? 'true' : 'false'; };
+  addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+})();
+
+
+/* Currency: re-render every amount marked for conversion */
+(() => {
+  const sync = () => {
+    document.querySelectorAll('[data-fx]').forEach(el => { const [a, c, small] = el.dataset.fx.split(' '); el.textContent = estaieFX.text(+a, c, !!small); });
+    document.querySelectorAll('[data-fx-code]').forEach(el => el.textContent = estaieFX.code);
+    const t = document.getElementById('total'); if (t && t.textContent !== '0') t.textContent = estaieFX.num(159443, 'EGP');
+  };
+  window.addEventListener('estaie:currency', sync); sync();
+})();
+
+/* =================== Cursor animation language: progress, split headings, staggered reveals, docked account =================== */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const hero = document.getElementById('hero'), fin = document.getElementById('final'), header = document.getElementById('nav');
+  // Split section headings into masked words (keeps <em> accents and line breaks)
+  function split(h) {
+    if (h.classList.contains('split')) return;
+    h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
+    let i = 0;
+    const walk = node => [...node.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span'); w.className = 'split-word'; w.setAttribute('aria-hidden', 'true');
+          const inner = document.createElement('span'); inner.style.setProperty('--i', i++); inner.textContent = part; w.appendChild(inner); frag.appendChild(w);
+        });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1 && c.tagName !== 'BR') {
+        if (c.tagName === 'EM') { const em = c; const words = em.textContent.trim().split(/\s+/); const frag = document.createDocumentFragment();
+          words.forEach((wd, k) => { if (k) frag.appendChild(document.createTextNode(' ')); const w = document.createElement('span'); w.className = 'split-word'; w.setAttribute('aria-hidden', 'true'); const inner = document.createElement('em'); inner.style.setProperty('--i', i++); inner.textContent = wd; w.appendChild(inner); frag.appendChild(w); });
+          em.replaceWith(frag);
+        } else walk(c);
+      }
+    });
+    walk(h); h.classList.add('split'); h.removeAttribute('data-reveal');
+  }
+  const heads = [...document.querySelectorAll('main section:not(#hero) h2')];
+  heads.forEach(split);
+  // Stagger the remaining reveals inside each section, the way the reference paces them (0, 90, 180 … ms)
+  document.querySelectorAll('main section, footer').forEach(sec => {
+    if (sec.id === 'hero') return;
+    [...sec.querySelectorAll('[data-reveal]')].forEach((el, k) => el.style.setProperty('--rd', Math.min(k, 5) * 90 + 'ms'));
+  });
+  const watch = [...heads, fin];
+  if (reduce.matches || !('IntersectionObserver' in window)) watch.forEach(el => el.classList.add('in'));
+  else { const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: .15 }); watch.forEach(el => io.observe(el)); }
+  // Scroll progress: hero (−top / height) and final (enter: (vh − top) / 0.9vh), as in the reference
+  let raf = 0;
+  const clamp = v => Math.min(1, Math.max(0, v));
+  function tick() {
+    raf = 0; const vh = innerHeight;
+    if (reduce.matches) { hero.style.setProperty('--p', '0'); fin.style.setProperty('--p', '1'); }
+    else {
+      const h = hero.getBoundingClientRect(); hero.style.setProperty('--p', clamp(-h.top / Math.max(1, h.height)).toFixed(4));
+      const f = fin.getBoundingClientRect(); if (f.top < vh * 1.2 && f.bottom > -vh * .2) fin.style.setProperty('--p', clamp((vh - f.top) / (vh * .9)).toFixed(4));
+    }
+    header.dataset.docked = scrollY > 72 ? 'true' : 'false';
+  }
+  const req = () => { if (!raf) raf = requestAnimationFrame(tick); };
+  addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); reduce.addEventListener('change', req); tick();
+})();
+</script>
+</body>
+</html>

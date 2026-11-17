@@ -1006,6 +1006,23 @@ figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-s
 .feat:not([aria-selected="true"]):hover{background:#fff;border-color:rgba(138,62,191,.3)}
 .feat p{font-size:clamp(15px,1.15vw,16.5px);line-height:1.45}
 @media (max-width: 1180px){.feat p{font-size:14.5px}}
+
+/* Why Estaie, refined to the site's section pattern: split header (title left, step controls right, like Explore / Destinations),
+   cards and photo on the same radius + shadow family as the stay cards and Estaiecare photo */
+.why-nav{grid-column:2;grid-row:1;align-self:end;display:flex;align-items:center;justify-content:flex-end;gap:22px;padding-bottom:6px}
+.why-count{display:flex;align-items:baseline;gap:6px;margin:0;font-size:13px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.why-count b{font:300 30px/1 var(--display);color:var(--ink);letter-spacing:-.01em}
+.why-bars{display:grid;grid-template-columns:repeat(4,28px);gap:6px}
+.why-bars i{height:3px;border-radius:2px;background:rgba(36,2,67,.12);transition:background-color .5s var(--ease-soft)}
+.why-bars i.on{background:var(--purple)}
+.why-arrows{display:flex;gap:10px}
+.xp{row-gap:40px}
+.feats{gap:8px}.feat + .feat{margin-top:0}
+.feat{border-radius:20px}
+.feats .feat:not([aria-selected="true"]){border-color:rgba(36,2,67,.07);box-shadow:0 1px 2px rgba(36,2,67,.03)}
+.feat[aria-selected="true"]{box-shadow:0 12px 28px rgba(69,6,126,.08)}
+.scene{border-radius:28px;box-shadow:0 14px 32px rgba(36,2,67,.09)}
+@media (max-width: 1180px){.why-nav{display:none}}
 @media (min-width: 601px){.tod-ctrl,.scene .tod-ctrl{left:50%;right:auto;translate:-50% 0}}
 .hero-proof{justify-content:center;text-align:center;padding:0}
 .hero-proof li + li::before{margin-left:-13px;margin-right:-9px}
@@ -1226,6 +1243,14 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
             <p class="kicker">Why Estaie</p>
             <h2 id="why-title">Your home for months, <em>without the friction</em> of a lease.</h2>
           </header>
+          <div class="why-nav" aria-hidden="false">
+            <p class="why-count"><b id="why-n">01</b><span>/ 04</span></p>
+            <div class="why-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="why-arrows">
+              <button type="button" class="arrow" id="why-prev" aria-label="Previous reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+              <button type="button" class="arrow" id="why-next" aria-label="Next reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+            </div>
+          </div>
           <div class="feats" role="tablist" aria-orientation="vertical" aria-label="Why Estaie features">
             <button class="feat" role="tab" id="tab-flexible" aria-controls="scene" aria-selected="true" tabindex="0" data-feature="flexible">
               <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/></svg></span>
@@ -1754,6 +1779,14 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
       if (j !== null) { e.preventDefault(); select(tabs[j].dataset.feature, { focus: true }); }
     });
   });
+
+  // Step controls in the header: same arrows as the other carousels, plus a 4-part progress line.
+  const whyN = document.getElementById('why-n'), bars = [...document.querySelectorAll('.why-bars i')];
+  const step = d => { const i = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true'); select(tabs[(i + d + tabs.length) % tabs.length].dataset.feature); };
+  document.getElementById('why-prev').addEventListener('click', () => step(-1));
+  document.getElementById('why-next').addEventListener('click', () => step(1));
+  new MutationObserver(() => { const i = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true'); whyN.textContent = String(i + 1).padStart(2, '0'); bars.forEach((b, k) => b.classList.toggle('on', k <= i)); }).observe(scene, { attributes: true, attributeFilter: ['data-feature'] });
+  bars[0].classList.add('on');
 
   // Entrance on scroll into view.
   if (reduce.matches || !('IntersectionObserver' in window)) xp.classList.add('in');

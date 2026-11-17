@@ -960,7 +960,8 @@ figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-s
 :root{--sp-disc-t:120px;--sp-disc-b:96px;--sp-ex:104px;--sp-dark:128px;--sp-ed-t:120px;--sp-ed-b:112px;--sp-faq-b:136px}
 @media (max-width: 1100px){:root{--sp-disc-t:96px;--sp-disc-b:80px;--sp-ex:88px;--sp-dark:104px;--sp-ed-t:96px;--sp-ed-b:88px;--sp-faq-b:112px}}
 @media (max-width: 600px){:root{--sp-disc-t:72px;--sp-disc-b:56px;--sp-ex:64px;--sp-dark:80px;--sp-ed-t:72px;--sp-ed-b:72px;--sp-faq-b:88px}}
-.ds{background:var(--page);padding:var(--sp-disc-t) 0 var(--sp-disc-b)}
+.ds{background:#f3f1f6;padding:var(--sp-disc-t) 0 var(--sp-disc-b)}
+.ds + .ex{padding-top:calc(var(--sp-ex) - 32px)}
 .ex{background:#f3f1f6;padding:var(--sp-ex) 0}
 .mv-inner{padding:var(--sp-dark) 0}
 .why{background:var(--paper);padding:var(--sp-ed-t) 0 var(--sp-ed-b)}
@@ -1104,7 +1105,7 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
         <button type="button" class="city" data-city="Lisbon"><img src="img/city-lisbon.jpg" alt="Terracotta rooftops and a white-domed church in Lisbon" loading="lazy"><span class="city-meta"><small>Portugal</small><b>Lisbon</b><span class="city-go">Start a search in Lisbon <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
         <button type="button" class="city" data-city="Barcelona"><img src="img/city-barcelona.jpg" alt="A cream apartment block with wrought-iron balconies in Barcelona" loading="lazy"><span class="city-meta"><small>Spain</small><b>Barcelona</b><span class="city-go">Start a search in Barcelona <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
         <button type="button" class="city" data-city="Amsterdam"><img src="img/city-amsterdam.jpg" alt="A canal lined with boats and trees in Amsterdam" loading="lazy"><span class="city-meta"><small>Netherlands</small><b>Amsterdam</b><span class="city-go">Start a search in Amsterdam <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
-        <button type="button" class="city" data-city="Dubai"><img src="img/city-dubai.jpg" alt="The Dubai skyline across a fountain at dusk" loading="lazy"><span class="city-badge">Example rates</span><span class="city-meta"><small>United Arab Emirates</small><b>Dubai</b><span class="city-go">Start a search in Dubai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Dubai"><img src="img/city-dubai.jpg" alt="The Dubai skyline across a fountain at dusk" loading="lazy"><span class="city-meta"><small>United Arab Emirates</small><b>Dubai</b><span class="city-go">Start a search in Dubai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
       </div>
     </div>
   </section>

@@ -1048,7 +1048,7 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
 .ft-social a:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
 
 /* Stay cards read as clickable: pointer, lift, arrow badge, "View stay" cue; quick-view dialog */
-.stay{cursor:pointer}
+.stay{cursor:pointer;display:block;text-decoration:none}
 .ex-track.drag .stay{cursor:grabbing}
 .stay:focus-visible{outline:2px solid var(--purple);outline-offset:4px}
 .stay:hover,.stay:focus-visible{transform:translateY(-6px);box-shadow:0 24px 48px rgba(36,2,67,.18)}
@@ -1527,22 +1527,6 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
   <p class="dlg-k"><span class="live" aria-hidden="true"></span>24/7 for booked guests</p>
   <div class="dlg-actions"><a class="btn-sun" href="https://estaie.com" target="_blank" rel="noopener">Help on estaie.com <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><button type="button" class="btn-line" data-close>Close</button></div>
 </div>
-<div class="dlg sd" id="stay-dialog" role="dialog" aria-modal="true" aria-labelledby="stay-dlg-title" hidden>
-  <button type="button" class="dlg-x" data-close aria-label="Close">×</button>
-  <figure class="sd-img"><img src="" alt=""><span class="stay-rep">Representative image</span></figure>
-  <div class="sd-body">
-    <p class="sd-k"></p>
-    <h2 id="stay-dlg-title"></h2>
-    <p class="sd-room"></p>
-    <dl class="sd-rate">
-      <div><dt>Captured online total · 15 nights, 2 guests</dt><dd class="sd-online"></dd></div>
-      <div><dt>Local tax, paid at the property</dt><dd class="sd-tax"></dd></div>
-      <div><dt>Bills</dt><dd>Included in the online total</dd></div>
-    </dl>
-    <p class="sd-note">A captured quote from estaie.com, not a live price or availability.</p>
-    <div class="dlg-actions"><button type="button" class="btn-sun" id="sd-plan">Choose your dates <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button><button type="button" class="btn-line" data-close>Close</button></div>
-  </div>
-</div>
 <div class="dlg" id="account-dialog" role="dialog" aria-modal="true" aria-labelledby="acc-dlg-title" hidden>
   <button type="button" class="dlg-x" data-close aria-label="Close">×</button>
   <h2 id="acc-dlg-title">Your account</h2>
@@ -2006,29 +1990,12 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
     { id: 'mandarin', img: 'p-ex6', type: 'Hotel', name: 'Mandarin Oriental Downtown, Dubai', room: 'Superior room, 1 king bed', total: 509122, tax: [81.69, 'USD'] }];
   const track = $('#ex-track'), exEmpty = $('#ex-empty'), exRes = $('#ex-results');
   function card(s) {
-    return `<article class="stay" data-stay="${s.id}" tabindex="0" role="button" aria-label="${s.name}, ${s.type} in Dubai. View the captured quote"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-rep">Representative image</span><span class="stay-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+    return `<a class="stay" href="#" data-stay="${s.id}" aria-label="${s.name}, ${s.type} in Dubai" draggable="false"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-rep">Representative image</span><span class="stay-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       <div class="stay-txt"><small>${s.type} · Dubai</small><b>${s.name}</b><span>${s.room}</span></div></div>
-      <div class="stay-price"><small>Captured 15-night total</small><b><i>${estaieFX.code}</i>${estaieFX.num(s.total, 'EGP')}</b><span>${s.tax ? `+ ${estaieFX.text(s.tax[0], s.tax[1], true)} local tax, paid at the property` : 'No property tax in the captured quote'}</span><em class="stay-cta">View stay <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></em></div></article>`;
+      <div class="stay-price"><small>Captured 15-night total</small><b><i>${estaieFX.code}</i>${estaieFX.num(s.total, 'EGP')}</b><span>${s.tax ? `+ ${estaieFX.text(s.tax[0], s.tax[1], true)} local tax, paid at the property` : 'No property tax in the captured quote'}</span><em class="stay-cta">View stay <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></em></div></a>`;
   }
-  /* Stay quick view: the captured quote, honestly labelled, and a path into the booking search */
-  function openStay(id) {
-    const s = STAYS.find(x => x.id === id); if (!s) return;
-    const d = document.getElementById('stay-dialog');
-    d.querySelector('.sd-img img').src = `img/${s.img}.jpg`; d.querySelector('.sd-img img').alt = `Representative photo for ${s.name}`;
-    d.querySelector('.sd-k').textContent = `${s.type} · Dubai`;
-    d.querySelector('#stay-dlg-title').textContent = s.name;
-    d.querySelector('.sd-room').textContent = s.room;
-    d.querySelector('.sd-online').textContent = estaieFX.text(s.total, 'EGP');
-    d.querySelector('.sd-tax').textContent = s.tax ? estaieFX.text(s.tax[0], s.tax[1], true) : 'None in the captured quote';
-    d.dataset.stay = s.id; showDialog('stay-dialog');
-  }
-  track.addEventListener('click', e => { const c = e.target.closest('.stay'); if (c) openStay(c.dataset.stay); });
-  track.addEventListener('keydown', e => { const c = e.target.closest('.stay'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openStay(c.dataset.stay); } });
-  document.getElementById('sd-plan').addEventListener('click', () => {
-    const s = STAYS.find(x => x.id === document.getElementById('stay-dialog').dataset.stay);
-    closeDialog(); S.city = 'Dubai'; S.type = s.type; if (typeof syncParty === 'function') syncParty(); render();
-    setTimeout(() => window.estaieOpenPanel('length'), 320);
-  });
+  // Stay pages are not built yet: cards look and feel like links but stay in place.
+  track.addEventListener('click', e => { if (e.target.closest('.stay')) e.preventDefault(); });
   let shown = STAYS;
   window.addEventListener('estaie:currency', () => { const x = track.scrollLeft; track.innerHTML = shown.map(card).join(''); track.scrollLeft = x; });
   function showStays(items) { shown = items; track.innerHTML = items.map(card).join(''); track.hidden = !items.length; track.scrollLeft = 0; updateArrows(track, $('#ex-prev'), $('#ex-next')); }

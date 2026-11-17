@@ -952,6 +952,46 @@ figure[data-reveal].in img{transform:none;animation:image-settle 2s var(--ease-s
 .rr-lede,.ml-lede,.cr-lede,.ds-lede{font-size:clamp(16px,1.2vw,18px);line-height:1.6;max-width:50ch;margin-top:20px}
 .mv-panel p{font-size:clamp(15px,1.1vw,16px);line-height:1.65}
 @media (max-width: 600px){.mv-name{font-size:28px}.fq-item button{font-size:17px}.city-meta b{font-size:28px}}
+
+/* =================== Homepage audit: rhythm, colour sequence, Monthly on linen ===================
+   Order: Hero → Destinations → Explore stays → What's moving you → Why Estaie → Monthly living → The Real Rate → Estaiecare → FAQ → Stay long enough → Footer
+   Colour: light = product & information (linen / mist / paper), deep plum = human chapters (Moving, Estaiecare) and the footer.
+   Rhythm (desktop / tablet / mobile): discovery 104–120 · editorial 112–120 · immersive dark 128–136 · close 120–136.            */
+:root{--sp-disc-t:120px;--sp-disc-b:96px;--sp-ex:104px;--sp-dark:128px;--sp-ed-t:120px;--sp-ed-b:112px;--sp-faq-b:136px}
+@media (max-width: 1100px){:root{--sp-disc-t:96px;--sp-disc-b:80px;--sp-ex:88px;--sp-dark:104px;--sp-ed-t:96px;--sp-ed-b:88px;--sp-faq-b:112px}}
+@media (max-width: 600px){:root{--sp-disc-t:72px;--sp-disc-b:56px;--sp-ex:64px;--sp-dark:80px;--sp-ed-t:72px;--sp-ed-b:72px;--sp-faq-b:88px}}
+.ds{background:var(--page);padding:var(--sp-disc-t) 0 var(--sp-disc-b)}
+.ex{background:#f3f1f6;padding:var(--sp-ex) 0}
+.mv-inner{padding:var(--sp-dark) 0}
+.why{background:var(--paper);padding:var(--sp-ed-t) 0 var(--sp-ed-b)}
+.ml-inner{padding:var(--sp-ed-t) 0 var(--sp-ed-b)}
+.rr{background:var(--paper);padding:var(--sp-ed-t) 0 var(--sp-ed-t)}
+.cr-inner{padding:calc(var(--sp-dark) + 8px) 0 var(--sp-dark)}
+.fq{background:var(--paper);padding:var(--sp-ed-t) 0 var(--sp-faq-b)}
+.ex-head,.ds-head{margin-bottom:40px}
+/* Monthly living moves onto warm linen: it is a planning tool, so it reads as product, not mood */
+.ml{color:var(--ink);background:var(--page);border-radius:0}
+.ml-kicker{color:var(--ink)}
+.ml h2 em{color:var(--purple)}
+.ml-lede{color:var(--text-2)}.ml-lede b{color:var(--ink)}
+.ml-label{color:var(--text-2)}
+.ml-stop{border-color:rgba(36,2,67,.14);background:#fff;color:var(--ink)}
+.ml-stop small{color:var(--text-2)}.ml-stop span{color:rgba(36,2,67,.8)}
+.ml-stop:hover{border-color:var(--purple);background:#fff}
+.ml-stop[aria-checked="true"]{background:#45067e;border-color:#45067e;color:#fff}
+.ml-stop[aria-checked="true"] small,.ml-stop[aria-checked="true"] span{color:rgba(255,255,255,.82)}
+.ml-stop:focus-visible{outline-color:var(--purple)}
+.ml-band{color:rgba(36,2,67,.5)}.ml-band i{background:rgba(36,2,67,.12)}
+.ml[data-band="extended"] .ml-band.ext,.ml[data-band="monthly"] .ml-band.mon{color:var(--ink)}
+.ml[data-band="extended"] .ml-band.ext i,.ml[data-band="monthly"] .ml-band.mon i{background:var(--purple)}
+.ml-result{color:var(--text-2)}.ml-result b{color:var(--ink)}
+.ml-incl{border-top-color:rgba(36,2,67,.12)}.ml-incl li{color:rgba(36,2,67,.82)}.ml-incl svg{stroke:var(--purple)}
+.ml-cta{background:#45067e;color:#fff}.ml-cta:hover{box-shadow:0 12px 28px rgba(69,6,126,.28)}.ml-cta:focus-visible{outline-color:var(--purple)}
+.ml-note{color:var(--text-2)}
+.ml-photo{background:#e9e1d4;box-shadow:0 24px 60px rgba(36,2,67,.12)}
+@media (max-width: 1023px){.ml{border-radius:0}}
+/* Explore stays: cards sit on mist; filters read as part of the carousel, not a new block */
+.ex-filters,.ex-chips{margin-top:8px}
 @media (max-width: 1180px){.ml-inner{gap:48px}.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}.ml-stop{padding:12px 12px 11px;min-width:0}}
 @media (max-width: 1023px){.ml-stops{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width: 600px){.ml-stops{grid-template-columns:1fr 1fr}}
@@ -1029,12 +1069,34 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
     </div>
   </section>
 
+  <section class="ds" id="destinations" aria-labelledby="ds-title">
+    <div class="ds-inner">
+      <div class="ds-head">
+        <div data-reveal>
+          <p class="kicker">Destinations</p>
+          <h2 id="ds-title" class="h-xl">Cities to <em>settle</em><br>into for a while.</h2>
+        </div>
+        <div class="ex-ctrl" data-reveal>
+          <button type="button" class="arrow" id="ds-prev" aria-label="Previous cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+          <button type="button" class="arrow" id="ds-next" aria-label="More cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
+      </div>
+      <div class="ds-track" id="ds-track" tabindex="0" aria-label="Destinations. Scroll sideways for more.">
+        <button type="button" class="city" data-city="London"><img src="img/city-london.jpg" alt="A quiet London street of stucco townhouses in late sun" loading="lazy"><span class="city-meta"><small>United Kingdom</small><b>London</b><span class="city-go">Start a search in London <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Lisbon"><img src="img/city-lisbon.jpg" alt="Terracotta rooftops and a white-domed church in Lisbon" loading="lazy"><span class="city-meta"><small>Portugal</small><b>Lisbon</b><span class="city-go">Start a search in Lisbon <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Barcelona"><img src="img/city-barcelona.jpg" alt="A cream apartment block with wrought-iron balconies in Barcelona" loading="lazy"><span class="city-meta"><small>Spain</small><b>Barcelona</b><span class="city-go">Start a search in Barcelona <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Amsterdam"><img src="img/city-amsterdam.jpg" alt="A canal lined with boats and trees in Amsterdam" loading="lazy"><span class="city-meta"><small>Netherlands</small><b>Amsterdam</b><span class="city-go">Start a search in Amsterdam <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+        <button type="button" class="city" data-city="Dubai"><img src="img/city-dubai.jpg" alt="The Dubai skyline across a fountain at dusk" loading="lazy"><span class="city-badge">Example rates</span><span class="city-meta"><small>United Arab Emirates</small><b>Dubai</b><span class="city-go">Start a search in Dubai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+      </div>
+    </div>
+  </section>
+
   <section class="ex" id="explore" aria-labelledby="ex-title">
     <div class="ex-inner">
       <div class="ex-head">
         <div data-reveal>
           <p class="kicker">Explore stays</p>
-          <h2 id="ex-title" class="h-xl">Find a place<br><em>to settle into.</em></h2>
+          <h2 id="ex-title" class="h-xl">Stays to move<br><em>straight into.</em></h2>
           <p class="ex-results" id="ex-results" aria-live="polite" hidden></p>
         </div>
         <div class="ex-ctrl" data-reveal>
@@ -1055,6 +1117,51 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
           <button type="button" class="chip-f" data-dest="Portugal" aria-pressed="false">Portugal</button>
           <button type="button" class="chip-f" data-dest="Spain" aria-pressed="false">Spain</button>
           <button type="button" class="chip-f" data-dest="Netherlands" aria-pressed="false">Netherlands</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mv" id="moving" aria-labelledby="mv-title">
+    <div class="mv-inner">
+      <div class="mv-copy">
+        <p class="kicker light" data-reveal>What's moving you?</p>
+        <h2 id="mv-title" class="mv-title" data-reveal>Every long stay starts with a <em>reason.</em></h2>
+        <div class="mv-list" id="mv-list">
+          <div class="mv-item" data-i="0">
+            <h3><button type="button" class="mv-btn" aria-expanded="true" aria-controls="mv-p0" id="mv-b0"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16.5 6.5l2 2M14.5 8.5l1.5 1.5"/></svg></span><span class="mv-name">A new chapter</span></button></h3>
+            <div class="mv-panel" id="mv-p0" role="region" aria-labelledby="mv-b0"><div><p>Starting a job or a life in a new city? Settle in first, then take your time finding the neighborhood that fits.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="1">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p1" id="mv-b1"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="5.5" width="15" height="10" rx="1.6"/><path d="M2.5 18.5h19"/></svg></span><span class="mv-name">Work that travels</span></button></h3>
+            <div class="mv-panel" id="mv-p1" role="region" aria-labelledby="mv-b1"><div><p>A long project or a remote contract. A furnished place with the bills sorted lets you keep your focus on the work.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="2">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p2" id="mv-b2"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5v-5h4v5"/></svg></span><span class="mv-name">Between homes</span></button></h3>
+            <div class="mv-panel" id="mv-p2" role="region" aria-labelledby="mv-b2"><div><p>Renovating, waiting for keys, or between leases. A comfortable furnished base for as long as you need it.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+          <div class="mv-item" data-i="3">
+            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p3" id="mv-b3"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/></svg></span><span class="mv-name">A slower season</span></button></h3>
+            <div class="mv-panel" id="mv-p3" role="region" aria-labelledby="mv-b3"><div><p>Spend a season somewhere new. Cook, unwind and get to know a neighborhood the way a local does.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="mv-media" data-reveal>
+        <div class="mv-arch">
+          <img class="on" src="img/mv-chapter.jpg" alt="A woman smiling beside a tall window with a view over the city" style="object-position:30% 40%">
+          <img src="img/mv-work.jpg" alt="A furnished living room with a desk set up beside a tall window" loading="lazy">
+          <img src="img/mv-between.jpg" alt="A calm living room with a sofa, armchair and soft daylight" loading="lazy" style="object-position:50% 55%">
+          <img src="img/mv-season.jpg" alt="A calm kitchen and dining table in a furnished apartment" loading="lazy">
+        </div>
+        <div class="mv-nav">
+          <button type="button" class="arrow light" id="mv-prev" aria-label="Previous reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
+          <div class="mv-dots" role="tablist" aria-label="Reasons">
+            <button type="button" role="tab" aria-selected="true" aria-label="A new chapter"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="Work that travels"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="Between homes"></button>
+            <button type="button" role="tab" aria-selected="false" aria-label="A slower season"></button>
+          </div>
+          <button type="button" class="arrow light" id="mv-next" aria-label="Next reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
         </div>
       </div>
     </div>
@@ -1141,83 +1248,6 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
     </div>
   </section>
 
-  <section class="mv" id="moving" aria-labelledby="mv-title">
-    <div class="mv-inner">
-      <div class="mv-copy">
-        <p class="kicker light" data-reveal>What's moving you?</p>
-        <h2 id="mv-title" class="mv-title" data-reveal>Every long stay starts with a <em>reason.</em></h2>
-        <div class="mv-list" id="mv-list">
-          <div class="mv-item" data-i="0">
-            <h3><button type="button" class="mv-btn" aria-expanded="true" aria-controls="mv-p0" id="mv-b0"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16.5 6.5l2 2M14.5 8.5l1.5 1.5"/></svg></span><span class="mv-name">A new chapter</span></button></h3>
-            <div class="mv-panel" id="mv-p0" role="region" aria-labelledby="mv-b0"><div><p>Starting a job or a life in a new city? Settle in first, then take your time finding the neighborhood that fits.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
-          </div>
-          <div class="mv-item" data-i="1">
-            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p1" id="mv-b1"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="5.5" width="15" height="10" rx="1.6"/><path d="M2.5 18.5h19"/></svg></span><span class="mv-name">Work that travels</span></button></h3>
-            <div class="mv-panel" id="mv-p1" role="region" aria-labelledby="mv-b1"><div><p>A long project or a remote contract. A furnished place with the bills sorted lets you keep your focus on the work.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
-          </div>
-          <div class="mv-item" data-i="2">
-            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p2" id="mv-b2"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5v-5h4v5"/></svg></span><span class="mv-name">Between homes</span></button></h3>
-            <div class="mv-panel" id="mv-p2" role="region" aria-labelledby="mv-b2"><div><p>Renovating, waiting for keys, or between leases. A comfortable furnished base for as long as you need it.</p><button type="button" class="btn-sun mv-plan" data-nights="30">Plan 30 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
-          </div>
-          <div class="mv-item" data-i="3">
-            <h3><button type="button" class="mv-btn" aria-expanded="false" aria-controls="mv-p3" id="mv-b3"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/></svg></span><span class="mv-name">A slower season</span></button></h3>
-            <div class="mv-panel" id="mv-p3" role="region" aria-labelledby="mv-b3"><div><p>Spend a season somewhere new. Cook, unwind and get to know a neighborhood the way a local does.</p><button type="button" class="btn-sun mv-plan" data-nights="90">Plan 90 nights <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="mv-media" data-reveal>
-        <div class="mv-arch">
-          <img class="on" src="img/mv-chapter.jpg" alt="A woman smiling beside a tall window with a view over the city" style="object-position:30% 40%">
-          <img src="img/mv-work.jpg" alt="A furnished living room with a desk set up beside a tall window" loading="lazy">
-          <img src="img/mv-between.jpg" alt="A calm living room with a sofa, armchair and soft daylight" loading="lazy" style="object-position:50% 55%">
-          <img src="img/mv-season.jpg" alt="A calm kitchen and dining table in a furnished apartment" loading="lazy">
-        </div>
-        <div class="mv-nav">
-          <button type="button" class="arrow light" id="mv-prev" aria-label="Previous reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
-          <div class="mv-dots" role="tablist" aria-label="Reasons">
-            <button type="button" role="tab" aria-selected="true" aria-label="A new chapter"></button>
-            <button type="button" role="tab" aria-selected="false" aria-label="Work that travels"></button>
-            <button type="button" role="tab" aria-selected="false" aria-label="Between homes"></button>
-            <button type="button" role="tab" aria-selected="false" aria-label="A slower season"></button>
-          </div>
-          <button type="button" class="arrow light" id="mv-next" aria-label="Next reason"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="rr" id="realrate" aria-labelledby="rr-title">
-    <div class="rr-inner">
-      <div class="rr-top">
-        <div class="rr-copy">
-          <p class="kicker" data-reveal>The Real Rate</p>
-          <h2 id="rr-title" class="h-xl" data-reveal>No surprise fees.<br><em>Just The Real Rate.</em></h2>
-          <p class="rr-lede" data-reveal>One clear price for the month, with bills included. Here’s how it sits next to short-stay platforms.</p>
-          <ul class="rr-chips" data-reveal><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Bills included</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Monthly from 30 nights</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Furnished from the first night</li></ul>
-          <button type="button" class="btn-sun rr-cta" id="rr-cta" data-reveal>See stays with the Real Rate <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
-        </div>
-        <figure class="rr-photo" data-reveal><img src="img/p-realrate.jpg" alt="A guest sitting by a tall window in a furnished apartment" loading="lazy"></figure>
-      </div>
-      <div class="rr-panel" id="rr-panel" data-reveal>
-        <div class="rr-save">
-          <p class="rr-k">Estimated saving</p>
-          <p class="rr-big"><small>Up to</small> <b>32%</b> <small>/month</small></p>
-          <p class="rr-sub">vs comparable short-stay rates, same property class.</p>
-          <p class="rr-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg>All taxes shown before you book.</p>
-        </div>
-        <div class="rr-scale" role="img" aria-label="Monthly prices in USD: Estaie 2,400; Agoda 3,332; Booking.com 3,720; Airbnb 4,062.">
-          <div class="rr-track"><i class="rr-fill"></i></div>
-          <div class="rr-ticks"><span style="--v:2000">2,000</span><span style="--v:2400" class=on>2,400</span><span style="--v:2800">2,800</span><span style="--v:3200">3,200</span><span style="--v:3600">3,600</span><span style="--v:4000">4,000</span><span style="--v:4400">4,400</span></div>
-          <div class="rr-pin est" style="--v:2400;--h:26px"><div class="rr-tag"><img src="img/logo-dark.svg" alt="estaie"><b>$2,400</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
-          <div class="rr-pin" style="--v:3332" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ag">a</i>Agoda</span><b>$3,332</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
-          <div class="rr-pin rr-mid" style="--v:3720" data-tier="lo"><div class="rr-lbl"><span class="rr-brand"><i class="ic bk">B.</i>Booking.com</span><b>$3,720</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
-          <div class="rr-pin rr-end" style="--v:4062" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ab">a</i>Airbnb</span><b>$4,062</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
-        </div>
-        <ul class="rr-legend" aria-hidden="true"><li><i class="ic ag">a</i>Agoda <b>$3,332</b></li><li><i class="ic bk">B.</i>Booking.com <b>$3,720</b></li><li><i class="ic ab">a</i>Airbnb <b>$4,062</b></li></ul>
-      </div>
-    </div>
-  </section>
-
   <section class="ml" id="monthly" aria-labelledby="ml-title">
     <div class="ml-inner">
       <figure class="ml-photo">
@@ -1261,24 +1291,35 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
       </div>
     </div>
   </section>
-  <section class="ds" id="destinations" aria-labelledby="ds-title">
-    <div class="ds-inner">
-      <div class="ds-head">
-        <div data-reveal>
-          <p class="kicker">Destinations</p>
-          <h2 id="ds-title" class="h-xl">Cities to <em>settle</em><br>into for a while.</h2>
+
+  <section class="rr" id="realrate" aria-labelledby="rr-title">
+    <div class="rr-inner">
+      <div class="rr-top">
+        <div class="rr-copy">
+          <p class="kicker" data-reveal>The Real Rate</p>
+          <h2 id="rr-title" class="h-xl" data-reveal>No surprise fees.<br><em>Just The Real Rate.</em></h2>
+          <p class="rr-lede" data-reveal>One clear price for the month, with bills included. Here’s how it sits next to short-stay platforms.</p>
+          <ul class="rr-chips" data-reveal><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Bills included</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Monthly from 30 nights</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Furnished from the first night</li></ul>
+          <button type="button" class="btn-sun rr-cta" id="rr-cta" data-reveal>See stays with the Real Rate <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
         </div>
-        <div class="ex-ctrl" data-reveal>
-          <button type="button" class="arrow" id="ds-prev" aria-label="Previous cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
-          <button type="button" class="arrow" id="ds-next" aria-label="More cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
-        </div>
+        <figure class="rr-photo" data-reveal><img src="img/p-realrate.jpg" alt="A guest sitting by a tall window in a furnished apartment" loading="lazy"></figure>
       </div>
-      <div class="ds-track" id="ds-track" tabindex="0" aria-label="Destinations. Scroll sideways for more.">
-        <button type="button" class="city" data-city="London"><img src="img/city-london.jpg" alt="A quiet London street of stucco townhouses in late sun" loading="lazy"><span class="city-meta"><small>United Kingdom</small><b>London</b><span class="city-go">Start a search in London <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
-        <button type="button" class="city" data-city="Lisbon"><img src="img/city-lisbon.jpg" alt="Terracotta rooftops and a white-domed church in Lisbon" loading="lazy"><span class="city-meta"><small>Portugal</small><b>Lisbon</b><span class="city-go">Start a search in Lisbon <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
-        <button type="button" class="city" data-city="Barcelona"><img src="img/city-barcelona.jpg" alt="A cream apartment block with wrought-iron balconies in Barcelona" loading="lazy"><span class="city-meta"><small>Spain</small><b>Barcelona</b><span class="city-go">Start a search in Barcelona <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
-        <button type="button" class="city" data-city="Amsterdam"><img src="img/city-amsterdam.jpg" alt="A canal lined with boats and trees in Amsterdam" loading="lazy"><span class="city-meta"><small>Netherlands</small><b>Amsterdam</b><span class="city-go">Start a search in Amsterdam <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
-        <button type="button" class="city" data-city="Dubai"><img src="img/city-dubai.jpg" alt="The Dubai skyline across a fountain at dusk" loading="lazy"><span class="city-badge">Example rates</span><span class="city-meta"><small>United Arab Emirates</small><b>Dubai</b><span class="city-go">Start a search in Dubai <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></button>
+      <div class="rr-panel" id="rr-panel" data-reveal>
+        <div class="rr-save">
+          <p class="rr-k">Estimated saving</p>
+          <p class="rr-big"><small>Up to</small> <b>32%</b> <small>/month</small></p>
+          <p class="rr-sub">vs comparable short-stay rates, same property class.</p>
+          <p class="rr-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg>All taxes shown before you book.</p>
+        </div>
+        <div class="rr-scale" role="img" aria-label="Monthly prices in USD: Estaie 2,400; Agoda 3,332; Booking.com 3,720; Airbnb 4,062.">
+          <div class="rr-track"><i class="rr-fill"></i></div>
+          <div class="rr-ticks"><span style="--v:2000">2,000</span><span style="--v:2400" class=on>2,400</span><span style="--v:2800">2,800</span><span style="--v:3200">3,200</span><span style="--v:3600">3,600</span><span style="--v:4000">4,000</span><span style="--v:4400">4,400</span></div>
+          <div class="rr-pin est" style="--v:2400;--h:26px"><div class="rr-tag"><img src="img/logo-dark.svg" alt="estaie"><b>$2,400</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin" style="--v:3332" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ag">a</i>Agoda</span><b>$3,332</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin rr-mid" style="--v:3720" data-tier="lo"><div class="rr-lbl"><span class="rr-brand"><i class="ic bk">B.</i>Booking.com</span><b>$3,720</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+          <div class="rr-pin rr-end" style="--v:4062" data-tier="hi"><div class="rr-lbl"><span class="rr-brand"><i class="ic ab">a</i>Airbnb</span><b>$4,062</b></div><i class="rr-stem"></i><i class="rr-dot"></i></div>
+        </div>
+        <ul class="rr-legend" aria-hidden="true"><li><i class="ic ag">a</i>Agoda <b>$3,332</b></li><li><i class="ic bk">B.</i>Booking.com <b>$3,720</b></li><li><i class="ic ab">a</i>Airbnb <b>$4,062</b></li></ul>
       </div>
     </div>
   </section>

@@ -1179,6 +1179,10 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
 .ft-brand p{font:var(--t-card);letter-spacing:-.005em}
 .ft-link,.ft-cols a,.ft-legal a,.ft-bottom p,.ft-offices address{font:var(--t-small)}
 .ft-offices b{display:block;font:var(--t-label)}
+/* Explore cards: estimated monthly price (15-night capture × 2, labelled as an estimate) */
+.stay-amt{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.stay-per{font:400 13px/1.5 var(--font);font-style:normal;color:var(--text-2)}
+.stay-src{display:block;margin-top:2px}
 /* =================== Arabic (RTL): Figma "v3/AR" type, mirrored layout =================== */
 html[lang="ar"]{--font:"Noto Sans Arabic","Figtree",sans-serif;--display:"Alexandria","Noto Sans Arabic",sans-serif;
   --t-dl:300 clamp(34px,3.85vw,56px)/1.4 var(--display);--t-dm:300 clamp(29px,3.2vw,46px)/1.42 var(--display);--t-ds:300 clamp(26px,2.62vw,38px)/1.45 var(--display)}
@@ -2204,7 +2208,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
   function card(s) {
     return `<a class="stay" href="#" data-stay="${s.id}" aria-label="${s.name}, ${s.type} in Dubai" draggable="false"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-rep">Representative image</span><span class="stay-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       <div class="stay-txt"><small>${s.type} · Dubai</small><b>${s.name}</b><span>${s.room}</span></div></div>
-      <div class="stay-price"><small>Captured 15-night total</small><b><i>${estaieFX.code}</i>${estaieFX.num(s.total, 'EGP')}</b><span>${s.tax ? `+ ${estaieFX.text(s.tax[0], s.tax[1], true)} local tax, paid at the property` : 'No property tax in the captured quote'}</span><em class="stay-cta">View stay <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></em></div></a>`;
+      <div class="stay-price"><small>Estimated monthly</small><div class="stay-amt"><b><i>${estaieFX.code}</i>${estaieFX.num(Math.round(s.total * 30 / 15), 'EGP')}</b><em class="stay-per">/month</em></div><span class="stay-src">From the 15-night total: ${estaieFX.text(s.total, 'EGP')}</span><span>${s.tax ? `+ ${estaieFX.text(s.tax[0], s.tax[1], true)} local tax per 15 nights, at the property` : 'No property tax in the captured quote'}</span></div></a>`;
   }
   // Stay pages are not built yet: cards look and feel like links but stay in place.
   track.addEventListener('click', e => { if (e.target.closest('.stay')) e.preventDefault(); });
@@ -2457,7 +2461,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     'City deluxe room, twin': 'غرفة ديلوكس بإطلالة على المدينة، سريران منفصلان', 'Deluxe apartment, 2 king beds': 'شقة ديلوكس، سريران كينج',
     'Luxury studio apartment': 'شقة استوديو فاخرة', 'Premier studio with a partial Burj Khalifa view': 'استوديو بريميير بإطلالة جزئية على برج خليفة',
     'Executive apartment, 1 king and 1 queen': 'شقة تنفيذية، سرير كينج وسرير كوين', 'Superior room, 1 king bed': 'غرفة سوبيريور، سرير كينج',
-    'Captured 15-night total': 'إجمالي 15 ليلة المسجّل', 'View stay': 'عرض الإقامة', 'No property tax in the captured quote': 'لا ضريبة عقار في السعر المسجّل',
+    'Captured 15-night total': 'إجمالي 15 ليلة المسجّل', 'Estimated monthly': 'تقدير شهري', 'View stay': 'عرض الإقامة', 'No property tax in the captured quote': 'لا ضريبة عقار في السعر المسجّل',
     'Destination': 'الوجهة', 'All destinations': 'كل الوجهات', 'No stays in this preview': 'لا إقامات في هذه المعاينة',
     'Nothing in the captured Dubai set matches this stay type, guest count, or room count. The quotes are for 2 adults and 1 room.': 'لا شيء في أسعار دبي المسجّلة يطابق نوع الإقامة أو عدد الضيوف أو الغرف. الأسعار لبالغَين وغرفة واحدة.',
     'Only Dubai rates are loaded in this preview.': 'هذه المعاينة تحتوي على أسعار دبي فقط.',
@@ -2583,6 +2587,8 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
   const dates = s => s.replace(/\b(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g, (m, d, mo) => `${d} ${MON[mo]}`).replace(/ to /g, ' إلى ');
   const RULES = [
     [/^(\w{3}) ([\d,.]+)$/, (m, c, n) => CUR[c] ? `${n} ${CUR[c]}` : null],
+    [/^\+ (\w{3}) ([\d,.]+) local tax per 15 nights, at the property$/, (m, c, n) => `+ ضريبة محلية ${n} ${CUR[c] || c} لكل 15 ليلة، في مقر الإقامة`],
+    [/^From the 15-night total: (\w{3}) ([\d,.]+)$/, (m, c, n) => `من إجمالي 15 ليلة: ${n} ${CUR[c] || c}`],
     [/^\+ (\w{3}) ([\d,.]+) local tax, paid at the property$/, (m, c, n) => `+ ضريبة محلية ${n} ${CUR[c] || c} تُدفع في مقر الإقامة`],
     [/^(\d+) nights$/, (m, n) => `${n} ليلة`],
     [/^(\d+) nights · (.+)$/, (m, n, l) => `${n} ليلة · ${dates(l)}`],

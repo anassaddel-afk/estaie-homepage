@@ -2206,7 +2206,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     { id: 'mandarin', img: 'p-ex6', type: 'Hotel', name: 'Mandarin Oriental Downtown, Dubai', room: 'Superior room, 1 king bed', total: 509122, tax: [81.69, 'USD'] }];
   const track = $('#ex-track'), exEmpty = $('#ex-empty'), exRes = $('#ex-results');
   function card(s) {
-    return `<a class="stay" href="#" data-stay="${s.id}" aria-label="${s.name}, ${s.type} in Dubai" draggable="false"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-rep">Representative image</span><span class="stay-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+    return `<a class="stay" href="#" data-stay="${s.id}" aria-label="${s.name}, ${s.type} in Dubai" draggable="false"><div class="stay-img"><img src="img/${s.img}.jpg" alt="Representative photo for ${s.name}" loading="lazy" draggable="false"><span class="stay-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       <div class="stay-txt"><small>${s.type} · Dubai</small><b>${s.name}</b><span>${s.room}</span></div></div>
       <div class="stay-price"><small>Estimated monthly</small><div class="stay-amt"><b><i>${estaieFX.code}</i>${estaieFX.num(Math.round(s.total * 30 / 15), 'EGP')}</b><em class="stay-per">/month</em></div><span class="stay-guests">${s.guests || 2} guests</span></div></a>`;
   }

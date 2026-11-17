@@ -1184,6 +1184,23 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
 .stay-per{font:400 13px/1.5 var(--font);font-style:normal;color:var(--text-2)}
 .stay-price .stay-guests{display:flex;align-items:center;gap:6px}
 .stay-guests svg{flex:none;width:15px;height:15px;fill:none;stroke:var(--plum-500);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* Colours synced from Figma (17 Nov 2026) */
+.site-header{color:#fff}
+.seg span.ph,.seg [data-val].ph{color:#6b6575}
+.submit{color:#fff}
+.hero .hero-title{color:#fff}
+.kicker.light{color:var(--paper)}
+.mv-btn{color:rgba(253,249,241,.45)}
+.ml-stop span{color:var(--ink)}
+.ml-stop[aria-checked="true"] span{color:#fff}
+.ml-band{color:var(--text-2)}
+.ml-incl li{color:var(--ink)}
+.rr-pill{color:rgba(255,255,255,.88)}
+.ft-offices b{color:var(--paper)}
+.ft-bottom p{color:rgba(253,249,241,.7)}
+.ft-legal a{color:rgba(253,249,241,.7)}
+#faq h2 em{font-style:normal;color:var(--purple)}
+.hero-proof li + li::before{display:none}
 /* =================== Arabic (RTL): Figma "v3/AR" type, mirrored layout =================== */
 html[lang="ar"]{--font:"Noto Sans Arabic","Figtree",sans-serif;--display:"Alexandria","Noto Sans Arabic",sans-serif;
   --t-dl:300 clamp(34px,3.85vw,56px)/1.4 var(--display);--t-dm:300 clamp(29px,3.2vw,46px)/1.42 var(--display);--t-ds:300 clamp(26px,2.62vw,38px)/1.45 var(--display)}
@@ -1324,7 +1341,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     <div class="hero-photo"><img class="hero-bg" src="img/hero-photo.jpg" alt="A bright living room with a linen sofa, tall windows, and a view over the city" fetchpriority="high"></div>
     <div class="hero-veil" aria-hidden="true"></div>
     <div class="hero-inner">
-      <h1 id="hero-title" class="hero-title split in" aria-label="Find a place that feels like yours." style="--delay:1000ms"><span class="split-word" aria-hidden="true"><span style="--i:0">Find</span></span> <span class="split-word" aria-hidden="true"><span style="--i:1">a</span></span> <span class="split-word" aria-hidden="true"><span style="--i:2">place</span></span> <span class="split-word" aria-hidden="true"><span style="--i:3">that</span></span><br><span class="split-word" aria-hidden="true"><span style="--i:4">feels</span></span> <span class="split-word" aria-hidden="true"><span style="--i:5">like</span></span> <span class="split-word" aria-hidden="true"><span style="--i:6" class="is-accent">yours.</span></span></h1>
+      <h1 id="hero-title" class="hero-title split in" aria-label="Find a place that feels like yours" style="--delay:1000ms"><span class="split-word" aria-hidden="true"><span style="--i:0">Find</span></span> <span class="split-word" aria-hidden="true"><span style="--i:1">a</span></span> <span class="split-word" aria-hidden="true"><span style="--i:2">place</span></span> <span class="split-word" aria-hidden="true"><span style="--i:3">that</span></span><br><span class="split-word" aria-hidden="true"><span style="--i:4">feels</span></span> <span class="split-word" aria-hidden="true"><span style="--i:5">like</span></span> <span class="split-word" aria-hidden="true"><span style="--i:6" class="is-accent">yours</span></span></h1>
       <p class="hero-lede" data-reveal>Furnished hotels, serviced apartments, studios and homes for stays from 15 nights to a year.</p>
       <form class="hs" id="hero-search" role="search" aria-label="Search stays" novalidate data-reveal>
         <div class="hs-row">
@@ -1346,7 +1363,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
       <div class="ds-head">
         <div data-reveal>
           <p class="kicker">Destinations</p>
-          <h2 id="ds-title" class="h-xl">Cities to <em>settle</em><br>into for a while.</h2>
+          <h2 id="ds-title" class="h-xl">Cities to <em>settle</em><br>into for a while</h2>
         </div>
         <div class="ex-ctrl" data-reveal>
           <button type="button" class="arrow" id="ds-prev" aria-label="Previous cities"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5 5-5-5 5-5"/></svg></button>
@@ -1368,7 +1385,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
       <div class="ex-head">
         <div data-reveal>
           <p class="kicker">Explore stays</p>
-          <h2 id="ex-title" class="h-xl">Stays to move<br><em>straight into.</em></h2>
+          <h2 id="ex-title" class="h-xl">Stays to move<br><em>straight into</em></h2>
           <p class="ex-results" id="ex-results" aria-live="polite" hidden></p>
         </div>
         <div class="ex-ctrl" data-reveal>
@@ -1398,7 +1415,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     <div class="mv-inner">
       <div class="mv-copy">
         <p class="kicker light" data-reveal>What's moving you?</p>
-        <h2 id="mv-title" class="mv-title" data-reveal>Every long stay starts with a <em>reason.</em></h2>
+        <h2 id="mv-title" class="mv-title" data-reveal>Every long stay starts with a <em>reason</em></h2>
         <div class="mv-list" id="mv-list">
           <div class="mv-item" data-i="0">
             <h3><button type="button" class="mv-btn" aria-expanded="true" aria-controls="mv-p0" id="mv-b0"><span class="mv-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16.5 6.5l2 2M14.5 8.5l1.5 1.5"/></svg></span><span class="mv-name">A new chapter</span></button></h3>
@@ -1445,7 +1462,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
         <div class="xp-side">
           <header class="why-head">
             <p class="kicker">Why Estaie</p>
-            <h2 id="why-title">Your home for months, <em>without the friction</em> of a lease.</h2>
+            <h2 id="why-title">Your home for months, <em>without the friction</em> of<br>a lease</h2>
           </header>
           <div class="feats" role="tablist" aria-orientation="vertical" aria-label="Why Estaie features">
             <button class="feat" role="tab" id="tab-flexible" aria-controls="scene" aria-selected="true" tabindex="0" data-feature="flexible">
@@ -1532,7 +1549,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
 
       <div class="ml-copy">
         <p class="ml-kicker">Monthly living</p>
-        <h2 id="ml-title">From 30 nights, the stay is priced like a <em>month.</em></h2>
+        <h2 id="ml-title">From 30 nights, the stay is priced like a <em>month</em></h2>
         <p class="ml-lede"><b>A month, a season, or a year.</b> Monthly living runs from 30 to 365 nights. Shorter plans start from 15.</p>
 
         <div class="ml-picker">
@@ -1569,7 +1586,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
       <div class="rr-top">
         <div class="rr-copy">
           <p class="kicker" data-reveal>The Real Rate</p>
-          <h2 id="rr-title" class="h-xl" data-reveal>No surprise fees.<br><em>Just The Real Rate.</em></h2>
+          <h2 id="rr-title" class="h-xl" data-reveal>No surprise fees.<br><em>Just The Real Rate</em></h2>
           <p class="rr-lede" data-reveal>One clear price for the month, with bills included. Here’s how it sits next to short-stay platforms.</p>
           <ul class="rr-chips" data-reveal><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Bills included</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Monthly from 30 nights</li><li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg></i>Furnished from the first night</li></ul>
           <button type="button" class="btn-sun rr-cta" id="rr-cta" data-reveal>See stays with the Real Rate <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
@@ -1600,7 +1617,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     <div class="cr-inner">
       <div class="cr-copy">
         <p class="kicker light" data-reveal>Estaiecare</p>
-        <h2 id="cr-title" class="cr-title" data-reveal><em>Real support,</em><br>not just a booking confirmation.</h2>
+        <h2 id="cr-title" class="cr-title" data-reveal><em>Real support,</em><br>not just a booking confirmation</h2>
         <p class="cr-lede" data-reveal>Estaiecare connects you with a real person — before you book, during your stay, and after.</p>
         <button type="button" class="btn-cream" data-open="care-dialog" data-reveal>Talk to Estaiecare <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
         <ul class="cr-pts">
@@ -1617,7 +1634,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
     <div class="fq-inner">
       <div class="fq-head" data-reveal>
         <p class="kicker">Good to know</p>
-        <h2 id="fq-title" class="h-lg">The practical questions, answered.</h2>
+        <h2 id="fq-title" class="h-lg">The practical questions, <em>answered</em></h2>
         <button type="button" class="btn-line" data-open="care-dialog">Still deciding? Talk to us</button>
       </div>
       <div class="fq-list">
@@ -1634,7 +1651,7 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
   <section class="final" id="final" aria-labelledby="final-title">
     <div class="final-photo" aria-hidden="true"><img class="final-bg" src="img/apt-base.jpg" alt="" loading="lazy" decoding="async"></div>
     <div class="final-inner">
-      <h2 id="final-title">Stay long enough<br>to feel at <em>home.</em></h2>
+      <h2 id="final-title">Stay long enough<br>to feel at <em>home</em></h2>
       <p>Every stay shows what you pay online, what you pay at the property, and any deposit, before you book.</p>
       <a class="final-cta" href="#top" id="final-cta">Find your stay
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
@@ -2429,16 +2446,16 @@ html[lang="ar"] .rr-scale .ic{font:700 17px/1.3 "Figtree",sans-serif}
 /* =================== Arabic (RTL) version: EN ⇄ العربية =================== */
 (() => {
   const HEADS = {
-    'hero-title': 'اعثر على مكان تشعر فيه<br>وكـــــــــــــــــــــأنك فـــــى <em>بيتـــــــــــــــــــــــك.</em>',
-    'ds-title': 'مدن <em>تستقر</em> فيها<br>لبعض الوقت.',
-    'ex-title': 'إقامات تنتقل إليها<br><em>مباشرةً.</em>',
-    'mv-title': 'لكل إقامة طويلة <em>سبب.</em>',
-    'why-title': 'بيتك لأشهر، <em>دون تعقيدات</em> عقد الإيجار.',
-    'ml-title': 'من 30 ليلة، تُسعَّر الإقامة على أساس <em>شهري.</em>',
-    'rr-title': 'لا رسوم مفاجئة.<br><em>فقط السعر الحقيقي.</em>',
-    'cr-title': '<em>دعم حقيقي،</em><br>لا مجرد تأكيد حجز.',
-    'fq-title': 'أسئلة عملية، وإجاباتها.',
-    'final-title': 'أقِم بما يكفي<br>لتشعر وكأنك في <em>بيتك.</em>'
+    'hero-title': 'اعثر على مكان تشعر فيه<br>وكـــــــــــــــــــــأنك فـــــى <em>بيتـــــــــــــــــــــــك</em>',
+    'ds-title': 'مدن <em>تستقر</em> فيها<br>لبعض الوقت',
+    'ex-title': 'إقامات تنتقل إليها<br><em>مباشرةً</em>',
+    'mv-title': 'لكل إقامة طويلة <em>سبب</em>',
+    'why-title': 'بيتك لأشهر، <em>دون تعقيدات</em> عقد الإيجار',
+    'ml-title': 'من 30 ليلة، تُسعَّر الإقامة على أساس <em>شهري</em>',
+    'rr-title': 'لا رسوم مفاجئة.<br><em>فقط السعر الحقيقي</em>',
+    'cr-title': '<em>دعم حقيقي،</em><br>لا مجرد تأكيد حجز',
+    'fq-title': 'أسئلة عملية، <em>وإجاباتها</em>',
+    'final-title': 'أقِم بما يكفي<br>لتشعر وكأنك في <em>بيتك</em>'
   };
   const D = {
     // Header

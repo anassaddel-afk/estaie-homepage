@@ -1240,8 +1240,8 @@ html[dir="rtl"] :is(.feat,.ml-stop){text-align:right}
 html[dir="rtl"] .chip{right:auto;left:max(16px,calc(50vw - 640px))}
 @media (min-width: 1181px){html[dir="rtl"] .feat::before{left:auto;right:-1px}}
 html[dir="rtl"] .stay-price b{display:inline-flex;flex-direction:row-reverse;gap:.25em}
-@font-face{font-family:"Lyon Arabic Display";src:url("fonts/lyon-arabic-display-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Lyon Arabic Display";src:url("fonts/lyon-arabic-display-medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Lyon Arabic Display";src:url("fonts/lyon-arabic-display-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-0040,U+005B-0060,U+007B-00BF,U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-206F;}
+@font-face{font-family:"Lyon Arabic Display";src:url("fonts/lyon-arabic-display-medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;unicode-range:U+0000-0040,U+005B-0060,U+007B-00BF,U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-206F;}
 /* =================== Arabic typography synced from Figma (AR 1440 frame + v3/AR styles, 17 Nov 2026) ===================
    Lyon Arabic Display is served from fonts/ (Regular 400, Medium 500); Alexandria is only the loading fallback. */
 html[lang="ar"]{
@@ -1273,7 +1273,10 @@ html[lang="ar"] .feat b{font:500 clamp(15px,1.667vw,24px)/1.4 var(--lyon)}
 @media (min-width: 1181px){html[lang="ar"] .feat p{font:400 16.5px/1.85 var(--font)}}
 html[lang="ar"] .ml-lede b{font:400 clamp(18px,1.667vw,24px)/1.45 var(--lyon)}
 html[lang="ar"] .cr-pts b{font:400 clamp(18px,1.389vw,20px)/1.45 var(--lyon)}
-html[lang="ar"] .fq-item button{font:400 19px/1.45 "Alexandria",var(--font)}
+html[lang="ar"] .fq-item button{font:500 clamp(18px,1.6vw,23px)/1.5 var(--lyon);padding:26px 0}
+html[lang="ar"] .fq-item[class] button[aria-expanded="false"]{color:rgba(36,2,67,.82)}
+html[lang="ar"] .fq-panel p{max-width:660px;color:var(--text-2)}
+@media (min-width: 1100px){html[lang="ar"] .final p{max-width:none;white-space:nowrap}}
 html[lang="ar"] .ft-brand p{font:500 clamp(18px,1.667vw,24px)/1.45 var(--lyon)}
 /* Latin figures and brand names keep the EN styles in the Arabic frame */
 html[lang="ar"] .stay-price b{font:400 26px/1.15 "Outfit",sans-serif}

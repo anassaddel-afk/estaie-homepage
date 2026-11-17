@@ -6,7 +6,7 @@
 <title>Estaie — Conversion Edition · Desktop homepage (scroll prototype)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@300;400&family=Noto+Sans+Arabic:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Outfit:wght@300;400&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Alexandria:wght@300;400;500&display=swap">
 <style>
 :root{
   --paper:#fdf9f1; --page:#f6efe2; --ink:#240243; --plum:#0d0417; --plum-500:#45067e; --plum-600:#240243;
@@ -73,7 +73,9 @@ body{margin:0;background:var(--page);font-family:var(--font);color:var(--ink);-w
 .cur-menu button[aria-checked="true"]{background:var(--plum-50)}
 .cur-menu button[aria-checked="true"] b{color:var(--purple)}
 .lang{position:relative;display:flex;width:128px;height:44px;border:1px solid rgba(255,255,255,.5);border-radius:22px;padding:3px;transition:border-color 300ms}
-.lang span{display:grid;place-items:center;width:60px;height:36px;border-radius:18px;font-weight:700}
+.lang span,.lang button{display:grid;place-items:center;width:60px;height:36px;border-radius:18px;font-weight:700;border:0;padding:0;margin:0;background:none;color:inherit;font-family:var(--font);font-size:13px;cursor:pointer;transition:background 250ms,color 250ms}
+.lang button:not(.on):hover{background:rgba(255,255,255,.14)}[data-tone="solid"] .lang button:not(.on):hover{background:rgba(36,2,67,.06)}
+.lang button:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
 .lang .on{background:var(--cream);color:var(--plum);font-size:13px;letter-spacing:.08em}
 .lang .ar{font-family:"Noto Sans Arabic",var(--font);font-size:14px}
 [data-tone="solid"] .lang{border-color:var(--hair)}
@@ -770,7 +772,7 @@ a.ext::after{content:"↗";margin-left:4px;font-size:11px;opacity:.6}
 .cur-menu button{align-items:center}
 .cur-menu .flag{width:22px;height:15px}
 .cur-menu button:focus-visible{outline:2px solid var(--purple);outline-offset:-2px}
-.lang .ar[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+
 
 /* =================== Responsive =================== */
 @media (max-width: 1100px){
@@ -1089,6 +1091,62 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
 .sd-rate div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--hair);font-size:14px}
 .sd-rate dt{color:var(--text-2)}.sd-rate dd{margin:0;font-weight:600;color:var(--ink);text-align:right}
 .sd .sd-note{margin:12px 0 0;font-size:12.5px}
+/* =================== Arabic (RTL): Figma "v3/AR" type, mirrored layout =================== */
+html[lang="ar"]{--font:"Noto Sans Arabic","Figtree",sans-serif;--display:"Alexandria","Noto Sans Arabic",sans-serif;
+  --t-dl:300 clamp(34px,3.85vw,56px)/1.4 var(--display);--t-dm:300 clamp(29px,3.2vw,46px)/1.42 var(--display);--t-ds:300 clamp(26px,2.62vw,38px)/1.45 var(--display)}
+html[lang="ar"] body{font-family:var(--font)}
+html[lang="ar"] *{letter-spacing:0 !important;text-transform:none !important}
+html[lang="ar"] button,html[lang="ar"] input,html[lang="ar"] textarea{font-family:var(--font)}
+html[lang="ar"] [lang="en"],html[lang="ar"] .lang [data-lang="en"]{font-family:"Figtree",sans-serif}
+/* Display type: Alexandria Light, ~0.86 of the English size, open line height */
+html[lang="ar"] .hero-title{font:300 clamp(44px,6.5vw,96px)/1.3 var(--display)}
+html[lang="ar"] .final h2{font:300 clamp(42px,6.2vw,88px)/1.3 var(--display)}
+html[lang="ar"] .mv-name{font:300 clamp(24px,2.4vw,34px)/1.4 var(--display)}
+html[lang="ar"] .city-meta b{font:400 clamp(23px,1.9vw,28px)/1.35 var(--display)}
+html[lang="ar"] .feat b{font:400 clamp(18px,1.7vw,26px)/1.4 var(--display)}
+html[lang="ar"] .rr-lbl b{font:400 26px/1.3 var(--display)}
+html[lang="ar"] .rr-big{font:500 56px/1.15 var(--display)}
+html[lang="ar"] .price .total b{font:300 30px/1.2 var(--display)}
+html[lang="ar"] .split-word{padding-top:.12em;margin-top:-.12em;padding-bottom:.28em;margin-bottom:-.28em}
+html[lang="ar"] em{font-style:normal}
+/* Body: Noto Sans Arabic, open leading */
+html[lang="ar"] p,html[lang="ar"] li,html[lang="ar"] dd,html[lang="ar"] dt,html[lang="ar"] .fq-panel{line-height:1.85}
+/* Eyebrows: no capitals or tracking in Arabic, so a touch larger to keep their weight */
+html[lang="ar"] :is(.kicker,.ml-kicker,.rr-k,.sd .sd-k,.seg small,.stay-txt small,.stay-price small,.pop-k,.city-meta small,.ft-cols h3,.price .eyebrow,.price .total span,.msg.reply .who){font-size:13px;font-weight:600}
+/* Mirror text alignment */
+html[dir="rtl"] :is(.seg,.pop-presets button,.mv-btn,.city,.fq-item button,.cur-menu button){text-align:right}
+html[dir="rtl"] :is(.price .total .plus,.price .total > div,.sd-rate dd){text-align:left}
+/* Header */
+html[dir="rtl"] .dock-logo{left:auto;right:0}
+html[dir="rtl"] .dock-logo img{left:auto;right:0}
+html[dir="rtl"] .dock-actions{right:auto;left:0}
+html[dir="rtl"] .site-header::before{inset:-6px -22px -6px -8px}
+@media (max-width: 1240px){html[dir="rtl"] .dock-nav{left:auto;right:200px}}
+/* Carousels bleed to the left screen edge instead of the right */
+html[dir="rtl"] :is(.ex-track,.ds-track){direction:rtl}
+/* Directional icons */
+html[dir="rtl"] svg:has(> path[d^="M5 12h14"]),html[dir="rtl"] svg:has(> path[d^="M19 12H5"]),html[dir="rtl"] svg:has(> path[d^="M7 17 17 7"]){transform:scaleX(-1)}
+/* Real Rate scale reads from the right */
+html[dir="rtl"] .rr-scale{margin-left:0;margin-right:32px}
+html[dir="rtl"] .rr-fill{left:auto;right:0}
+html[dir="rtl"] .rr-ticks span,html[dir="rtl"] .rr-pin{left:auto;right:calc((var(--v) - 2000) / 2400 * 100%);transform:translateX(50%)}
+html[dir="rtl"] .rr-lbl{justify-items:end;transform:translateX(-18px)}
+html[dir="rtl"] .rr-legend b{margin-left:0;margin-right:auto}
+/* Numbers, prices and Latin brand names stay left to right inside Arabic lines */
+html[dir="rtl"] :is(.stay-price b,.rr-tag b,.rr-big b,#total){direction:ltr;unicode-bidi:isolate}
+html[dir="rtl"] .hero-proof li + li::before{margin-left:-9px;margin-right:-13px}
+@media (max-width: 760px){html[dir="rtl"] .hero-proof li + li::before{margin-left:-6px;margin-right:-10px}}
+html[lang="ar"] .hero-proof li{line-height:1.6}
+@media (max-width: 760px){
+  /* Phones: the switch shows only the other language, as a small pill beside currency */
+  .lang{display:flex;width:auto;padding:3px}
+  .lang .on{display:none}
+  .lang button:not(.on){width:auto;min-width:44px;padding:0 12px;font-size:13px}
+  .lang .ar{font-size:14px}
+}
+html[dir="rtl"] .chip{right:auto;left:max(16px,calc(50vw - 640px))}
+@media (min-width: 1181px){html[dir="rtl"] .feat::before{left:auto;right:-1px}}
+html[dir="rtl"] .stay-price b{display:inline-flex;flex-direction:row-reverse;gap:.25em}
 </style>
 </head>
 <body>
@@ -1110,7 +1168,7 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
       <div class="cur-menu" role="menu" aria-label="Currency"></div>
     </div>
-    <div class="lang" role="group" aria-label="Language"><span class="on">EN</span><span class="ar" lang="ar" aria-disabled="true" title="Arabic is coming later">العربية</span></div>
+    <div class="lang" role="group" aria-label="Language"><button type="button" class="on" data-lang="en" lang="en" aria-pressed="true">EN</button><button type="button" class="ar" data-lang="ar" lang="ar" aria-pressed="false">العربية</button></div>
     <button class="account" type="button" aria-label="Account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.7-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg><span>Account</span></button>
   </div>
 </header>
@@ -2044,13 +2102,15 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
   });
 
   /* ---------- Carousels: arrows, keyboard, mouse drag; touch scrolls natively ---------- */
-  function updateArrows(t, p, n) { if (!p) return; p.disabled = t.scrollLeft <= 4; n.disabled = t.scrollLeft + t.clientWidth >= t.scrollWidth - 4; }
+  const rtlDir = () => document.documentElement.dir === 'rtl' ? -1 : 1;
+  function updateArrows(t, p, n) { if (!p) return; const x = Math.abs(t.scrollLeft); p.disabled = x <= 4; n.disabled = x + t.clientWidth >= t.scrollWidth - 4; }
   function carousel(t, p, n) {
     const step = () => { const c = t.firstElementChild; return c ? c.getBoundingClientRect().width + 24 : 300; };
-    p.addEventListener('click', () => t.scrollBy({ left: -step(), behavior: reduce.matches ? 'auto' : 'smooth' }));
-    n.addEventListener('click', () => t.scrollBy({ left: step(), behavior: reduce.matches ? 'auto' : 'smooth' }));
+    p.addEventListener('click', () => t.scrollBy({ left: -step() * rtlDir(), behavior: reduce.matches ? 'auto' : 'smooth' }));
+    n.addEventListener('click', () => t.scrollBy({ left: step() * rtlDir(), behavior: reduce.matches ? 'auto' : 'smooth' }));
     t.addEventListener('scroll', () => updateArrows(t, p, n), { passive: true });
-    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); n.click(); } if (e.key === 'ArrowLeft') { e.preventDefault(); p.click(); } });
+    t.addEventListener('keydown', e => { const fwd = rtlDir() > 0 ? 'ArrowRight' : 'ArrowLeft', back = rtlDir() > 0 ? 'ArrowLeft' : 'ArrowRight'; if (e.key === fwd) { e.preventDefault(); n.click(); } if (e.key === back) { e.preventDefault(); p.click(); } });
+    addEventListener('estaie:lang', () => { t.scrollLeft = 0; updateArrows(t, p, n); });
     let down = false, sx = 0, sl = 0, moved = false;
     t.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || t.classList.contains('grid')) return; down = true; moved = false; sx = e.clientX; sl = t.scrollLeft; });
     addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) { moved = true; t.classList.add('drag'); } t.scrollLeft = sl - dx; });
@@ -2192,6 +2252,7 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
     });
     walk(h); h.classList.add('split'); h.removeAttribute('data-reveal');
   }
+  window.estaieSplit = split;
   const heads = [...document.querySelectorAll('main section:not(#hero) h2')];
   heads.forEach(split);
   // Stagger the remaining reveals inside each section, the way the reference paces them (0, 90, 180 … ms)
@@ -2216,6 +2277,281 @@ html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::
   }
   const req = () => { if (!raf) raf = requestAnimationFrame(tick); };
   addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); reduce.addEventListener('change', req); tick();
+})();
+</script>
+<script>
+/* =================== Arabic (RTL) version: EN ⇄ العربية =================== */
+(() => {
+  const HEADS = {
+    'hero-title': 'اعثر على مكان <em>تشعر</em> فيه وكأنك في بيتك.',
+    'ds-title': 'مدن <em>تستقر</em> فيها<br>لبعض الوقت.',
+    'ex-title': 'إقامات تنتقل إليها<br><em>مباشرةً.</em>',
+    'mv-title': 'لكل إقامة طويلة <em>سبب.</em>',
+    'why-title': 'بيتك لأشهر، <em>دون تعقيدات</em> عقد الإيجار.',
+    'ml-title': 'من 30 ليلة، تُسعَّر الإقامة على أساس <em>شهري.</em>',
+    'rr-title': 'لا رسوم مفاجئة.<br><em>فقط السعر الحقيقي.</em>',
+    'cr-title': '<em>دعم حقيقي،</em><br>لا مجرد تأكيد حجز.',
+    'fq-title': 'أسئلة عملية، وإجاباتها.',
+    'final-title': 'أقِم بما يكفي<br>لتشعر وكأنك في <em>بيتك.</em>'
+  };
+  const D = {
+    // Header
+    'Explore stays': 'استكشف الإقامات', 'Monthly living': 'السكن الشهري', 'The Real Rate': 'السعر الحقيقي', 'Estaiecare': 'Estaiecare',
+    'Egyptian pound': 'جنيه مصري', 'US dollar': 'دولار أمريكي', 'Saudi riyal': 'ريال سعودي', 'UAE dirham': 'درهم إماراتي', 'British pound': 'جنيه إسترليني', 'Euro': 'يورو',
+    'Account': 'حسابي',
+    // Hero + search
+    'Furnished hotels, serviced apartments, studios and homes for stays from 15 nights to a year.': 'فنادق وشقق فندقية واستوديوهات ومنازل مفروشة، لإقامات من 15 ليلة حتى سنة.',
+    'Where': 'الوجهة', 'City, area, or hotel': 'مدينة أو منطقة أو فندق', 'Stay type and guests': 'نوع الإقامة والضيوف',
+    'Length': 'المدة', 'Choose length': 'اختر المدة', 'Search stays': 'ابحث عن إقامة', 'Searching…': 'جارٍ البحث…',
+    'No annual lease': 'بلا عقد إيجار سنوي', 'Bills included, priced up front': 'الفواتير مشمولة ومسعّرة مسبقًا',
+    'Cancellation terms before you confirm': 'شروط الإلغاء قبل التأكيد', '24/7 Estaiecare for booked guests': 'Estaiecare على مدار الساعة للضيوف بعد الحجز',
+    // Destinations
+    'Destinations': 'الوجهات', 'United Kingdom': 'المملكة المتحدة', 'London': 'لندن', 'Portugal': 'البرتغال', 'Lisbon': 'لشبونة',
+    'Spain': 'إسبانيا', 'Barcelona': 'برشلونة', 'Netherlands': 'هولندا', 'Amsterdam': 'أمستردام', 'United Arab Emirates': 'الإمارات العربية المتحدة',
+    'Dubai': 'دبي', 'Cairo': 'القاهرة', 'Rome': 'روما', 'Riyadh': 'الرياض', 'Paris': 'باريس', 'Egypt': 'مصر', 'Saudi Arabia': 'السعودية', 'Italy': 'إيطاليا', 'France': 'فرنسا',
+    'Start a search in London': 'ابدأ البحث في لندن', 'Start a search in Lisbon': 'ابدأ البحث في لشبونة', 'Start a search in Barcelona': 'ابدأ البحث في برشلونة',
+    'Start a search in Amsterdam': 'ابدأ البحث في أمستردام', 'Start a search in Dubai': 'ابدأ البحث في دبي', 'Example rates': 'أسعار نموذجية',
+    // Explore
+    'View all stays': 'عرض كل الإقامات', 'Show as carousel': 'عرض كشريط', 'Representative image': 'صورة توضيحية',
+    'Hotel · Dubai': 'فندق · دبي', 'Serviced apartment · Dubai': 'شقة فندقية · دبي', 'Studio · Dubai': 'استوديو · دبي',
+    'Marriott Marquis Dubai Creek': 'ماريوت ماركيز دبي كريك', 'Nasma Luxury Stays — The Nook 1': 'نسمة لاكشري ستايز — ذا نوك 1',
+    'Cheval Maison Expo City Dubai': 'شيفال ميزون إكسبو سيتي دبي', 'Westminster Dubai Mall': 'وستمنستر دبي مول',
+    'The Residences 601': 'ذا ريزيدنسز 601', 'Mandarin Oriental Downtown, Dubai': 'ماندارين أورينتال داون تاون، دبي',
+    'City deluxe room, twin': 'غرفة ديلوكس بإطلالة على المدينة، سريران منفصلان', 'Deluxe apartment, 2 king beds': 'شقة ديلوكس، سريران كينج',
+    'Luxury studio apartment': 'شقة استوديو فاخرة', 'Premier studio with a partial Burj Khalifa view': 'استوديو بريميير بإطلالة جزئية على برج خليفة',
+    'Executive apartment, 1 king and 1 queen': 'شقة تنفيذية، سرير كينج وسرير كوين', 'Superior room, 1 king bed': 'غرفة سوبيريور، سرير كينج',
+    'Captured 15-night total': 'إجمالي 15 ليلة المسجّل', 'View stay': 'عرض الإقامة', 'No property tax in the captured quote': 'لا ضريبة عقار في السعر المسجّل',
+    'Destination': 'الوجهة', 'All destinations': 'كل الوجهات', 'No stays in this preview': 'لا إقامات في هذه المعاينة',
+    'Nothing in the captured Dubai set matches this stay type, guest count, or room count. The quotes are for 2 adults and 1 room.': 'لا شيء في أسعار دبي المسجّلة يطابق نوع الإقامة أو عدد الضيوف أو الغرف. الأسعار لبالغَين وغرفة واحدة.',
+    'Only Dubai rates are loaded in this preview.': 'هذه المعاينة تحتوي على أسعار دبي فقط.',
+    // Moving
+    "What's moving you?": 'ما الذي يدفعك للانتقال؟',
+    'A new chapter': 'فصل جديد', 'Work that travels': 'عمل يتنقّل معك', 'Between homes': 'بين منزلين', 'A slower season': 'موسم أهدأ',
+    'Starting a job or a life in a new city? Settle in first, then take your time finding the neighborhood that fits.': 'تبدأ عملًا أو حياة في مدينة جديدة؟ استقر أولًا، ثم خذ وقتك في اختيار الحي الذي يناسبك.',
+    'A long project or a remote contract. A furnished place with the bills sorted lets you keep your focus on the work.': 'مشروع طويل أو عقد عن بُعد. مكان مفروش بفواتير مرتّبة يُبقي تركيزك على العمل.',
+    'Renovating, waiting for keys, or between leases. A comfortable furnished base for as long as you need it.': 'تجديد، أو انتظار المفاتيح، أو بين عقدَي إيجار. قاعدة مفروشة مريحة طوال المدة التي تحتاجها.',
+    'Spend a season somewhere new. Cook, unwind and get to know a neighborhood the way a local does.': 'اقضِ موسمًا في مكان جديد. اطهُ واسترخِ وتعرّف على الحي كما يعرفه أهله.',
+    // Why Estaie
+    'Why Estaie': 'لماذا Estaie', 'Flexible stays': 'إقامات مرنة', '15 nights to a year, through every season.': 'من 15 ليلة حتى سنة، في كل المواسم.',
+    'Move-in ready': 'جاهز للسكن', 'Furnished and ready from day one.': 'مفروش وجاهز من اليوم الأول.', 'Transparent pricing': 'تسعير شفاف',
+    'Bills included, priced upfront.': 'الفواتير مشمولة ومسعّرة مسبقًا.', 'Real support': 'دعم حقيقي', '24/7 Estaiecare for booked guests.': 'Estaiecare على مدار الساعة للضيوف بعد الحجز.',
+    'Summer': 'صيف', 'Autumn': 'خريف', 'Winter': 'شتاء', 'Spring': 'ربيع', 'Ready from day one.': 'جاهز من اليوم الأول.',
+    'Captured quote': 'سعر مسجّل', 'Accommodation': 'الإقامة', 'In the online total': 'ضمن الإجمالي عبر الإنترنت',
+    'Nasma Luxury Stays — The Nook 1, Dubai · 15 nights · 2 guests': 'نسمة لاكشري ستايز — ذا نوك 1، دبي · 15 ليلة · ضيفان',
+    'Bills': 'الفواتير', 'Included': 'مشمولة', 'Local tax': 'الضريبة المحلية',
+    'Paid at the property, shown before you book. Not added to the total.': 'تُدفع في مقر الإقامة وتظهر قبل الحجز. لا تُضاف إلى الإجمالي.',
+    'Total paid online': 'الإجمالي المدفوع عبر الإنترنت', 'local tax at the property': 'ضريبة محلية في مقر الإقامة',
+    'A captured rate from estaie.com, not a live price. A monthly total shows for stays of 28 nights or more once a 30-night rate is captured.': 'سعر مسجّل من estaie.com وليس سعرًا مباشرًا. يظهر الإجمالي الشهري للإقامات من 28 ليلة فأكثر عند تسجيل سعر 30 ليلة.',
+    'Available 24/7 for booked guests': 'متاح على مدار الساعة للضيوف بعد الحجز', 'I need help with my stay.': 'أحتاج مساعدة في إقامتي.',
+    "We're here to help. How can we assist?": 'نحن هنا للمساعدة. كيف يمكننا خدمتك؟',
+    'Flexible stays: the same apartment in summer: bright sun, blue sky and green trees.': 'إقامات مرنة: الشقة نفسها في الصيف: شمس ساطعة وسماء زرقاء وأشجار خضراء.',
+    'Flexible stays: the same apartment in autumn: amber light and golden foliage.': 'إقامات مرنة: الشقة نفسها في الخريف: ضوء كهرماني وأوراق ذهبية.',
+    'Flexible stays: the same apartment in winter: cool daylight and snow outside.': 'إقامات مرنة: الشقة نفسها في الشتاء: ضوء نهار بارد وثلج في الخارج.',
+    'Flexible stays: the same apartment in spring: fresh greenery in blossom.': 'إقامات مرنة: الشقة نفسها في الربيع: خضرة نضرة وأزهار متفتحة.',
+    'Move-in ready: the curtains open, the lights come on and the furnished apartment is ready from day one.': 'جاهز للسكن: تنفتح الستائر وتُضاء الأنوار والشقة المفروشة جاهزة من اليوم الأول.',
+    'Transparent pricing: a captured Real Rate with accommodation and bills in the online total, and local tax shown separately.': 'تسعير شفاف: سعر حقيقي مسجّل يشمل الإقامة والفواتير في الإجمالي عبر الإنترنت، مع إظهار الضريبة المحلية بشكل منفصل.',
+    'Real support: Estaiecare answers a guest, available 24/7 for booked guests.': 'دعم حقيقي: Estaiecare يردّ على ضيف، متاح على مدار الساعة للضيوف بعد الحجز.',
+    // Monthly
+    'A month': 'شهر', '30 nights': '30 ليلة', 'A month, a season, or a year.': 'شهر أو موسم أو سنة.',
+    'Monthly living runs from 30 to 365 nights. Shorter plans start from 15.': 'يمتد السكن الشهري من 30 إلى 365 ليلة. والخطط الأقصر تبدأ من 15 ليلة.',
+    'Pick a length in nights, from 15 to 365': 'اختر المدة بالليالي، من 15 إلى 365', 'nights': 'ليلة', 'Extended stay': 'إقامة ممتدة', 'A season': 'موسم', 'A year': 'سنة',
+    'Two weeks and more': 'أسبوعان فأكثر',
+    'Extended stay · 15–29 nights': 'إقامة ممتدة · 15–29 ليلة', 'Monthly living · 30–365 nights, priced like a month': 'السكن الشهري · 30–365 ليلة، بسعر شهري',
+    ', priced like a month.': '، بسعر شهري.', ', priced for the stay.': '، بسعر للإقامة كاملة.',
+    'Furnished from the first night.': 'مفروش من الليلة الأولى.', 'One rate for living, not just sleeping.': 'سعر واحد للعيش، لا للنوم فقط.',
+    'Someone to call, for the whole stay.': 'شخص تتصل به طوال إقامتك.', 'A monthly equivalent appears when a real rate exists.': 'يظهر المكافئ الشهري عند توفر سعر حقيقي.',
+    'No monthly comparison for extended stays.': 'لا مقارنة شهرية للإقامات الممتدة.',
+    // Real Rate
+    'One clear price for the month, with bills included. Here’s how it sits next to short-stay platforms.': 'سعر واحد واضح للشهر، شامل الفواتير. إليك مقارنته بمنصات الإقامة القصيرة.',
+    'Bills included': 'الفواتير مشمولة', 'Monthly from 30 nights': 'شهري من 30 ليلة', 'Furnished from the first night': 'مفروش من الليلة الأولى',
+    'See stays with the Real Rate': 'تصفّح الإقامات بالسعر الحقيقي', 'Estimated saving': 'التوفير التقديري', 'Up to': 'حتى', '/month': '/شهريًا',
+    'vs comparable short-stay rates, same property class.': 'مقارنةً بأسعار إقامات قصيرة مماثلة، بالفئة نفسها.', 'All taxes shown before you book.': 'كل الضرائب تظهر قبل الحجز.',
+    // Care
+    'Estaiecare connects you with a real person — before you book, during your stay, and after.': 'يوصلك Estaiecare بشخص حقيقي — قبل الحجز وأثناء الإقامة وبعدها.',
+    'Talk to Estaiecare': 'تحدّث مع Estaiecare', 'A real person to reach': 'شخص حقيقي يمكنك الوصول إليه', 'Support whenever you need a helping hand.': 'دعم متى احتجت إلى المساعدة.',
+    '24/7 support': 'دعم على مدار الساعة', 'For booked guests, around the clock.': 'للضيوف بعد الحجز، طوال اليوم.', 'Arrival assistance': 'مساعدة عند الوصول',
+    'If something is wrong when you arrive, we help make it right.': 'إذا وجدت مشكلة عند وصولك، نساعدك على حلّها.',
+    // FAQ
+    'Good to know': 'معلومات مفيدة', 'Still deciding? Talk to us': 'ما زلت تفكر؟ تحدّث معنا',
+    'What is Estaie?': 'ما هي Estaie؟',
+    'Estaie offers furnished stays from 15 nights and monthly living from 30 nights, in hotels, serviced apartments, studios and homes selected for longer living. The Real Rate shows what you pay online and what you pay at the property, before you book.': 'تقدّم Estaie إقامات مفروشة من 15 ليلة وسكنًا شهريًا من 30 ليلة، في فنادق وشقق فندقية واستوديوهات ومنازل مختارة للإقامة الطويلة. يوضّح السعر الحقيقي ما تدفعه عبر الإنترنت وما تدفعه في مقر الإقامة، قبل الحجز.',
+    'What is By The Month Living?': 'ما هو السكن الشهري؟',
+    'From 30 nights, the stay is priced like a month. Monthly living runs from 30 to 365 nights. Shorter plans start from 15.': 'من 30 ليلة، تُسعَّر الإقامة على أساس شهري. يمتد السكن الشهري من 30 إلى 365 ليلة. والخطط الأقصر تبدأ من 15 ليلة.',
+    'Are all listings verified the same way?': 'هل يتم التحقق من كل الإقامات بالطريقة نفسها؟',
+    'Hotels and serviced apartments are selected for longer living, with the stay type named clearly on every card.': 'نختار الفنادق والشقق الفندقية للإقامة الطويلة، مع ذكر نوع الإقامة بوضوح على كل بطاقة.',
+    'What happens if a stay doesn’t match the listing?': 'ماذا لو لم تطابق الإقامة الوصف؟',
+    'If something is wrong when you arrive, Estaiecare helps make it right. Support is available 24/7 for booked guests.': 'إذا وجدت مشكلة عند وصولك، يساعدك Estaiecare على حلّها. الدعم متاح على مدار الساعة للضيوف بعد الحجز.',
+    'Are utilities and fees included in the price?': 'هل الخدمات والرسوم مشمولة في السعر؟',
+    'Bills sit inside the online rate, so there is one number to plan around. Local taxes due at the property stay separate and visible before you book.': 'الفواتير ضمن السعر عبر الإنترنت، فتخطط حول رقم واحد. أما الضرائب المحلية المستحقة في مقر الإقامة فتبقى منفصلة وظاهرة قبل الحجز.',
+    'Can I change or extend my stay?': 'هل يمكنني تعديل إقامتي أو تمديدها؟',
+    'This answer is still being confirmed. Estaiecare can help with changes to a booked stay in the meantime.': 'هذه الإجابة قيد التأكيد. يمكن لـEstaiecare مساعدتك في تعديل إقامة محجوزة في هذه الأثناء.',
+    // Final + footer
+    'Every stay shows what you pay online, what you pay at the property, and any deposit, before you book.': 'كل إقامة توضّح ما تدفعه عبر الإنترنت وما تدفعه في مقر الإقامة وأي تأمين، قبل الحجز.',
+    'Find your stay': 'اعثر على إقامتك', 'For the stay between a holiday and a home.': 'للإقامة بين العطلة والبيت.',
+    'Discover': 'اكتشف', 'Company': 'الشركة', 'About us': 'من نحن', 'How it works': 'كيف تعمل', 'Corporates': 'الشركات', 'Blog': 'المدونة',
+    'Inquire': 'استفسارات', 'Partners': 'الشركاء', 'Investors': 'المستثمرون', 'Support': 'الدعم', 'Help & FAQ': 'المساعدة والأسئلة الشائعة', 'Contact': 'تواصل معنا',
+    'Office 10, In5 Media, Dubai Production City': 'المكتب 10، In5 Media، مدينة دبي للإنتاج', 'Dubai, UAE': 'دبي، الإمارات',
+    'Building 7930, King Abdul Aziz, Al Sahafah District': 'مبنى 7930، طريق الملك عبدالعزيز، حي الصحافة', 'Riyadh, KSA': 'الرياض، السعودية',
+    'Office 7, Level 15, WeWork, Hub71, ADGM': 'المكتب 7، الطابق 15، WeWork، Hub71، سوق أبوظبي العالمي', 'Abu Dhabi, UAE': 'أبوظبي، الإمارات',
+    '© 2026 estaie. All rights reserved.': '© 2026 estaie. جميع الحقوق محفوظة.', 'Privacy Policy': 'سياسة الخصوصية', 'Terms & Conditions': 'الشروط والأحكام',
+    'Cookie Policy': 'سياسة ملفات تعريف الارتباط', 'Payments & Cancellation Policy': 'سياسة الدفع والإلغاء', 'Back to top': 'العودة للأعلى',
+    'This preview holds captured Dubai rates only. It shows no review scores, guest counts, or savings claims. Deposits appear only when a property supplies one. The “up to 32%” line on the current site is illustrative.': 'تحتوي هذه المعاينة على أسعار دبي المسجّلة فقط، دون تقييمات أو أعداد ضيوف أو ادعاءات توفير. يظهر التأمين فقط إذا حدّده العقار. عبارة «حتى 32%» في الموقع الحالي توضيحية.',
+    // Popover + dialogs
+    'Describe': 'صِف', 'Describe a stay': 'صِف إقامة', 'No matching city in this preview.': 'لا توجد مدينة مطابقة في هذه المعاينة.',
+    'Any type': 'أي نوع', 'Hotel': 'فندق', 'Serviced apartment': 'شقة فندقية', 'Studio': 'استوديو', 'Furnished home': 'منزل مفروش',
+    'Adults': 'البالغون', 'Rooms': 'الغرف', 'Continue to length': 'تابع إلى المدة',
+    'Nothing is selected until you choose. Extended stays are 15–29 nights. Monthly living starts at 30 nights.': 'لا يُحدَّد شيء حتى تختار. الإقامات الممتدة من 15 إلى 29 ليلة، والسكن الشهري يبدأ من 30 ليلة.',
+    'Extended stay · minimum': 'إقامة ممتدة · الحد الأدنى', 'Check in': 'تسجيل الوصول', 'Check out': 'تسجيل المغادرة', 'Done': 'تم',
+    "Describe the stay you're looking for": 'صِف الإقامة التي تبحث عنها', 'Ask Estaie': 'اسأل Estaie', 'Asking…': 'جارٍ السؤال…',
+    "Estaiecare is a real person you can reach before you book, during your stay, and after. Live chat and calls aren't connected in this preview, so nothing you type here is sent.": 'Estaiecare شخص حقيقي يمكنك الوصول إليه قبل الحجز وأثناء الإقامة وبعدها. الدردشة والمكالمات غير متصلة في هذه المعاينة، لذا لن يُرسل أي شيء تكتبه هنا.',
+    '24/7 for booked guests': 'على مدار الساعة للضيوف بعد الحجز', 'Help on estaie.com': 'المساعدة على estaie.com', 'Close': 'إغلاق', 'Your account': 'حسابك',
+    "Sign in and bookings need the Estaie account service, which isn't connected in this preview.": 'يتطلب تسجيل الدخول والحجوزات خدمة حساب Estaie، وهي غير متصلة في هذه المعاينة.',
+    'Pick a length, or choose a check-in and check-out for a custom stay (15 to 365 nights).': 'اختر المدة، أو حدّد تاريخَي الوصول والمغادرة لإقامة مخصّصة (من 15 إلى 365 ليلة).',
+    'Now choose a check-out, at least 15 nights later.': 'الآن اختر تاريخ المغادرة، بعد 15 ليلة على الأقل.',
+    'Pick a length or choose your dates.': 'اختر المدة أو حدّد التواريخ.',
+    'Describe the stay, or use the booking search.': 'صِف الإقامة، أو استخدم بحث الحجز.',
+    'Discovery search is not connected in this preview. Use the booking search to continue.': 'البحث الوصفي غير متصل في هذه المعاينة. استخدم بحث الحجز للمتابعة.',
+    'Search needs a few choices.': 'يحتاج البحث إلى بعض الاختيارات.', 'Choose a destination.': 'اختر وجهة.',
+    'Choose a stay length.': 'اختر مدة الإقامة.', 'The minimum is 15 nights.': 'الحد الأدنى 15 ليلة.',
+    // Attributes
+    'Estaie home': 'الصفحة الرئيسية لـEstaie', 'Primary': 'الرئيسية', 'Currency': 'العملة', 'Language': 'اللغة',
+    'A bright living room with a linen sofa, tall windows, and a view over the city': 'غرفة معيشة مشرقة بأريكة كتانية ونوافذ طويلة وإطلالة على المدينة',
+    'Previous cities': 'المدن السابقة', 'More cities': 'مدن أخرى', 'Destinations. Scroll sideways for more.': 'الوجهات. مرّر أفقيًا للمزيد.',
+    'A quiet London street of stucco townhouses in late sun': 'شارع هادئ في لندن ببيوت مطلية تحت شمس الأصيل',
+    'Terracotta rooftops and a white-domed church in Lisbon': 'أسطح من الطين الأحمر وكنيسة بقبة بيضاء في لشبونة',
+    'A cream apartment block with wrought-iron balconies in Barcelona': 'مبنى سكني كريمي بشرفات حديدية في برشلونة',
+    'A canal lined with boats and trees in Amsterdam': 'قناة تحفّها القوارب والأشجار في أمستردام', 'The Dubai skyline across a fountain at dusk': 'أفق دبي عبر نافورة عند الغروب',
+    'Previous stays': 'الإقامات السابقة', 'Next stays': 'الإقامات التالية', 'Stays carousel. Use the arrows or scroll sideways.': 'شريط الإقامات. استخدم الأسهم أو مرّر أفقيًا.',
+    'A woman smiling beside a tall window with a view over the city': 'امرأة تبتسم بجوار نافذة طويلة تطل على المدينة',
+    'A furnished living room with a desk set up beside a tall window': 'غرفة معيشة مفروشة بمكتب بجوار نافذة طويلة',
+    'A calm living room with a sofa, armchair and soft daylight': 'غرفة معيشة هادئة بأريكة وكرسي وضوء نهار ناعم',
+    'A calm kitchen and dining table in a furnished apartment': 'مطبخ هادئ وطاولة طعام في شقة مفروشة',
+    'Previous reason': 'السبب السابق', 'Reasons': 'الأسباب', 'Next reason': 'السبب التالي', 'Why Estaie features': 'مزايا Estaie',
+    'A bright, furnished serviced apartment living room with a tall window, linen curtains, an armchair and a sofa': 'غرفة معيشة مشرقة في شقة فندقية مفروشة بنافذة طويلة وستائر كتان وكرسي وأريكة',
+    'Season outside the window': 'الموسم خارج النافذة', 'Estaiecare is typing': 'Estaiecare يكتب',
+    'A furnished living room with a desk by a tall window': 'غرفة معيشة مفروشة بمكتب بجوار نافذة طويلة', 'Included in every stay': 'مشمول في كل إقامة',
+    'A guest sitting by a tall window in a furnished apartment': 'ضيف يجلس بجوار نافذة طويلة في شقة مفروشة',
+    'Monthly prices in USD: Estaie 2,400; Agoda 3,332; Booking.com 3,720; Airbnb 4,062.': 'الأسعار الشهرية بالدولار: Estaie ‏2,400؛ Agoda ‏3,332؛ Booking.com ‏3,720؛ Airbnb ‏4,062.',
+    'A member of the Estaie team welcoming a guest at the door': 'أحد أعضاء فريق Estaie يستقبل ضيفًا عند الباب',
+    'Estaie on social': 'Estaie على وسائل التواصل', 'Footer': 'تذييل الصفحة', 'opens estaie.com': 'يفتح estaie.com', 'Search': 'بحث',
+    'Stay type': 'نوع الإقامة', 'Fewer adults': 'بالغون أقل', 'More adults': 'بالغون أكثر', 'Fewer rooms': 'غرف أقل', 'More rooms': 'غرف أكثر', 'Stay length': 'مدة الإقامة',
+    'A quiet apartment for remote work, a furnished place near the centre, a monthly stay for a couple…': 'شقة هادئة للعمل عن بُعد، مكان مفروش قرب المركز، إقامة شهرية لشخصين…',
+    'Arabic is coming later': 'العربية', 'Back': 'رجوع'
+  };
+  const CUR = { EGP: 'ج.م', USD: 'دولار', SAR: 'ر.س', AED: 'د.إ', GBP: 'ج.إ', EUR: 'يورو' };
+  const MON = { Jan: 'يناير', Feb: 'فبراير', Mar: 'مارس', Apr: 'أبريل', May: 'مايو', Jun: 'يونيو', Jul: 'يوليو', Aug: 'أغسطس', Sep: 'سبتمبر', Oct: 'أكتوبر', Nov: 'نوفمبر', Dec: 'ديسمبر' };
+  const ad = n => +n === 1 ? 'بالغ' : (+n === 2 ? 'بالغان' : 'بالغين');
+  const rm = n => +n === 1 ? 'غرفة' : (+n === 2 ? 'غرفتان' : 'غرف');
+  const t = s => D[s] || null;
+  const dates = s => s.replace(/\b(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g, (m, d, mo) => `${d} ${MON[mo]}`).replace(/ to /g, ' إلى ');
+  const RULES = [
+    [/^(\w{3}) ([\d,.]+)$/, (m, c, n) => CUR[c] ? `${n} ${CUR[c]}` : null],
+    [/^\+ (\w{3}) ([\d,.]+) local tax, paid at the property$/, (m, c, n) => `+ ضريبة محلية ${n} ${CUR[c] || c} تُدفع في مقر الإقامة`],
+    [/^(\d+) nights$/, (m, n) => `${n} ليلة`],
+    [/^(\d+) nights · (.+)$/, (m, n, l) => `${n} ليلة · ${dates(l)}`],
+    [/^Plan (\d+) nights$/, (m, n) => `خطّط لإقامة ${n} ليلة`],
+    [/^(\d+) nights is monthly living$/, (m, n) => `${n} ليلة تعني سكنًا شهريًا`],
+    [/^(\d+) nights is an extended stay$/, (m, n) => `${n} ليلة تعني إقامة ممتدة`],
+    [/^(.+) · (\d+) adults?, (\d+) rooms?$/, (m, ty, a, r) => t(ty) ? `${t(ty)} · ${a} ${ad(a)}، ${r} ${rm(r)}` : null],
+    [/^· (.+)$/, (m, r) => `· ${dates(r)}`],
+    [/^(.+?) · (.+?) · (\d+) adults?(?: · (\d+) stays?)?$/, (m, c, l, a, k) => {
+      const len = tr(l); return `${t(c) || c} · ${len || l} · ${a} ${ad(a)}${k !== undefined ? ` · ${k} ${+k === 1 ? 'إقامة' : 'إقامات'}` : ''}`; }],
+    [/^No stays in (.+) yet$/, (m, c) => `لا إقامات في ${t(c) || c} بعد`],
+    [/^(.+) is a real Estaie destination, but this preview only holds captured Dubai rates\. Try Dubai to see The Real Rate breakdown\.$/, (m, c) => `${t(c) || c} وجهة حقيقية في Estaie، لكن هذه المعاينة تحتوي على أسعار دبي المسجّلة فقط. جرّب دبي لترى تفاصيل السعر الحقيقي.`],
+    [/^(.+), (Hotel|Serviced apartment|Studio|Furnished home) in Dubai$/, (m, n, ty) => `${t(n) || n}، ${t(ty)} في دبي`],
+    [/^Representative photo for (.+)$/, (m, n) => `صورة توضيحية لـ${t(n) || n}`],
+    [/^Currency: (.+)$/, (m, n) => `العملة: ${t(n) || n}`],
+    [/^(.+) on (Instagram|Facebook|TikTok|LinkedIn|X|YouTube)$/, (m, a, b) => `Estaie على ${b}`]
+  ];
+  function tr(src) {
+    const s = src.replace(/\s+/g, ' ').trim();
+    if (!s || !/[A-Za-z]/.test(s)) return null;
+    let out = t(s);
+    if (!out) for (const [re, fn] of RULES) { const m = s.match(re); if (m) { out = fn(...m); if (out) break; } }
+    if (!out && /\.\s/.test(s)) { // sentence by sentence
+      const parts = s.split(/(?<=[.?!])\s+/); const tp = parts.map(p => t(p));
+      if (tp.every(Boolean)) out = tp.join(' ');
+    }
+    if (!out) return null;
+    const lead = src.match(/^\s*/)[0] ? ' ' : '', trail = src.match(/\s*$/)[0] ? ' ' : '';
+    return lead + out + trail;
+  }
+  const ATTRS = ['aria-label', 'title', 'placeholder', 'alt'];
+  let lang = 'en';
+  const skip = n => { const p = n.parentElement; return !p || p.closest('script,style,#debug,.dbg,[data-noi18n]'); };
+  function doText(n) {
+    if (skip(n)) return;
+    if (n.__ar !== undefined && n.data === n.__ar) return;
+    const code = n.data.trim(); const sym = CUR[code] && n.parentElement.matches('.stay-price i, [data-fx-code]');
+    const out = sym ? CUR[code] : tr(n.data); if (out == null) return;
+    n.__en = n.data; n.__ar = out; n.data = out;
+  }
+  function doAttrs(el) {
+    if (el.closest && el.closest('[data-noi18n]')) return;
+    ATTRS.forEach(a => {
+      if (!el.hasAttribute(a)) return; const v = el.getAttribute(a);
+      el.__ar = el.__ar || {}; el.__en = el.__en || {};
+      if (el.__ar[a] === v) return;
+      const out = tr(v); if (out == null) return;
+      el.__en[a] = v; el.__ar[a] = out.trim(); el.setAttribute(a, out.trim());
+    });
+  }
+  function walk(root) {
+    if (root.nodeType === 3) return doText(root);
+    if (root.nodeType !== 1) return;
+    doAttrs(root);
+    root.querySelectorAll('*').forEach(doAttrs);
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; const list = [];
+    while ((n = w.nextNode())) list.push(n);
+    list.forEach(doText);
+  }
+  const headEN = {};
+  function heads(toAr) {
+    Object.keys(HEADS).forEach(id => {
+      const h = document.getElementById(id); if (!h) return;
+      if (toAr) {
+        if (!headEN[id]) headEN[id] = { html: h.innerHTML, label: h.getAttribute('aria-label') };
+        h.innerHTML = HEADS[id]; h.classList.remove('split');
+        const lbl = h.textContent.replace(/\s+/g, ' ').trim();
+        if (window.estaieSplit) window.estaieSplit(h); h.setAttribute('aria-label', lbl);
+        h.__done = true;
+      } else if (headEN[id]) { h.innerHTML = headEN[id].html; if (headEN[id].label) h.setAttribute('aria-label', headEN[id].label); }
+    });
+  }
+  function revert() {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) if (n.__en !== undefined && n.data === n.__ar) { n.data = n.__en; n.__ar = undefined; }
+    document.querySelectorAll('*').forEach(el => { if (!el.__en) return; Object.keys(el.__en).forEach(a => { if (el.getAttribute(a) === el.__ar[a]) el.setAttribute(a, el.__en[a]); }); el.__en = null; el.__ar = null; });
+  }
+  let busy = false;
+  const mo = new MutationObserver(recs => {
+    if (lang !== 'ar' || busy) return; busy = true;
+    recs.forEach(r => {
+      if (r.type === 'characterData') doText(r.target);
+      else if (r.type === 'attributes') doAttrs(r.target);
+      else r.addedNodes.forEach(walk);
+    });
+    busy = false;
+  });
+  function setLang(l, save = true) {
+    if (l === lang) return; lang = l;
+    const html = document.documentElement;
+    html.lang = l; html.dir = l === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('.lang [data-lang]').forEach(b => { const on = b.dataset.lang === l; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    busy = true;
+    if (l === 'ar') { heads(true); walk(document.body); document.title = 'Estaie — إقامات مفروشة من 15 ليلة حتى سنة'; }
+    else { heads(false); revert(); document.title = window.__estaieTitle; }
+    busy = false;
+    if (save) try { localStorage.setItem('estaie-lang', l); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('estaie:lang', { detail: l }));
+  }
+  window.__estaieTitle = document.title;
+  window.estaieLang = { set: setLang, get: () => lang, tr };
+  mo.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+  document.querySelectorAll('.lang [data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  let want = null; try { want = localStorage.getItem('estaie-lang'); } catch (e) {}
+  const q = new URLSearchParams(location.search).get('lang'); if (q === 'ar' || q === 'en') want = q;
+  if (want === 'ar') setLang('ar', false);
 })();
 </script>
 </body>
